@@ -1,0 +1,106 @@
+{
+  "alg": {
+    "value": "PPO"
+  },
+  "gamma": {
+    "value": 0.9
+  },
+  "env_id": {
+    "value": "bus14"
+  },
+  "n_envs": {
+    "value": 50
+  },
+  "n_steps": {
+    "value": 400
+  },
+  "vf_coef": {
+    "value": 0.5
+  },
+  "actor_lr": {
+    "value": 0.00003
+  },
+  "norm_adv": {
+    "value": true
+  },
+  "norm_obs": {
+    "value": true
+  },
+  "anneal_lr": {
+    "value": true
+  },
+  "clip_coef": {
+    "value": 0.2
+  },
+  "critic_lr": {
+    "value": 0.0003
+  },
+  "eval_freq": {
+    "value": 10000
+  },
+  "n1_reward": {
+    "value": false
+  },
+  "target_kl": {
+    "value": null
+  },
+  "difficulty": {
+    "value": 0
+  },
+  "gae_lambda": {
+    "value": 0.95
+  },
+  "action_type": {
+    "value": "topology"
+  },
+  "clip_vfloss": {
+    "value": true
+  },
+  "actor_act_fn": {
+    "value": "tanh"
+  },
+  "actor_layers": {
+    "value": [
+      256,
+      128,
+      64
+    ]
+  },
+  "entropy_coef": {
+    "value": 0.01
+  },
+  "optimize_mem": {
+    "value": false
+  },
+  "critic_act_fn": {
+    "value": "tanh"
+  },
+  "critic_layers": {
+    "value": [
+      512,
+      256,
+      256
+    ]
+  },
+  "max_grad_norm": {
+    "value": 10
+  },
+  "n_minibatches": {
+    "value": 4
+  },
+  "update_epochs": {
+    "value": 40
+  },
+  "use_heuristic": {
+    "value": true
+  },
+  "heuristic_type": {
+    "value": "idle"
+  },
+  "env_config_path": {
+    "value": "scenario.json"
+  },
+  "th_deterministic": {
+    "value": true
+  }
+}

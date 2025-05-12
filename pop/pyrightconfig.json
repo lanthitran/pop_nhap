@@ -1,0 +1,9 @@
+{
+    "venvPath": "/home/dpaletti/.pyenv/versions",
+    "venv": "pop@3.7.12",
+    "reportMissingImports": true,
+    "reportMissingTypeStubs": false,
+    "pythonVersion": "3.7",
+    "pythonPlatform": "Linux",
+    "stubPath": "typings"
+}

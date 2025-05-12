@@ -1,0 +1,76 @@
+{
+    "configurations":[
+        {
+        "type": "python",
+        "args": "--run-file ./run_files/dpop_rte_very_small.toml",
+        "cwd" : "${workspaceFolder}",
+        "target-module": "pop/main.py",
+        "request": "launch",
+        "name": "dpop_rte_very_small"
+    },
+        {
+        "type": "python",
+        "args": "--run-file ./run_files/dpop_rte_curiosity.toml",
+        "cwd" : "${workspaceFolder}",
+        "target-module": "pop/main.py",
+        "request": "launch",
+        "name": "dpop_rte_curiosity"
+    },
+
+        {
+        "type": "python",
+        "args": "--run-file ./run_files/dpop_simple.toml",
+        "cwd" : "${workspaceFolder}",
+        "target-module": "pop/main.py",
+        "request": "launch",
+        "name": "dpop_simple"
+    },
+        {
+        "type": "python",
+        "args": "--run-file ./run_files/dpop_rte_1e4_load.toml",
+        "cwd" : "${workspaceFolder}",
+        "target-module": "pop/main.py",
+        "request": "launch",
+        "name": "dpop_load"
+    },
+        {
+        "type": "python",
+        "args": "--run-file ./run_files/dpop_sight_test.toml",
+        "cwd" : "${workspaceFolder}",
+        "target-module": "pop/main.py",
+        "request": "launch",
+        "name": "dpop_sight_test"
+    },
+
+        {
+        "type": "python",
+        "args": "--run-file ./run_files/dpop_base.toml",
+        "cwd" : "${workspaceFolder}",
+        "target-module": "pop/main.py",
+        "request": "launch",
+        "name": "dpop_base_test"
+    },
+        {
+        "name": "python: attach",
+        "type": "python",
+        "request": "attach",
+        "port": 5678,
+        "host": "127.0.0.1",
+        "pathmappings": [
+            {
+            "localroot": "${workspacefolder}",
+            "remoteroot": "."
+            }
+        ]
+    },
+        {
+        "type": "python",
+        "args": "--run-file ./run_files/dpop_base_curiosity.toml",
+        "cwd" : "${workspaceFolder}",
+        "target-module": "pop/main.py",
+        "request": "launch",
+        "name": "dpop_base_curiosity_test"
+    }
+
+    ]
+}

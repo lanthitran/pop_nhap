@@ -1,0 +1,35 @@
+[31mERROR: Received the following error from Worker-5: AttributeError: 'list' object has no attribute 'shape'[0m
+[31mERROR: Shutting down Worker-5.[0m
+[31mERROR: Received the following error from Worker-4: AttributeError: 'list' object has no attribute 'shape'[0m
+[31mERROR: Shutting down Worker-4.[0m
+[31mERROR: Received the following error from Worker-3: AttributeError: 'list' object has no attribute 'shape'[0m
+[31mERROR: Shutting down Worker-3.[0m
+[31mERROR: Received the following error from Worker-2: AttributeError: 'list' object has no attribute 'shape'[0m
+[31mERROR: Shutting down Worker-2.[0m
+[31mERROR: Received the following error from Worker-6: AttributeError: 'list' object has no attribute 'shape'[0m
+[31mERROR: Shutting down Worker-6.[0m
+[31mERROR: Received the following error from Worker-1: AttributeError: 'list' object has no attribute 'shape'[0m
+[31mERROR: Shutting down Worker-1.[0m
+[31mERROR: Received the following error from Worker-7: AttributeError: 'list' object has no attribute 'shape'[0m
+[31mERROR: Shutting down Worker-7.[0m
+[31mERROR: Received the following error from Worker-8: AttributeError: 'list' object has no attribute 'shape'[0m
+[31mERROR: Shutting down Worker-8.[0m
+[31mERROR: Received the following error from Worker-9: AttributeError: 'list' object has no attribute 'shape'[0m
+[31mERROR: Shutting down Worker-9.[0m
+[31mERROR: Raising the last exception back to the main process.[0m
+Traceback (most recent call last):
+  File "C:\Users\admin\Grid2Op\RL2Grid_Template\RL2Grid\main.py", line 156, in <module>
+    main(parser.parse_known_args()[0])
+  File "C:\Users\admin\Grid2Op\RL2Grid_Template\RL2Grid\main.py", line 123, in main
+    ALGORITHMS[alg](envs, max_steps, run_name, start_time, args, checkpoint)
+  File "C:\Users\admin\Grid2Op\RL2Grid_Template\RL2Grid\alg\ppo\core.py", line 49, in __init__
+    next_obs, info = envs.reset()
+                     ^^^^^^^^^^^^
+  File "C:\Users\admin\miniconda3\envs\rl2grid\Lib\site-packages\gymnasium\vector\vector_env.py", line 140, in reset
+    return self.reset_wait(seed=seed, options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\admin\miniconda3\envs\rl2grid\Lib\site-packages\gymnasium\vector\async_vector_env.py", line 250, in reset_wait
+    self._raise_if_errors(successes)
+  File "C:\Users\admin\miniconda3\envs\rl2grid\Lib\site-packages\gymnasium\vector\async_vector_env.py", line 544, in _raise_if_errors
+    raise exctype(value)
+AttributeError: 'list' object has no attribute 'shape'

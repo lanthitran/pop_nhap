@@ -1,0 +1,29 @@
+2025-04-16 16:26:28,309 INFO    MainThread:8900 [wandb_setup.py:_flush():67] Current SDK version is 0.19.8
+2025-04-16 16:26:28,309 INFO    MainThread:8900 [wandb_setup.py:_flush():67] Configure stats pid to 8900
+2025-04-16 16:26:28,309 INFO    MainThread:8900 [wandb_setup.py:_flush():67] Loading settings from C:\Users\admin\.config\wandb\settings
+2025-04-16 16:26:28,309 INFO    MainThread:8900 [wandb_setup.py:_flush():67] Loading settings from C:\Users\admin\Grid2Op\RL2Grid_Template\RL2Grid\wandb\settings
+2025-04-16 16:26:28,309 INFO    MainThread:8900 [wandb_setup.py:_flush():67] Loading settings from environment variables
+2025-04-16 16:26:28,309 INFO    MainThread:8900 [wandb_init.py:setup_run_log_directory():647] Logging user logs to C:\Users\admin\Grid2Op\RL2Grid_Template\RL2Grid\wandb\offline-run-20250416_162628-DQN_bus14_TENSOR_CHECKPOINT_42_0_1744794933_47176\logs\debug.log
+2025-04-16 16:26:28,309 INFO    MainThread:8900 [wandb_init.py:setup_run_log_directory():648] Logging internal logs to C:\Users\admin\Grid2Op\RL2Grid_Template\RL2Grid\wandb\offline-run-20250416_162628-DQN_bus14_TENSOR_CHECKPOINT_42_0_1744794933_47176\logs\debug-internal.log
+2025-04-16 16:26:28,318 INFO    MainThread:8900 [wandb_init.py:init():761] calling init triggers
+2025-04-16 16:26:28,318 INFO    MainThread:8900 [wandb_init.py:init():766] wandb.init called with sweep_config: {}
+config: {'time_limit': 4000.0, 'checkpoint': True, 'resume_run_name': '', 'additional_timesteps': 2000, 'alg': 'DQN', 'seed': 42, 'verbose': True, 'exp_tag': 'TENSOR_CHECKPOINT', 'track': True, 'wandb_project': 'rl2grid_bugfinder', 'wandb_entity': '', 'wandb_mode': 'offline', 'th_deterministic': False, 'cuda': True, 'n_threads': 4, 'env_id': 'bus14', 'n_envs': 3, 'action_type': 'topology', 'difficulty': 0, 'env_config_path': 'scenario.json', 'norm_obs': True, 'use_heuristic': True, 'total_timesteps': 4000, 'learning_starts': 20000, 'layers': [64, 64], 'act_fn': 'relu', 'lr': 0.00025, 'train_freq': 20, 'gamma': 0.9, 'tau': 1000.0, 'tg_qnet_freq': 1000, 'eps_start': 1.0, 'eps_end': 0.05, 'eps_decay_frac': 0.5, 'buffer_size': 500000, 'batch_size': 128, '_wandb': {}}
+2025-04-16 16:26:28,318 INFO    MainThread:8900 [wandb_init.py:init():784] starting backend
+2025-04-16 16:26:28,537 INFO    MainThread:8900 [wandb_init.py:init():788] sending inform_init request
+2025-04-16 16:26:28,573 INFO    MainThread:8900 [backend.py:_multiprocessing_setup():101] multiprocessing start_methods=spawn, using: spawn
+2025-04-16 16:26:28,573 INFO    MainThread:8900 [wandb_init.py:init():798] backend started and connected
+2025-04-16 16:26:28,575 INFO    MainThread:8900 [wandb_init.py:init():891] updated telemetry
+2025-04-16 16:26:28,610 INFO    MainThread:8900 [wandb_init.py:init():915] communicating run to backend with 90.0 second timeout
+2025-04-16 16:26:28,633 INFO    MainThread:8900 [wandb_init.py:init():990] starting run threads in backend
+2025-04-16 16:26:28,830 INFO    MainThread:8900 [wandb_run.py:_console_start():2375] atexit reg
+2025-04-16 16:26:28,830 INFO    MainThread:8900 [wandb_run.py:_redirect():2227] redirect: wrap_raw
+2025-04-16 16:26:28,830 INFO    MainThread:8900 [wandb_run.py:_redirect():2292] Wrapping output streams.
+2025-04-16 16:26:28,839 INFO    MainThread:8900 [wandb_run.py:_redirect():2315] Redirects installed.
+2025-04-16 16:26:28,841 INFO    MainThread:8900 [wandb_init.py:init():1032] run started, returning control to user process
+2025-04-16 16:26:28,841 INFO    MainThread:8900 [wandb_run.py:_tensorboard_callback():1449] tensorboard callback: runs/DQN_bus14_TENSOR_CHECKPOINT_42_0_1744794933_47176, True
+2025-04-16 16:27:18,152 INFO    MainThread:8900 [wandb_run.py:_finish():2112] finishing run /rl2grid_bugfinder/DQN_bus14_TENSOR_CHECKPOINT_42_0_1744794933_47176
+2025-04-16 16:27:18,153 INFO    MainThread:8900 [wandb_run.py:_atexit_cleanup():2340] got exitcode: 0
+2025-04-16 16:27:18,154 INFO    MainThread:8900 [wandb_run.py:_restore():2322] restore
+2025-04-16 16:27:18,154 INFO    MainThread:8900 [wandb_run.py:_restore():2328] restore done
+2025-04-16 16:27:18,167 INFO    MainThread:8900 [wandb_run.py:_footer_history_summary_info():3956] rendering history
+2025-04-16 16:27:18,168 INFO    MainThread:8900 [wandb_run.py:_footer_history_summary_info():3988] rendering summary

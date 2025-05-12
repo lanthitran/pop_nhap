@@ -1,0 +1,17 @@
+global_step=10, survival=4.650%, return=-3.0
+global_step=20, survival=5.345%, return=-2.556154042482376
+global_step=30, survival=6.448%, return=-3.0
+global_step=40, survival=0.050%, return=-1.851765125989914
+global_step=50, survival=0.037%, return=-2.304700195789337
+global_step=60, survival=10.020%, return=-3.0
+global_step=70, survival=4.601%, return=-2.6065757870674133
+global_step=80, survival=15.451%, return=-2.2245351672172546
+global_step=90, survival=0.050%, return=-1.65262371301651
+global_step=150, survival=4.700%, return=0.1917882263660431
+global_step=160, survival=2.840%, return=105.8530116379261
+global_step=170, survival=4.688%, return=0.39847639203071594
+global_step=180, survival=4.886%, return=-2.1905596256256104
+global_step=190, survival=2.840%, return=-3.0
+global_step=210, survival=0.161%, return=2.0976176857948303
+global_step=220, survival=9.983%, return=-2.174853205680847
+global_step=230, survival=6.399%, return=-3.0

@@ -1,0 +1,25 @@
+
+[34m[1mwandb[39m[22m: [33mWARNING[39m Step cannot be set when using tensorboard syncing. Please use `run.define_metric(...)` to define a custom metric to log your step values.
+global_step=4032, length=666, survival=8.259%, return=109.8939243555069
+global_step=4089, length=151, survival=1.873%, return=7.558175325393677
+global_step=4176, length=1422, survival=17.634%, return=155.9607491195202
+global_step=4296, length=1138, survival=14.112%, return=151.98839157819748
+global_step=4302, length=484, survival=6.002%, return=47.35275396704674
+global_step=4308, length=233, survival=2.889%, return=-2.6623490750789642
+global_step=4437, length=2706, survival=33.557%, return=1123.323611497879
+global_step=4518, length=526, survival=6.523%, return=245.6693571805954
+global_step=4617, length=340, survival=4.216%, return=31.074173495173454
+global_step=4794, length=1522, survival=18.874%, return=174.13083525002003
+global_step=4875, length=993, survival=12.314%, return=8.90105327963829
+global_step=4938, length=720, survival=8.929%, return=92.76460146903992
+global_step=5004, length=1113, survival=13.802%, return=315.6793128848076
+global_step=5043, length=700, survival=8.681%, return=1.6387923955917358
+global_step=5070, length=989, survival=12.264%, return=6.334569990634918
+global_step=5223, length=1176, survival=14.583%, return=350.21953254938126
+global_step=5370, length=616, survival=7.639%, return=39.680239737033844
+global_step=5412, length=624, survival=7.738%, return=38.58059412240982
+global_step=5418, length=971, survival=12.041%, return=3.99563866853714
+global_step=5463, length=387, survival=4.799%, return=2.9317480325698853
+global_step=5799, length=897, survival=11.124%, return=46.32319602370262
+global_step=5871, length=1263, survival=15.662%, return=66.87466804683208
+global_step=5886, length=824, survival=10.218%, return=8.209504336118698

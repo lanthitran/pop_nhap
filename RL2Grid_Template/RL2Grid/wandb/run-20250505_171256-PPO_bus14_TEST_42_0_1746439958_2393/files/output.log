@@ -1,0 +1,18 @@
+[34m[1mwandb[0m: [33mWARNING[0m Step cannot be set when using tensorboard syncing. Please use `run.define_metric(...)` to define a custom metric to log your step values.
+global steps=3700, length=8064, survival=100.000%, return=3791.9874451756477
+global steps=3900, length=8064, survival=100.000%, return=3839.4940710663795
+global steps=5080, length=8064, survival=100.000%, return=3718.1265465915203
+global steps=5920, length=8064, survival=100.000%, return=3648.6189627945423
+global steps=7380, length=8064, survival=100.000%, return=3696.6376202702522
+global steps=7440, length=8064, survival=100.000%, return=3959.544402360916
+global steps=7480, length=8064, survival=100.000%, return=3666.25463911891
+global steps=7680, length=8064, survival=100.000%, return=4070.30474331975
+global steps=9280, length=8064, survival=100.000%, return=4158.020247250795
+global steps=11060, length=8064, survival=100.000%, return=3656.331746429205
+global steps=12760, length=8064, survival=100.000%, return=3718.1265465915203
+global steps=13040, length=8064, survival=100.000%, return=3849.7363523840904
+global steps=13120, length=8064, survival=100.000%, return=4056.335169941187
+global steps=13160, length=8064, survival=100.000%, return=3830.4321617484093
+global steps=13540, length=8064, survival=100.000%, return=3855.6545217633247
+global steps=15020, length=8064, survival=100.000%, return=3661.3549101650715
+global steps=16060, length=8064, survival=100.000%, return=3927.1785779595375

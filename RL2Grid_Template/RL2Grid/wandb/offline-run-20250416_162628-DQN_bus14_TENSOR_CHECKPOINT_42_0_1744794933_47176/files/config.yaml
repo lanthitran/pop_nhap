@@ -1,0 +1,140 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    python_version: 3.12.2
+    cli_version: 0.19.8
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1744795588
+    t:
+      1:
+      - 1
+      - 55
+      3:
+      - 4
+      - 13
+      - 14
+      - 16
+      - 23
+      - 35
+      - 42
+      - 55
+      4: 3.12.2
+      5: 0.19.8
+      8:
+      - 3
+      - 5
+      13: windows-amd64
+time_limit:
+  desc: null
+  value: 4000.0
+checkpoint:
+  desc: null
+  value: true
+resume_run_name:
+  desc: null
+  value: ''
+additional_timesteps:
+  desc: null
+  value: 2000
+alg:
+  desc: null
+  value: DQN
+seed:
+  desc: null
+  value: 42
+verbose:
+  desc: null
+  value: true
+exp_tag:
+  desc: null
+  value: TENSOR_CHECKPOINT
+track:
+  desc: null
+  value: true
+wandb_project:
+  desc: null
+  value: rl2grid_bugfinder
+wandb_entity:
+  desc: null
+  value: ''
+wandb_mode:
+  desc: null
+  value: offline
+th_deterministic:
+  desc: null
+  value: false
+cuda:
+  desc: null
+  value: true
+n_threads:
+  desc: null
+  value: 4
+env_id:
+  desc: null
+  value: bus14
+n_envs:
+  desc: null
+  value: 3
+action_type:
+  desc: null
+  value: topology
+difficulty:
+  desc: null
+  value: 0
+env_config_path:
+  desc: null
+  value: scenario.json
+norm_obs:
+  desc: null
+  value: true
+use_heuristic:
+  desc: null
+  value: true
+total_timesteps:
+  desc: null
+  value: 4000
+learning_starts:
+  desc: null
+  value: 20000
+layers:
+  desc: null
+  value:
+  - 64
+  - 64
+act_fn:
+  desc: null
+  value: relu
+lr:
+  desc: null
+  value: 0.00025
+train_freq:
+  desc: null
+  value: 20
+gamma:
+  desc: null
+  value: 0.9
+tau:
+  desc: null
+  value: 1000.0
+tg_qnet_freq:
+  desc: null
+  value: 1000
+eps_start:
+  desc: null
+  value: 1.0
+eps_end:
+  desc: null
+  value: 0.05
+eps_decay_frac:
+  desc: null
+  value: 0.5
+buffer_size:
+  desc: null
+  value: 500000
+batch_size:
+  desc: null
+  value: 128

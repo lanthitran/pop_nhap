@@ -1,0 +1,14 @@
+{"time":"2025-04-20T23:36:26.3255058+07:00","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"C:\\Users\\admin\\Grid2Op\\RL2Grid_Template\\RL2Grid\\wandb\\run-20250420_233626-PPO_bus14_my__42_0_1745166977_42409\\logs\\debug-core.log"}
+{"time":"2025-04-20T23:36:26.3263258+07:00","level":"INFO","msg":"created new stream","id":"PPO_bus14_my__42_0_1745166977_42409"}
+{"time":"2025-04-20T23:36:26.3263258+07:00","level":"INFO","msg":"stream: started","id":"PPO_bus14_my__42_0_1745166977_42409"}
+{"time":"2025-04-20T23:36:26.3263258+07:00","level":"INFO","msg":"sender: started","stream_id":"PPO_bus14_my__42_0_1745166977_42409"}
+{"time":"2025-04-20T23:36:26.3263258+07:00","level":"INFO","msg":"writer: Do: started","stream_id":"PPO_bus14_my__42_0_1745166977_42409"}
+{"time":"2025-04-20T23:36:26.3263258+07:00","level":"INFO","msg":"handler: started","stream_id":"PPO_bus14_my__42_0_1745166977_42409"}
+{"time":"2025-04-20T23:36:27.4547158+07:00","level":"INFO","msg":"stream: closing","id":"PPO_bus14_my__42_0_1745166977_42409"}
+{"time":"2025-04-20T23:36:37.204799+07:00","level":"INFO","msg":"tensorboard: no root directory after 10 seconds, using working directory"}
+{"time":"2025-04-20T23:36:37.2065966+07:00","level":"ERROR","msg":"tensorboard: error creating symlink","target":"C:\\Users\\admin\\Grid2Op\\RL2Grid_Template\\RL2Grid\\runs\\PPO_bus14_my__42_0_1745166977_42409\\events.out.tfevents.1745166987.DESKTOP-TOTIENHUNG.2976.0","symlink":"C:\\Users\\admin\\Grid2Op\\RL2Grid_Template\\RL2Grid\\wandb\\run-20250420_233626-PPO_bus14_my__42_0_1745166977_42409\\files\\runs\\PPO_bus14_my__42_0_1745166977_42409\\events.out.tfevents.1745166987.DESKTOP-TOTIENHUNG.2976.0","error":"symlink C:\\Users\\admin\\Grid2Op\\RL2Grid_Template\\RL2Grid\\runs\\PPO_bus14_my__42_0_1745166977_42409\\events.out.tfevents.1745166987.DESKTOP-TOTIENHUNG.2976.0 C:\\Users\\admin\\Grid2Op\\RL2Grid_Template\\RL2Grid\\wandb\\run-20250420_233626-PPO_bus14_my__42_0_1745166977_42409\\files\\runs\\PPO_bus14_my__42_0_1745166977_42409\\events.out.tfevents.1745166987.DESKTOP-TOTIENHUNG.2976.0: A required privilege is not held by the client."}
+{"time":"2025-04-20T23:36:38.0604722+07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-20T23:36:38.3943277+07:00","level":"INFO","msg":"handler: closed","stream_id":"PPO_bus14_my__42_0_1745166977_42409"}
+{"time":"2025-04-20T23:36:38.3943277+07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"PPO_bus14_my__42_0_1745166977_42409"}
+{"time":"2025-04-20T23:36:38.3943277+07:00","level":"INFO","msg":"sender: closed","stream_id":"PPO_bus14_my__42_0_1745166977_42409"}
+{"time":"2025-04-20T23:36:38.3948369+07:00","level":"INFO","msg":"stream: closed","id":"PPO_bus14_my__42_0_1745166977_42409"}

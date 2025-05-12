@@ -1,0 +1,23 @@
+{
+  "os":  "Windows-11-10.0.22631-SP0",
+  "python":  "CPython 3.12.2",
+  "startedAt":  "2025-04-15T16:06:50.362320Z",
+  "args":  [
+    "--alg",
+    "DQN",
+    "--additional-timesteps",
+    "3000",
+    "--resume-run-name",
+    "DQN_bus14_OFFLINE_NHA--wandb-mode_42_0_1744732863_27044"
+  ],
+  "program":  "C:\\Users\\admin\\Grid2Op\\RL2Grid_Template\\RL2Grid\\main.py",
+  "codePath":  "RL2Grid_Template\\RL2Grid\\main.py",
+  "git":  {
+    "remote":  "https://github.com/rte-france/Grid2Op.git",
+    "commit":  "e7422c67f82f9b859c4494f3eb9c86b651142b50"
+  },
+  "root":  "C:\\Users\\admin\\Grid2Op\\RL2Grid_Template\\RL2Grid",
+  "host":  "DESKTOP-TOTIENHUNG",
+  "executable":  "C:\\Users\\admin\\miniconda3\\envs\\rl2grid\\python.exe",
+  "codePathLocal":  "main.py"
+}

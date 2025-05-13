@@ -649,7 +649,13 @@ def make_env_TOPOLOGY_with_L2RPNReward(args, idx, resume_run=False, generate_cla
 
 
 
-def make_env_TOPOLOGY_IDLE_Heuristic_with_L2RPNReward(args, idx, resume_run=False, generate_class=False, async_vec_env=False, params=None):
+
+#==================================================================
+
+
+
+
+def make_env_TOPOLOGY_IDLE_BSLINE(args, idx, resume_run=False, generate_class=False, async_vec_env=False, params=None):
     def thunk():
 
         config = load_config(args.env_config_path)
@@ -679,11 +685,12 @@ def make_env_TOPOLOGY_IDLE_Heuristic_with_L2RPNReward(args, idx, resume_run=Fals
                     IncreasingFlatReward(per_timestep=1/g2op_env.chronics_handler.max_episode_duration()),
                     0.1)
         if env_type == 'topology': 
-            cr.addReward("TopologyReward", DistanceReward(), 0.3)   # = 1 if topology is the original one, 0 if everything changed
+           cr.addReward("TopologyReward", DistanceReward(), 0.3)   # = 1 if topology is the original one, 0 if everything changed
         #else:   # TODO remove else -> redispatch should be higher weighted
-        #cr.addReward("redispatchReward", RedispRewardv1(), 0.2)  # Custom one, see common.rewards
-        cr.addReward("L2RPNReward", L2RPNRewardRegularized(), 0.6)  # Custom one, see common.rewards
+        cr.addReward("redispatchReward", RedispRewardv1(), 0.3 if env_type == 'topology' else 0.6)  # Custom one, see common.rewards
+        cr.addReward("LineMarginReward", LineMarginReward(), 0.3)  # Custom one, see common.rewards
         cr.initialize(g2op_env)
+
         g2op_env.chronics_handler.set_chunk_size(100)    # Instead of loading all episode data, get chunks of 100
         if generate_class:
             g2op_env.generate_classes()
@@ -802,6 +809,12 @@ def make_env_TOPOLOGY_IDLE_Heuristic_with_L2RPNReward(args, idx, resume_run=Fals
     
     # Return the environment object with custom serialization methods
     return thunk
+
+
+
+
+
+
 
 
 

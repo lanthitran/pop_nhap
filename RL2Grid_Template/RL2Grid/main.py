@@ -149,7 +149,7 @@ if __name__ == "__main__":
     parser.add_argument("--wandb-mode", type=str, default="offline", help="Online or offline wandb mode.")
 
     # Torch
-    parser.add_argument("--th-deterministic", type=str2bool, default=False, help="Enable deterministic in Torch.")
+    parser.add_argument("--th-deterministic", type=str2bool, default=True, help="Enable deterministic in Torch.")
     parser.add_argument("--cuda", type=str2bool, default=False, help="Enable CUDA by default.")
     parser.add_argument("--n-threads", type=int, default=8, help="Max number of torch threads.")
 

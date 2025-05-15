@@ -196,9 +196,9 @@ if __name__ == "__main__":
 
     # Initialize Runner as per the requested pattern
     # The Runner needs the environment instance that includes all desired wrappers (like heuristic)
-    runner = Runner(env=gym_env_for_eval_config, # Pass the outermost Gym env
+    runner = Runner(**gym_env_for_eval_config.get_params_for_runner(), # Unpack params from the fully wrapped env
                     agentClass=None, # We provide an instance
-                    agentInstance=agent_wrapper) # Pass the agent wrapper
+                    agentInstance=agent_wrapper)
 
     print(f"\nStarting Grid2Op Runner evaluation for {args.num_runner_episodes} episodes...")
 

@@ -217,8 +217,7 @@ if __name__ == "__main__":
     # Initialize Runner as per the requested pattern
     runner = Runner(**g2op_eval_env.get_params_for_runner(),
                     agentClass=None, # We provide an instance
-                    agentInstance=agent_wrapper,
-                    verbose_level=1)
+                    agentInstance=agent_wrapper)
     
 
 

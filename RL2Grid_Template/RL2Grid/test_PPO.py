@@ -183,12 +183,14 @@ if __name__ == "__main__":
     print(f"Evaluating on env_id: {eval_env_id_to_use} with seed: {eval_seed_from_cmd}")
 
     # --- Setup for Grid2Op Runner ---
+    # Get the raw Grid2Op environment from the Gym wrapper's init_env attribute
+    g2op_eval_env = gym_env_for_eval_config.init_env
     # Instantiate the agent wrapper
     agent_wrapper = PPOAgentWrapper(
         actor_network=loaded_agent_instance, # Pass the whole Agent instance (which has get_action)
-        g2op_env_action_space=g2op_eval_env.action_space,
-        gym_obs_converter=gym_env_for_eval_config.observation_space, # BoxGymObsSpace
-        gym_act_converter=gym_env_for_eval_config.action_space,   # DiscreteActSpace
+        g2op_env_action_space=g2op_eval_env.action_space, # Use the action space from the raw g2op env for BaseAgent init
+        gym_obs_converter=gym_env_for_eval_config.observation_space, # Use the Gym wrapper's observation space converter
+        gym_act_converter=gym_env_for_eval_config.action_space,   # Use the Gym wrapper's action space converter
         device=device
     )
 
@@ -196,8 +198,7 @@ if __name__ == "__main__":
     # The Runner needs the environment instance that includes all desired wrappers (like heuristic)
     runner = Runner(env=gym_env_for_eval_config, # Pass the outermost Gym env
                     agentClass=None, # We provide an instance
-                    agentInstance=agent_wrapper)
-
+                    agentInstance=agent_wrapper) # Pass the agent wrapper
 
     print(f"\nStarting Grid2Op Runner evaluation for {args.num_runner_episodes} episodes...")
 

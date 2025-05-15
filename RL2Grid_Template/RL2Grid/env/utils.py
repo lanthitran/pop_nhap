@@ -650,6 +650,7 @@ def make_env_TOPOLOGY_with_L2RPNReward(args, idx, resume_run=False, generate_cla
 
 
 
+
 #==================================================================
 
 
@@ -809,7 +810,6 @@ def make_env_TOPOLOGY_IDLE_BSLINE(args, idx, resume_run=False, generate_class=Fa
     
     # Return the environment object with custom serialization methods
     return thunk
-
 
 
 

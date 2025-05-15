@@ -110,7 +110,7 @@ if __name__ == "__main__":
     # Environment
     parser.add_argument("--env-id", type=str, default="bus14", help="Environment ID (e.g., bus14, bus36-M)")
     parser.add_argument("--difficulty", type=int, default=0, help="Difficulty level of the environment")
-    parser.add_argument("--eval-env-id", type=str, default="bus14_eval",
+    parser.add_argument("--eval-env-id", type=str, default="bus14_val",
                         help="The ID of the environment to use for evaluation (e.g., bus14_test, bus14_val). If None, uses --env-id.")
     parser.add_argument("--action-type", type=str, default="topology", help="Type of action space (e.g., topology, redispatch)")
     parser.add_argument("--env-config-path", type=str, default="scenario.json", help="Path to the environment configuration file")

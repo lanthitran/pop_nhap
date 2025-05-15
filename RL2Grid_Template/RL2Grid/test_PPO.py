@@ -72,7 +72,7 @@ class PPOAgentWrapper(BaseAgent):
             # For discrete actions, the action is an index (tensor). For continuous, it's a tensor of values.
             # The gym_act_converter.from_gym expects the Gym action format (int for discrete, array for box)
             if isinstance(self.gym_act_converter, DiscreteActSpace):
-                 action_idx = action.cpu().item() # Get Python number for discrete
+                action_idx = action.cpu().item() # Get Python number for discrete
 
         # Convert the action index to a Grid2Op action object
         grid2op_action = self.gym_act_converter.from_gym(action_idx)
@@ -203,7 +203,7 @@ if __name__ == "__main__":
     # Call runner.run() with parameters as per the requested pattern
     results_summary = runner.run(nb_episode=args.num_runner_episodes,
                                  max_iter=-1,  # -1 means run episodes to their natural end
-                                 pbar_tqdm_class=tqdm, # Pass the tqdm class for progress bar
+                                 pbar=tqdm, # Pass the tqdm class for progress bar
                                  path_save=args.runner_output_dir)
 
     print("Grid2Op Runner evaluation finished.")

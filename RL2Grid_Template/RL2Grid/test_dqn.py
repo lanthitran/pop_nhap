@@ -226,7 +226,7 @@ if __name__ == "__main__":
     # Call runner.run() with parameters as per the requested pattern
     results_summary = runner.run(nb_episode=args.num_runner_episodes,
                                  max_iter=-1,  # -1 means run episodes to their natural end, or use a specific MAX_EVAL_STEPS if defined
-                                 pbar_tqdm_class=tqdm, # Pass the tqdm class for progress bar
+                                 pbar=tqdm, # Pass the tqdm class for progress bar
                                  path_save=args.runner_output_dir)
  
     print("Grid2Op Runner evaluation finished.")

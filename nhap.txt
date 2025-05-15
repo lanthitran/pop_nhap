@@ -1,14 +1,12 @@
 
 
 
+(rl2grid) D:\grid2op\RL2Grid\RL2Grid>            python  test_PPO.py  --checkpoint-path "D:\grid2op\RL2Grid\RL2Grid\checkpoint\PPO_bus14_train_ZZZ_main_topo_idle_bsline_BASELINE_MINIbatches_4_nn_256_128_64_tanh_n_steps_400_envs_50_train_env_42_0_1747133018_43591.tar"  --num-runner-episodes 5   --runner-output-dir "./TEST_my_PPO_evaluation_results"  --seed 123    --eval-env-id "bus14_val"   --env-id "bus14_train"  --action-type "topology" --difficulty 0  --cuda True --env-config-path "scenario.json" --norm-obs True --use-heuristic True
+D:\Miniconda3\envs\rl2grid\Lib\site-packages\grid2op\Backend\pandaPowerBackend.py:32: UserWarning: Numba cannot be loaded. You will gain possibly massive speed if installing it by
+        D:\Miniconda3\envs\rl2grid\python.exe -m pip install numba
 
-
-
-Successfully loaded checkpoint. Model was trained with env_id: bus14 and seed: 42
-Evaluating on env_id: bus14_val with seed: 123
 Traceback (most recent call last):
-  File "D:\grid2op\RL2Grid\RL2Grid\test_dqn.py", line 216, in <module>
-    runner = Runner(**runner_params,
-             ^^^^^^^^^^^^^^^^^^^^^^^
-TypeError: grid2op.Runner.runner.Runner() got multiple values for keyword argument 'max_iter'
-
+  File "D:\grid2op\RL2Grid\RL2Grid\test_PPO.py", line 6, in <module>
+    from alg.ppo.core import Actor  # To load the PPO Actor architecture
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'Actor' from 'alg.ppo.core' (D:\grid2op\RL2Grid\RL2Grid\alg\ppo\core.py)

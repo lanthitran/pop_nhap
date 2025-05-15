@@ -2,7 +2,7 @@ import time
 import numpy as np
 import torch as th
 import gymnasium as gym
-from env.utils import make_env, DiscreteActSpace # To create the environment and import DiscreteActSpace
+from env.utils import make_env, DiscreteActSpace # To create the environment and import DiscreteActSpace (needed for isinstance check)
 from alg.ppo.agent import Agent # To load the PPO Agent architecture (contains Actor)
 from common.checkpoint import PPOCheckpoint #to load the checkpoint
 from common.utils import set_random_seed, set_torch, str2bool
@@ -14,6 +14,7 @@ from grid2op import make as g2op_make
 from grid2op.Agent import BaseAgent
 from grid2op.Runner import Runner
 from grid2op.Parameters import Parameters
+from env.heuristic import RHO_SAFETY_THRESHOLD # Import the safety threshold
 from tqdm import tqdm # Import tqdm for the progress bar
 
 
@@ -40,11 +41,13 @@ class PPOAgentWrapper(BaseAgent):
     A wrapper for the trained PPO Actor network to make it compatible with grid2op.Runner.
     """
     def __init__(self, actor_network, g2op_env_action_space,
-                 gym_obs_converter, gym_act_converter, device):
+                 gym_obs_converter, gym_act_converter, device, use_heuristic):
         """
         Args:
             actor_network: The trained PyTorch PPO Agent instance (which has the get_action method).
             g2op_env_action_space: The native Grid2Op action space from the evaluation environment.
+                                   (Used for BaseAgent initialization and getting do_nothing_action).
+                                   NOTE: This should be the action space of the *raw* grid2op env.
             gym_obs_converter: The Gymnasium observation space wrapper (e.g., BoxGymObsSpace)
                                used to convert Grid2Op observations to NumPy arrays.
             gym_act_converter: The Gymnasium action space wrapper (e.g., DiscreteActSpace or BoxGymActSpace)
@@ -56,9 +59,15 @@ class PPOAgentWrapper(BaseAgent):
         self.gym_obs_converter = gym_obs_converter
         self.gym_act_converter = gym_act_converter
         self.device = device
+        self.use_heuristic = use_heuristic # Flag to enable/disable heuristic logic
         self.actor_network.eval() # Ensure model is in evaluation mode
 
     def act(self, observation, reward, done):
+        # Heuristic Logic: If use_heuristic is True and the grid is safe, return do-nothing
+        if self.use_heuristic and observation.rho.max() < RHO_SAFETY_THRESHOLD:
+            return self.action_space.get_do_nothing_action()
+
+        # Otherwise, use the RL agent's policy
         # Convert Grid2Op observation to Gym observation array
         gym_obs_array = self.gym_obs_converter.to_gym(observation)
         # Convert Gym observation array to PyTorch tensor, add batch dimension
@@ -188,7 +197,7 @@ if __name__ == "__main__":
     # Instantiate the agent wrapper
     agent_wrapper = PPOAgentWrapper(
         actor_network=loaded_agent_instance, # Pass the whole Agent instance (which has get_action)
-        g2op_env_action_space=g2op_eval_env.action_space, # Use the action space from the raw g2op env for BaseAgent init
+        g2op_env_action_space=g2op_eval_env.action_space, # Use the action space from the raw g2op env for BaseAgent init (needed for get_do_nothing_action)
         gym_obs_converter=gym_env_for_eval_config.observation_space, # Use the Gym wrapper's observation space converter
         gym_act_converter=gym_env_for_eval_config.action_space,   # Use the Gym wrapper's action space converter
         device=device
@@ -196,7 +205,8 @@ if __name__ == "__main__":
 
     # Initialize Runner as per the requested pattern
     # The Runner needs the environment instance that includes all desired wrappers (like heuristic)
-    runner = Runner(**gym_env_for_eval_config.get_params_for_runner(), # Unpack params from the fully wrapped env
+    # Pass parameters from the raw Grid2Op environment, as Runner works with raw envs
+    runner = Runner(**g2op_eval_env.get_params_for_runner(),
                     agentClass=None, # We provide an instance
                     agentInstance=agent_wrapper)
 

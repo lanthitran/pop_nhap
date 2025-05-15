@@ -1,12 +1,23 @@
 
-
-
-(rl2grid) D:\grid2op\RL2Grid\RL2Grid>            python  test_PPO.py  --checkpoint-path "D:\grid2op\RL2Grid\RL2Grid\checkpoint\PPO_bus14_train_ZZZ_main_topo_idle_bsline_BASELINE_MINIbatches_4_nn_256_128_64_tanh_n_steps_400_envs_50_train_env_42_0_1747133018_43591.tar"  --num-runner-episodes 5   --runner-output-dir "./TEST_my_PPO_evaluation_results"  --seed 123    --eval-env-id "bus14_val"   --env-id "bus14_train"  --action-type "topology" --difficulty 0  --cuda True --env-config-path "scenario.json" --norm-obs True --use-heuristic True
-D:\Miniconda3\envs\rl2grid\Lib\site-packages\grid2op\Backend\pandaPowerBackend.py:32: UserWarning: Numba cannot be loaded. You will gain possibly massive speed if installing it by
-        D:\Miniconda3\envs\rl2grid\python.exe -m pip install numba
-
 Traceback (most recent call last):
-  File "D:\grid2op\RL2Grid\RL2Grid\test_PPO.py", line 6, in <module>
-    from alg.ppo.core import Actor  # To load the PPO Actor architecture
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ImportError: cannot import name 'Actor' from 'alg.ppo.core' (D:\grid2op\RL2Grid\RL2Grid\alg\ppo\core.py)
+  File "D:\grid2op\RL2Grid\RL2Grid\test_PPO.py", line 204, in <module>
+    results_summary = runner.run(nb_episode=args.num_runner_episodes,
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Miniconda3\envs\rl2grid\Lib\site-packages\grid2op\Runner\runner.py", line 1261, in run
+    res = self._run_sequential(
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Miniconda3\envs\rl2grid\Lib\site-packages\grid2op\Runner\runner.py", line 878, in _run_sequential
+    ) = self.run_one_episode(
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Miniconda3\envs\rl2grid\Lib\site-packages\grid2op\Runner\runner.py", line 769, in run_one_episode
+    res = _aux_run_one_episode(
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Miniconda3\envs\rl2grid\Lib\site-packages\grid2op\Runner\aux_fun.py", line 243, in _aux_run_one_episode
+    act = agent.act(obs, reward, done)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\grid2op\RL2Grid\RL2Grid\test_PPO.py", line 70, in act
+    action, _, _ = self.actor_network.get_action(obs_tensor)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Miniconda3\envs\rl2grid\Lib\site-packages\torch\nn\modules\module.py", line 1688, in __getattr__
+    raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'")
+AttributeError: 'Sequential' object has no attribute 'get_action'

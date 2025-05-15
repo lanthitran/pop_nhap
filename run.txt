@@ -1,4 +1,84 @@
 
+D:
+
+
+    RL2grid:
+        
+
+
+        
+        D: 
+        cd D:\grid2op\RL2Grid\RL2Grid
+        conda activate rl2grid
+        
+        tensorboard --logdir="D:\grid2op\RL2Grid\RL2Grid\runs\runs"  --reload_multifile=true
+
+
+        python main.py --alg PPO --exp-tag my_   --additional-timesteps 500000 --total-timesteps 100 --action-type redispatch --env-id bus14_train  --n-threads 16  --n-envs 10 --wandb-mode offline --time-limit 4000 --checkpoint True --seed 42 --cuda True --verbose True --track True --norm-obs True --use-heuristic True
+        python main.py --alg PPO --resume-run-name 
+        # in PPO, total-timesteps has to be larger than n-steps?
+        tensorboard --logdir="D:\grid2op\RL2Grid\RL2Grid\runs\runs"  --reload_multifile=true
+
+        python main.py --alg DQN --total-timesteps 3000000 --exp-tag LAB_offline --wandb-mode offline  --n-threads 8 --checkpoint True --action-type topology --use-heuristic True --time-limit 100300 --n-steps 20000 --update-epochs 40  --critic-lr 0.0003 --n-envs 20 --max-grad-norm 10 --gamma 0.9 --n-minibatches 1563 --seed 42 --cuda True --verbose True --track True --norm-obs True
+
+        python test_dqn.py --checkpoint-path   D:\grid2op\RL2Grid\RL2Grid\checkpoint\DQN_bus14_my_first_run_42_0_1742976773_41243.tar     --env-id bus14 --cuda True --seed 0 --difficulty 0 --action-type  topology --env-config-path scenario.json --n-threads 4 --norm-obs True --use-heuristic False
+        python main_CURRI_topo_idle.py --alg PPO --total-timesteps 400000 --exp-tag   NEW_main_CURRI_topo_idle_MINIbatches_1563_nn_256_256_reLU   --additional-timesteps 100000   --n-minibatches 1563   --action-type topology --n-threads 16  --n-envs 10 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn relu  --critic-act-fn relu  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 20000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True 
+            --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn relu  --critic-act-fn relu
+            
+        
+        python main.py --alg SAC --seed 42 --exp-tag my_first_run2 --cuda True --n-threads 4 --verbose True --track True  --wandb-mode online --checkpoint True --total-timesteps 1000000
+
+        runs:
+
+
+        D: 
+        cd D:\grid2op\RL2Grid\RL2Grid
+        conda activate rl2grid
+
+            python c:/Users/Admin/pop_nhap/RL2Grid_Template/RL2Grid/test_dqn.py --checkpoint-path "C:\Users\Admin\pop_nhap\RL2Grid_Template\RL2Grid\checkpoint\DQN_bus14_my_first_run_so4_42_0_1744825212_37510.tar"  --num-runner-episodes 5   --runner-output-dir "./my_dqn_evaluation_results/test"  --seed 123    --eval-env-id "bus14_eval"   --env-id "bus14_train"  --action-type "topology" --difficulty 0  --cuda True --env-config-path "scenario.json" --norm-obs True --use-heuristic True 
+
+
+            python main_topo_nonHeu_CURRI.py --alg PPO  --total-timesteps 300000  --exp-tag ZZZ_main_topo_nonHeu_CURRI_MINIbatches_4_nn_256_256_tanh_n_steps_400_envs_50_train_env  --use-heuristic False   --additional-timesteps 100000     --n-minibatches 4  --n-threads 16   --action-type topology   --gamma 0.9 --env-id bus14_train --n-envs 50 --n-steps 400 --vf-coef 0.5 --actor-lr 0.00003 --norm-adv True --norm-obs True --anneal-lr True --clip-coef 0.2 --critic-lr 0.0003    --difficulty 0 --gae-lambda 0.95   --clip-vfloss True --actor-act-fn tanh --actor-layers 256 128 64 --entropy-coef 0.01 --optimize-mem False --critic-act-fn tanh --critic-layers 512 256 256 --max-grad-norm 10   --update-epochs 40                         --env-config-path scenario.json --th-deterministic True     --wandb-mode offline --time-limit 9000 --seed 42 --cuda True --verbose True --track True  
+
+
+            python main_topo_idle_CURRI.py --alg PPO  --total-timesteps 300000  --exp-tag ZZZ_main_topo_idle_CURRI_CURRI_MINIbatches_4_nn_256_128_64_tanh_n_steps_400_envs_50_train_env --additional-timesteps 100000     --n-minibatches 4  --n-threads 16   --action-type topology   --gamma 0.9 --env-id bus14_train --n-envs 50 --n-steps 400 --vf-coef 0.5 --actor-lr 0.00003 --norm-adv True --norm-obs True --anneal-lr True --clip-coef 0.2 --critic-lr 0.0003    --difficulty 0 --gae-lambda 0.95   --clip-vfloss True --actor-act-fn tanh --actor-layers 256 128 64 --entropy-coef 0.01 --optimize-mem False --critic-act-fn tanh --critic-layers 512 256 256 --max-grad-norm 10   --update-epochs 40 --use-heuristic True --heuristic-type idle --env-config-path scenario.json --th-deterministic True     --wandb-mode offline --time-limit 9000 --seed 42 --cuda True --verbose True --track True  
+                python main_topo_idle_CURRI.py --alg PPO --resume-run-name  PPO_bus14_train_ZZZ_main_topo_idle_CURRI_CURRI_MINIbatches_4_nn_256_128_64_tanh_n_steps_400_envs_50_train_env_42_0_1747210462_38789
+                    LV 1: 1040k
+                    LV 3: 1440k 
+                    LV 4: 1780k 
+                    LV 5:  (set ?)
+            python main_topo_idle_bsline.py --alg PPO  --total-timesteps 3000000  --exp-tag ZZZ_main_topo_idle_bsline_BASELINE_MINIbatches_4_nn_256_128_64_tanh_n_steps_400_envs_50_train_env --additional-timesteps 100000     --n-minibatches 4  --n-threads 16   --action-type topology   --gamma 0.9 --env-id bus14_train --n-envs 50 --n-steps 400 --vf-coef 0.5 --actor-lr 0.00003 --norm-adv True --norm-obs True --anneal-lr True --clip-coef 0.2 --critic-lr 0.0003    --difficulty 0 --gae-lambda 0.95   --clip-vfloss True --actor-act-fn tanh --actor-layers 256 128 64 --entropy-coef 0.01 --optimize-mem False --critic-act-fn tanh --critic-layers 512 256 256 --max-grad-norm 10   --update-epochs 40 --use-heuristic True --heuristic-type idle --env-config-path scenario.json --th-deterministic True     --wandb-mode offline --time-limit 9000 --seed 42 --cuda True --verbose True --track True  
+
+
+            python main_topo_idle.py      --alg PPO --total-timesteps 3000000 --exp-tag   SSS_main_topo_idle_BASELINE_MINIbatches_4_nn_256_256_tanh_n_steps_512_envs_10_train_env   --additional-timesteps 100000   --n-minibatches 20  --n-steps 128   --n-envs 20   --action-type topology --n-threads 16   --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+ 
+
+            python main_topo_idle.py      --alg PPO --total-timesteps 3000000 --exp-tag   SSS_main_topo_idle_BASELINE_MINIbatches_20_nn_256_256_tanh_n_steps_128_envs_20_train_env   --additional-timesteps 100000   --n-minibatches 20  --n-steps 128   --n-envs 20   --action-type topology --n-threads 16   --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+
+
+            python main_topo_idle.py      --alg PPO --total-timesteps 3000000 --exp-tag   SSS_main_topo_idle_BASELINE_MINIbatches_5_nn_256_256_tanh_n_steps_64_envs_10_train_env   --additional-timesteps 100000   --n-minibatches 5   --n-steps 64   --n-envs 10   --action-type topology --n-threads 16    --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+
+
+            python stable_bs_PPO_200.py --env_id "bus14_train" --difficulty 0 --action_type "topology" --total_timesteps 4000000 --save_path "trained_STB_BSL_models/ppo_grid2op" --n_envs 1 
+                PPO_7
+
+            python stable_bs_PPO_2000.py --env_id "bus14_train" --difficulty 0 --action_type "topology" --total_timesteps 4000000 --save_path "trained_STB_BSL_models/ppo_grid2op" --n_envs 10 
+                PPO_6
+
+            python stable_bs_PPO_2000.py --env_id "bus14_train" --difficulty 0 --action_type "topology" --total_timesteps 4000000 --save_path "trained_STB_BSL_models/ppo_grid2op" --n_envs 1 
+                PPO_5
+
+            python main_topo_idle.py      --alg PPO --total-timesteps 3000000 --exp-tag   SSS_main_topo_idle_BASELINE_MINIbatches_20_nn_256_256_tanh_n_steps_256_envs_10_train_env   --additional-timesteps 100000   --n-minibatches 20   --action-type topology --n-threads 16  --n-envs 10 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 256   --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+                python main_topo_idle.py --alg PPO --resume-run-name 
+
+            python main_topo_idle.py      --alg PPO --total-timesteps 3000000 --exp-tag   SSS_main_topo_idle_BASELINE_MINIbatches_2_nn_256_256_tanh_n_steps_256_envs_1_train_env   --additional-timesteps 100000   --n-minibatches 2   --action-type topology --n-threads 16  --n-envs 1 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 256   --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+                python main_topo_idle.py --alg PPO --resume-run-name 
+
+            python main_topo_idle.py      --alg PPO --total-timesteps 3000000 --exp-tag   SSS_main_topo_idle_BASELINE_MINIbatches_10_nn_256_256_tanh_n_steps_128_envs_10_train_env   --additional-timesteps 100000   --n-minibatches 10   --action-type topology --n-threads 16  --n-envs 10 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 128  --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+                python main_topo_idle.py --alg PPO --resume-run-name 
+
+            python main_topo_idle.py      --alg PPO --total-timesteps 3000000 --exp-tag   SSS_main_topo_idle_BASELINE_MINIbatches_1_nn_256_256_tanh_n_steps_128_envs_1_train_env   --additional-timesteps 100000   --n-minibatches 1   --action-type topology --n-threads 16  --n-envs 1 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 128  --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+                python main_topo_idle.py --alg PPO --resume-run-name 
 
 
 
@@ -6,19 +86,203 @@
 
 
 
-python c:/Users/Admin/pop_nhap/RL2Grid_Template/RL2Grid/test_dqn.py --checkpoint-path "C:\Users\Admin\pop_nhap\RL2Grid_Template\RL2Grid\checkpoint\DQN_bus14_my_first_run_so4_42_0_1744825212_37510.tar"  --num-runner-episodes 5   --runner-output-dir "./my_dqn_evaluation_results/test"  --seed 123    --eval-env-id "bus14_eval"   --env-id "bus14_train"  --action-type "topology" --difficulty 0  --cuda True --env-config-path "scenario.json" --norm-obs True --use-heuristic True 
-
-
-
-python main_topo_nonHeu_CURRI.py --alg PPO  --total-timesteps 300000  --exp-tag ZZZ_main_topo_nonHeu_CURRI_MINIbatches_4_nn_256_256_tanh_n_steps_400_envs_50_train_env  --use-heuristic False   --additional-timesteps 100000     --n-minibatches 4  --n-threads 16   --action-type topology   --gamma 0.9 --env-id bus14_train --n-envs 50 --n-steps 400 --vf-coef 0.5 --actor-lr 0.00003 --norm-adv True --norm-obs True --anneal-lr True --clip-coef 0.2 --critic-lr 0.0003    --difficulty 0 --gae-lambda 0.95   --clip-vfloss True --actor-act-fn tanh --actor-layers 256 128 64 --entropy-coef 0.01 --optimize-mem False --critic-act-fn tanh --critic-layers 512 256 256 --max-grad-norm 10   --update-epochs 40                         --env-config-path scenario.json --th-deterministic True     --wandb-mode offline --time-limit 9000 --seed 42 --cuda True --verbose True --track True  
 
 
 
 
 
-python main_topo_idle_CURRI.py --alg PPO  --total-timesteps 300000  --exp-tag ZZZ_main_topo_idle_CURRI_CURRI_MINIbatches_4_nn_256_128_64_tanh_n_steps_400_envs_50_train_env --additional-timesteps 100000     --n-minibatches 4  --n-threads 16   --action-type topology   --gamma 0.9 --env-id bus14_train --n-envs 50 --n-steps 400 --vf-coef 0.5 --actor-lr 0.00003 --norm-adv True --norm-obs True --anneal-lr True --clip-coef 0.2 --critic-lr 0.0003    --difficulty 0 --gae-lambda 0.95   --clip-vfloss True --actor-act-fn tanh --actor-layers 256 128 64 --entropy-coef 0.01 --optimize-mem False --critic-act-fn tanh --critic-layers 512 256 256 --max-grad-norm 10   --update-epochs 40 --use-heuristic True --heuristic-type idle --env-config-path scenario.json --th-deterministic True     --wandb-mode offline --time-limit 9000 --seed 42 --cuda True --verbose True --track True  
-    python main_topo_idle_CURRI.py --alg PPO --resume-run-name  PPO_bus14_train_ZZZ_main_topo_idle_CURRI_CURRI_MINIbatches_4_nn_256_128_64_tanh_n_steps_400_envs_50_train_env_42_0_1747210462_38789
-        LV 1: 1040k
-        LV 3:  (set 400k)
-python main_topo_idle_bsline.py --alg PPO  --total-timesteps 3000000  --exp-tag ZZZ_main_topo_idle_bsline_BASELINE_MINIbatches_4_nn_256_128_64_tanh_n_steps_400_envs_50_train_env --additional-timesteps 100000     --n-minibatches 4  --n-threads 16   --action-type topology   --gamma 0.9 --env-id bus14_train --n-envs 50 --n-steps 400 --vf-coef 0.5 --actor-lr 0.00003 --norm-adv True --norm-obs True --anneal-lr True --clip-coef 0.2 --critic-lr 0.0003    --difficulty 0 --gae-lambda 0.95   --clip-vfloss True --actor-act-fn tanh --actor-layers 256 128 64 --entropy-coef 0.01 --optimize-mem False --critic-act-fn tanh --critic-layers 512 256 256 --max-grad-norm 10   --update-epochs 40 --use-heuristic True --heuristic-type idle --env-config-path scenario.json --th-deterministic True     --wandb-mode offline --time-limit 9000 --seed 42 --cuda True --verbose True --track True  
+
+            python main_topo_idle.py      --alg PPO --total-timesteps 500000 --exp-tag   NEW_main_topo_idle_BASELINE_MINIbatches_1_nn_256_256_tanh_n_steps_128_envs_1_train_env   --additional-timesteps 100000   --n-minibatches 1   --action-type topology --n-threads 16  --n-envs 1 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 128  --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+            python main_topo_idle.py      --alg PPO --total-timesteps 500000 --exp-tag   NEW_main_topo_idle_BASELINE_MINIbatches_157_nn_256_256_tanh_n_steps_20k_envs_1_train_env   --additional-timesteps 100000   --n-minibatches 157   --action-type topology --n-threads 16  --n-envs 1 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 20000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+            python main_topo_idle.py      --alg PPO --total-timesteps 500000 --exp-tag   NEW_main_topo_idle_BASELINE_MINIbatches_1563_nn_256_256_tanh_n_steps_2k_envs_10_train_env   --additional-timesteps 100000   --n-minibatches 1563   --action-type topology --n-threads 16  --n-envs 10 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 2000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+
+            python main_topo_idle.py      --alg PPO --total-timesteps 500000 --exp-tag   NEW_main_topo_idle_BASELINE_MINIbatches_1563_nn_256_256_tanh_n_steps_2k_envs_1_train_env   --additional-timesteps 100000   --n-minibatches 1563   --action-type topology --n-threads 16  --n-envs 1 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 2000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+            python main_topo_idle.py      --alg PPO --total-timesteps 500000 --exp-tag   NEW_main_topo_idle_BASELINE_MINIbatches_1563_nn_256_256_tanh_n_steps_20k_envs_1_train_env   --additional-timesteps 100000   --n-minibatches 1563   --action-type topology --n-threads 16  --n-envs 10 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 2000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+                # decapricated 
+
+            python stable_bs_PPO_20000.py --env_id "bus14_train" --difficulty 0 --action_type "topology" --total_timesteps 1000000 --save_path "trained_STB_BSL_models/ppo_grid2op" --n_envs 1  
+            python stable_bs_PPO_2000.py --env_id "bus14_train" --difficulty 0 --action_type "topology" --total_timesteps 1000000 --save_path "trained_STB_BSL_models/ppo_grid2op" --n_envs 10 
+            python stable_bs_PPO_2000.py --env_id "bus14_train" --difficulty 0 --action_type "topology" --total_timesteps 1000000 --save_path "trained_STB_BSL_models/ppo_grid2op" --n_envs 1
+
+
+
+            python stable_bs_PPO.py --env_id "bus14_train" --difficulty 0 --action_type "topology" --total_timesteps 1000000 --save_path "trained_STB_BSL_models/ppo_grid2op" --n_envs 10 
+
+
+            python main_CURRI_topo_idle_tanh.py --alg PPO --total-timesteps 400000 --exp-tag   NEW_main_CURRI_topo_idle_tanh_MINIbatches_1563_nn_256_256_tanh_train_env     --additional-timesteps 100000   --n-minibatches 1563   --action-type topology --n-threads 16  --n-envs 10 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh   --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 20000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True    --env-id bus14_train
+                python main_CURRI_topo_idle_tanh.py --alg PPO  --resume-run-name    NEW_main_CURRI_topo_idle_tanh_MINIbatches_1563_nn_256_256_tanh_train_env
+
+
+            python main_CURRI_topo_Standard_Reward.py --alg PPO --total-timesteps 400000 --exp-tag   NEW_main_CURRI_topo_Standard_Reward_TANH_MINIbatches_1563_nn_256_256_tanh_train_env     --additional-timesteps 100000   --n-minibatches 1563   --action-type topology --n-threads 16  --n-envs 10 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh   --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 20000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True    --env-id bus14_train
+
+
+            python main_topo_idle.py      --alg PPO --total-timesteps 400000 --exp-tag   NEW_main_topo_idle_BASELINE_MINIbatches_1563_nn_256_256_reLU_train_env   --additional-timesteps 100000   --n-minibatches 1563   --action-type topology --n-threads 16  --n-envs 10 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn relu  --critic-act-fn relu  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 20000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+            python main_topo_idle.py      --alg PPO --total-timesteps 400000 --exp-tag   NEW_main_topo_idle_BASELINE_MINIbatches_1563_nn_256_256_tanh_train_env   --additional-timesteps 100000   --n-minibatches 1563   --action-type topology --n-threads 16  --n-envs 10 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 20000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True   --env-id bus14_train
+                python main_CURRI_topo_idle_tanh.py --alg PPO  --resume-run-name    PPO_bus14_train_NEW_main_topo_idle_BASELINE_MINIbatches_1563_nn_256_256_tanh_train_env_42_0_1746432196_37768
+
+            
+            python main_CURRI_topo_idle.py --alg PPO --total-timesteps 400000 --exp-tag   NEW_main_CURRI_topo_idle_MINIbatches_1563_nn_256_256_reLU_train_env     --additional-timesteps 100000   --n-minibatches 1563   --action-type topology --n-threads 16  --n-envs 10 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn relu  --critic-act-fn relu  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 20000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True    --env-id bus14_train
+                --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn relu  --critic-act-fn relu
+
+
+            test GAME OVER:
+                always win?:
+                    python main_CURRI_topo_idle_tanh.py --alg PPO --total-timesteps 400000 --exp-tag   TEST_Game_Over_tanh_MINIbatches_1563_nn_256_256_tanh_train_env     --additional-timesteps 100000   --n-minibatches 1563   --action-type topology --n-threads 16  --n-envs 10 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn relu  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 20000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True    --env-id bus14_train
+                normal: 
+                    python main_CURRI_topo_idle_tanh.py --alg PPO --total-timesteps 400000 --exp-tag   TEST_Game_Over_tanh_MINIbatches_1563_nn_256_256_tanh_train_env     --additional-timesteps 100000   --n-minibatches 1563   --action-type topology --n-threads 16  --n-envs 10 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn tanh  --critic-act-fn tanh  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 20000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True    --env-id bus14_train
+                    python main.py --alg PPO --total-timesteps 400000 --exp-tag   TEST      --additional-timesteps 100000   --n-minibatches 1563   --action-type topology --n-threads 16  --n-envs 10 --actor-layers 256 256   --critic-layers 256 256 --actor-act-fn relu   --critic-act-fn relu  --wandb-mode offline --use-heuristic True --time-limit 4000 --n-steps 20000 --update-epochs 40 --actor-lr 0.0003 --critic-lr 0.0003   --max-grad-norm 10 --gamma 0.9  --seed 42 --cuda True --verbose True --track True --norm-obs True    --env-id bus14_train
+
+
+                python main_CURRI_topo_idle.py --alg PPO --exp-tag CURRI_TOPO_IDLE_TEST_Game_Over       --additional-timesteps 200000 --total-timesteps 400000   --actor-act-fn relu  --critic-act-fn relu   --action-type topology  --env-id bus14_train  --n-threads 16  --n-envs 10 --wandb-mode offline --time-limit 4000 --checkpoint True --seed 42 --cuda True --verbose True --track True --norm-obs True --use-heuristic True
+
+                
+            D: 
+            cd D:\grid2op\RL2Grid\RL2Grid
+            conda activate rl2grid
+
+
+
+
+
+
+
+            python main_CURRI_with_Reward.py --alg PPO --resume-run-name
+            python main_with_Reward.py --alg PPO --exp-tag BASELINE_REDIS_with_squared_REGULARIZED_REWARD_by_main_with_Reward_200k____    --additional-timesteps 200000 --total-timesteps 1500000 --action-type redispatch --n-threads 16  --n-envs 10 --wandb-mode offline --time-limit 4000 --checkpoint True --seed 42 --cuda True --verbose True --track True --norm-obs True --use-heuristic True
+                python main_with_Reward.py --alg PPO --resume-run-name  PPO_bus14_BASELINE_REDIS_with_squared_REGULARIZED_REWARD_by_main_with_Reward_200k_____42_0_1744906821_111
+            python main_CURRI_with_Reward.py --alg PPO --exp-tag CURRI_REDIS_with_squared_REGULARIZED_REWARD_by_main_with_Reward_200k____    --additional-timesteps 200000 --total-timesteps 600000 --action-type redispatch --n-threads 16  --n-envs 10 --wandb-mode offline --time-limit 4000 --checkpoint True --seed 42 --cuda True --verbose True --track True --norm-obs True --use-heuristic True
+                python main_CURRI_with_Reward.py --alg PPO --resume-run-name  PPO_bus14_CURRI_REDIS_with_squared_REGULARIZED_REWARD_by_main_with_Reward_200k_____42_0_1744906935_47058
+                Level 1: 600k 
+                Level 2: 1000k 
+                Level 3: 1200k (set 1000k) + 800k (set 400k)
+                Level 4: 600k  (set 600k)  + 1200k  (set 1000k) + 1200k (set 1000k) + __ (set 1000k)
+            python main_topo.py --alg PPO --exp-tag BASELINE_TOPO_with_squared_REGULARIZED_REWARD_by_main_with_Reward_200k____    --additional-timesteps 200000 --total-timesteps 900000 --action-type topology --n-threads 16  --n-envs 10 --wandb-mode offline --time-limit 4000 --checkpoint True --seed 42 --cuda True --verbose True --track True --norm-obs True --use-heuristic True
+                Level 1: 800k (set 900k) + 
+            python main_CURRI_topo_idle.py --alg PPO --exp-tag CURRI_TOPO_IDLE_with_squared_REGULARIZED_REWARD_by_main_CURRI_topo_idle_200k____    --additional-timesteps 200000 --total-timesteps 400000 --action-type topology  --env-id bus14_train  --n-threads 16  --n-envs 10 --wandb-mode offline --time-limit 4000 --checkpoint True --seed 42 --cuda True --verbose True --track True --norm-obs True --use-heuristic True
+                python main_CURRI_topo_idle.py --alg PPO --resume-run-name PPO_bus14_train_CURRI_TOPO_IDLE_with_squared_REGULARIZED_REWARD_by_main_CURRI_topo_idle_200k_____42_0_1745084881_22758
+                Level 1:  400k  (set 400k) +  600k (set 400k) + 600k (400k) + 600k (400k) + ___ (400k) 
+            python main_topo_idle.py --alg PPO --exp-tag train_BASELINE_TOPO_IDLE_with_squared_REGULARIZED_REWARD_by_main_topo_idle_200k____    --additional-timesteps 200000 --total-timesteps 400000 --action-type topology  --env-id bus14_train  --n-threads 16  --n-envs 10 --wandb-mode offline --time-limit 4000 --checkpoint True --seed 42 --cuda True --verbose True --track True --norm-obs True --use-heuristic True
+            
+            python main_CURRI_topo_idle.py --alg PPO --exp-tag CURRI_TOPO_IDLE_ver_2_full_3M_with_squared_REGULARIZED_REWARD_by_main_CURRI_topo_idle_200k____    --additional-timesteps 200000 --total-timesteps 3000000 --action-type topology  --env-id bus14_train  --n-threads 16  --n-envs 10 --wandb-mode offline --time-limit 4000 --checkpoint True --seed 42 --cuda True --verbose True --track True --norm-obs True --use-heuristic True
+                python main_CURRI_topo_idle.py --alg PPO --resume-run-name 
+               
+                
+            
+
+
+                
+            D: 
+            cd D:\grid2op\RL2Grid\RL2Grid
+            conda activate rl2grid
+            tensorboard --logdir="D:\grid2op\RL2Grid\RL2Grid\runs"
+
+
+
+
+        training time: 
+            10 envs, 20k steps: 7mins 
+            15 envs, 20k steps: 6mins 
+            20 envs, 20k steps: 6mins
+            30 envs, 20k steps: 5mins
+            40 envs, 20k steps: 5mins 
+            50 envs, 20k steps: 
+
+        Diary: 
+            Level 1: 1M 
+            Level 2:   #700k 
+            Level 3:   #2.1M
+
+    MARL:
+        D:
+        cd D:\grid2op\codebase
+        conda activate marlbase
+
+
+
+
+
+
+    Grid2Op:
+
+        D:
+        D:\grid2op\.venv\Scripts\activate
+
+    grid2viz
+
+        D:
+        D:\grid2op\.venv_grid2viz\Scripts\activate
+        
+        
+        grid2viz --agents_path C:\Users\HP\Grid2Op\getting_started\agentTest --env_path "C:\Users\HP\data_grid2op\l2rpn_case14_sandbox"
+
+        
+
+
+
+
+
+
+        
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+cd "C:\Users\admin\Grid2Op"
+
+venv_grid2op\Scripts\activate
+
+
+
+
+--------------------------------------------------------------------
+
+docker start -ai gridOp
+
+c:\Users\admin\Grid2Op\venv_grid2op\Scripts\python.exe -m grid2viz.main --agents_path c:\Users\admin\Grid2Op\getting_started\path_agents
+
+c:\Users\admin\Grid2Op\venv_grid2op\Scripts\python.exe -m grid2viz.main --agents_path C:\Users\admin\Grid2Op\getting_started\agent_Thu_nghiem                  --env_path "C:\Users\admin\data_grid2op\l2rpn_case14_sandbox_test"
+
+
+
+
+pip cache purge
+
+
+all requirements:
+    C:\Users\HP\Grid2Op\venv_g2op\Scripts\activate
+    
+    pip install grid2op
+    pip install jyquickhelper
+    pip install matplotlib
+    pip install gym
+    pip install gymnasium
+    pip install lightsim2grid
+    pip install stable_baselines3
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+    optional: 
+        pip install plotly
+        pip install numba==0.48.0
+    l2 baseline:
+        pip install l2rpn_baselines
+        pip install tensorflow==2.8.0
+        pip install protobuf==3.20.0
+        pip install numpy==1.23.5
+    
+    pip install 
+    pip install 
+    pip install 
+
+
+
 

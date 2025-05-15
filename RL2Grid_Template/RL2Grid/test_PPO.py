@@ -200,7 +200,8 @@ if __name__ == "__main__":
         g2op_env_action_space=g2op_eval_env.action_space, # Use the action space from the raw g2op env for BaseAgent init (needed for get_do_nothing_action)
         gym_obs_converter=gym_env_for_eval_config.observation_space, # Use the Gym wrapper's observation space converter
         gym_act_converter=gym_env_for_eval_config.action_space,   # Use the Gym wrapper's action space converter
-        device=device
+        device=device,
+        use_heuristic=args.use_heuristic # Pass the use_heuristic flag from command line args
     )
 
     # Initialize Runner as per the requested pattern

@@ -36,7 +36,7 @@ D:
         cd D:\grid2op\RL2Grid\RL2Grid
         conda activate rl2grid
 
-            python c:/Users/Admin/pop_nhap/RL2Grid_Template/RL2Grid/test_dqn.py --checkpoint-path "D:\grid2op\pop_nhap\RL2Grid_Template\RL2Grid\checkpoint\DQN_bus14_my_first_run_so4_42_0_1744825212_37510.tar"  --num-runner-episodes 5   --runner-output-dir "./my_dqn_evaluation_results/test"  --seed 123    --eval-env-id "bus14_eval"   --env-id "bus14_train"  --action-type "topology" --difficulty 0  --cuda True --env-config-path "scenario.json" --norm-obs True --use-heuristic True 
+            python c:/Users/Admin/pop_nhap/RL2Grid_Template/RL2Grid/test_dqn.py --checkpoint-path "D:\grid2op\pop_nhap\RL2Grid_Template\RL2Grid\checkpoint\DQN_bus14_my_first_run_so4_42_0_1744825212_37510.tar"   --num-runner-episodes 5   --runner-output-dir "./my_dqn_evaluation_results/test"  --seed 123    --eval-env-id "bus14_val"   --env-id "bus14_train"  --action-type "topology" --difficulty 0  --cuda True --env-config-path "scenario.json" --norm-obs True --use-heuristic True 
             python  test_dqn.py  --checkpoint-path "D:\grid2op\pop_nhap\RL2Grid_Template\RL2Grid\checkpoint\DQN_bus14_my_first_run_so4_42_0_1744825212_37510.tar"  --num-runner-episodes 5   --runner-output-dir "./my_dqn_evaluation_results/test"  --seed 123    --eval-env-id "bus14_val"   --env-id "bus14_train"  --action-type "topology" --difficulty 0  --cuda True --env-config-path "scenario.json" --norm-obs True --use-heuristic True 
 
 

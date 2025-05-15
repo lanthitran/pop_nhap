@@ -236,7 +236,7 @@ if __name__ == "__main__":
 
 
 
-# python c:/Users/Admin/pop_nhap/RL2Grid_Template/RL2Grid/test_dqn.py --checkpoint-path "C:/path/to/your/model/checkpoint.pt" --env-id "bus14_train" --eval-env-id "bus14_test" --action-type "topology" --difficulty 1 --seed 123 --num-runner-episodes 10 --runner-output-dir "./my_dqn_evaluation_results" --cuda True --env-config-path "scenario.json" --norm-obs True --use-heuristic False
+# python c:/Users/Admin/pop_nhap/RL2Grid_Template/RL2Grid/test_dqn.py --checkpoint-path "C:/path/to/your/model/checkpoint.pt"  --num-runner-episodes 30  --runner-output-dir "./my_dqn_evaluation_results"  --seed 123    --eval-env-id "bus14_eval"   --env-id "bus14_train"  --action-type "topology" --difficulty 0  --cuda True --env-config-path "scenario.json" --norm-obs True --use-heuristic True 
 
 
 

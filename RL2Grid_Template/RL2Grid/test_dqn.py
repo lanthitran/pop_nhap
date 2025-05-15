@@ -14,6 +14,8 @@ from grid2op import make as g2op_make
 from grid2op.Agent import BaseAgent
 from grid2op.Runner import Runner
 from grid2op.Parameters import Parameters
+from tqdm import tqdm # Import tqdm for the progress bar
+
 
 def load_checkpoint(checkpoint_path, envs, args):
     """Loads the DQN checkpoint from the given path."""
@@ -212,17 +214,22 @@ if __name__ == "__main__":
         device=device
     )
 
-    runner_params = g2op_eval_env.get_params_for_runner()
-    runner = Runner(**runner_params,
+    # Initialize Runner as per the requested pattern
+    runner = Runner(**g2op_eval_env.get_params_for_runner(),
                     agentClass=None, # We provide an instance
                     agentInstance=agent_wrapper,
-                    path_save=args.runner_output_dir,
-                    nb_episode=args.num_runner_episodes,
-                    max_iter=-1, # Run episodes to their natural end
                     verbose_level=1)
     
+
+
     print(f"\nStarting Grid2Op Runner evaluation for {args.num_runner_episodes} episodes...")
-    results_summary = runner.run()
+    
+    # Call runner.run() with parameters as per the requested pattern
+    results_summary = runner.run(nb_episode=args.num_runner_episodes,
+                                 max_iter=-1,  # -1 means run episodes to their natural end, or use a specific MAX_EVAL_STEPS if defined
+                                 pbar_tqdm_class=tqdm, # Pass the tqdm class for progress bar
+                                 path_save=args.runner_output_dir)
+ 
     print("Grid2Op Runner evaluation finished.")
     print(f"Results summary: {results_summary}")
     print(f"Detailed logs and results saved in: {args.runner_output_dir}")

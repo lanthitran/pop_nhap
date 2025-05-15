@@ -32,7 +32,7 @@ def load_checkpoint(checkpoint_path, envs, args):
     agent.actor.load_state_dict(checkpoint['actor'])
     # agent.critic.load_state_dict(checkpoint['critic']) # Critic is not needed for inference
 
-    return actor, checkpoint['args']
+    return agent, checkpoint['args']
 
 class PPOAgentWrapper(BaseAgent):
     """

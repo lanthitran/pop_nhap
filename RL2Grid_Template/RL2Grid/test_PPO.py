@@ -65,7 +65,7 @@ class PPOAgentWrapper(BaseAgent):
     def act(self, observation, reward, done):
         # Heuristic Logic: If use_heuristic is True and the grid is safe, return do-nothing
         if self.use_heuristic and observation.rho.max() < RHO_SAFETY_THRESHOLD:
-            return self.action_space.get_do_nothing_action()
+            return self.action_space({})
 
         # Otherwise, use the RL agent's policy
         # Convert Grid2Op observation to Gym observation array

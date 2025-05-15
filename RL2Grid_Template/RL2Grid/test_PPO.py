@@ -121,7 +121,7 @@ if __name__ == "__main__":
         4: {"HARD_OVERFLOW_THRESHOLD": 999, "NB_TIMESTEP_OVERFLOW_ALLOWED": 10, "SOFT_OVERFLOW_THRESHOLD": 1.0},
         5: {"HARD_OVERFLOW_THRESHOLD": 2.0, "NB_TIMESTEP_OVERFLOW_ALLOWED": 3, "SOFT_OVERFLOW_THRESHOLD": 1.0}
     }
-    parser.add_argument("--norm-obs", type=str2bool, default=False, help="Normalize observation")
+    parser.add_argument("--norm-obs", type=str2bool, default=True, help="Normalize observation")
     parser.add_argument("--use-heuristic", type=str2bool, default=True, help="Use heuristic")
 
     cmd_line_args = parser.parse_args()

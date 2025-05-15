@@ -1,0 +1,14 @@
+
+
+
+
+
+
+Successfully loaded checkpoint. Model was trained with env_id: bus14 and seed: 42
+Evaluating on env_id: bus14_val with seed: 123
+Traceback (most recent call last):
+  File "D:\grid2op\RL2Grid\RL2Grid\test_dqn.py", line 216, in <module>
+    runner = Runner(**runner_params,
+             ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: grid2op.Runner.runner.Runner() got multiple values for keyword argument 'max_iter'
+

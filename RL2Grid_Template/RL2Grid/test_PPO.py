@@ -2,8 +2,8 @@ import time
 import numpy as np
 import torch as th
 import gymnasium as gym
-from env.utils import make_env  # To create the environment
-from alg.ppo.core import Actor  # To load the PPO Actor architecture
+from env.utils import make_env # To create the environment
+from alg.ppo.agent import Agent # To load the PPO Agent architecture (contains Actor)
 from common.checkpoint import PPOCheckpoint #to load the checkpoint
 from common.utils import set_random_seed, set_torch, str2bool
 from common.imports import ap
@@ -20,17 +20,17 @@ from tqdm import tqdm # Import tqdm for the progress bar
 def load_checkpoint(checkpoint_path, envs, args):
     """Loads the PPO checkpoint from the given path."""
     checkpoint = th.load(checkpoint_path)
-    
-    # Create an Actor instance with the same architecture as the trained one
-    # The Actor needs the observation and action spaces from the environment
-    actor = Actor(envs, args)
 
-    # Load the state dictionary into the actor
-    # PPO checkpoint saves the actor state dict under the 'actor' key
-    actor.load_state_dict(checkpoint['actor'])
+    # Create an Agent instance (which contains the Actor and Critic)
+    # The Agent needs the environment spaces and args to build the network architecture
+    # We also need to know if actions are continuous or discrete for the Agent constructor
+    continuous_actions = True if args.action_type == "redispatch" else False
+    agent = Agent(envs, args, continuous_actions)
 
-    # Set the actor to evaluation mode
-    actor.eval()
+    # Load the state dictionaries into the agent's actor and critic
+    # PPO checkpoint saves state dicts under 'actor' and 'critic' keys
+    agent.actor.load_state_dict(checkpoint['actor'])
+    # agent.critic.load_state_dict(checkpoint['critic']) # Critic is not needed for inference
 
     return actor, checkpoint['args']
 
@@ -39,14 +39,14 @@ class PPOAgentWrapper(BaseAgent):
     A wrapper for the trained PPO Actor network to make it compatible with grid2op.Runner.
     """
     def __init__(self, actor_network, g2op_env_action_space,
-                 gym_obs_converter, gym_act_converter, device):
+                 gym_obs_converter, gym_act_converter, device): # Keep actor_network as input
         """
         Args:
             actor_network: The trained PyTorch PPO Actor model.
             g2op_env_action_space: The native Grid2Op action space from the evaluation environment.
             gym_obs_converter: The Gymnasium observation space wrapper (e.g., BoxGymObsSpace)
                                used to convert Grid2Op observations to NumPy arrays.
-            gym_act_converter: The Gymnasium action space wrapper (e.g., DiscreteActSpace)
+            gym_act_converter: The Gymnasium action space wrapper (e.g., DiscreteActSpace or BoxGymActSpace)
                                used to convert action indices to Grid2Op actions.
             device: The torch device (e.g., "cpu", "cuda").
         """
@@ -65,10 +65,14 @@ class PPOAgentWrapper(BaseAgent):
 
         with th.no_grad():
             # Get action from the actor network
-            # Assuming the Actor's get_action returns the discrete action index for topology
-            action_idx = self.actor_network.get_action(obs_tensor)
-            if isinstance(action_idx, th.Tensor): # If get_action returns a tensor
-                action_idx = action_idx.cpu().item() # Get Python number
+            # The Actor's get_action method returns action, logprob, entropy
+            # We only need the action here for inference
+            action, _, _ = self.actor_network.get_action(obs_tensor)
+
+            # For discrete actions, the action is an index (tensor). For continuous, it's a tensor of values.
+            # The gym_act_converter.from_gym expects the Gym action format (int for discrete, array for box)
+            if isinstance(self.gym_act_converter, DiscreteActSpace):
+                 action_idx = action.cpu().item() # Get Python number for discrete
 
         # Convert the action index to a Grid2Op action object
         grid2op_action = self.gym_act_converter.from_gym(action_idx)
@@ -170,8 +174,8 @@ if __name__ == "__main__":
 
     # Load the checkpoint
     # Actor will be initialized using the observation/action spaces from vec_env_for_actor_init
-    actor, loaded_checkpoint_args = load_checkpoint(args.checkpoint_path, vec_env_for_actor_init, args)
-    actor.to(device)
+    agent, loaded_checkpoint_args = load_checkpoint(args.checkpoint_path, vec_env_for_actor_init, args)
+    agent.to(device) # Move the whole agent to device
 
     print(f"Successfully loaded checkpoint. Model was trained with env_id: {loaded_checkpoint_args.env_id} and seed: {loaded_checkpoint_args.seed}")
     print(f"Evaluating on env_id: {eval_env_id_to_use} with seed: {eval_seed_from_cmd}")
@@ -181,7 +185,7 @@ if __name__ == "__main__":
 
     # Instantiate the agent wrapper
     agent_wrapper = PPOAgentWrapper(
-        actor_network=actor,
+        actor_network=agent.actor, # Pass the actor part of the agent
         g2op_env_action_space=g2op_eval_env.action_space,
         gym_obs_converter=gym_env_for_eval_config.observation_space, # BoxGymObsSpace
         gym_act_converter=gym_env_for_eval_config.action_space,   # DiscreteActSpace
@@ -199,7 +203,7 @@ if __name__ == "__main__":
     # Call runner.run() with parameters as per the requested pattern
     results_summary = runner.run(nb_episode=args.num_runner_episodes,
                                  max_iter=-1,  # -1 means run episodes to their natural end
-                                 pbar=tqdm, # Pass the tqdm class for progress bar
+                                 pbar_tqdm_class=tqdm, # Pass the tqdm class for progress bar
                                  path_save=args.runner_output_dir)
 
     print("Grid2Op Runner evaluation finished.")

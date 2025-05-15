@@ -27,22 +27,23 @@ def load_checkpoint(checkpoint_path, envs, args):
     continuous_actions = True if args.action_type == "redispatch" else False
     agent = Agent(envs, args, continuous_actions)
 
-    # Load the state dictionaries into the agent's actor and critic
-    # PPO checkpoint saves state dicts under 'actor' and 'critic' keys
+    # Load the state dictionary into the agent's actor network (which is an nn.Sequential)
+    # The checkpoint['actor'] contains the state_dict for the self.actor (nn.Sequential) part of the Agent class
     agent.actor.load_state_dict(checkpoint['actor'])
     # agent.critic.load_state_dict(checkpoint['critic']) # Critic is not needed for inference
 
-    return agent, checkpoint['args']
+    agent.eval() # Ensure the Agent module (and its submodules like self.actor) are in eval mode
+    return agent, checkpoint['args'] # Return the whole agent instance
 
 class PPOAgentWrapper(BaseAgent):
     """
     A wrapper for the trained PPO Actor network to make it compatible with grid2op.Runner.
     """
     def __init__(self, actor_network, g2op_env_action_space,
-                 gym_obs_converter, gym_act_converter, device): # Keep actor_network as input
+                 gym_obs_converter, gym_act_converter, device):
         """
         Args:
-            actor_network: The trained PyTorch PPO Actor model.
+            actor_network: The trained PyTorch PPO Agent instance (which has the get_action method).
             g2op_env_action_space: The native Grid2Op action space from the evaluation environment.
             gym_obs_converter: The Gymnasium observation space wrapper (e.g., BoxGymObsSpace)
                                used to convert Grid2Op observations to NumPy arrays.
@@ -66,7 +67,8 @@ class PPOAgentWrapper(BaseAgent):
         with th.no_grad():
             # Get action from the actor network
             # The Actor's get_action method returns action, logprob, entropy
-            # We only need the action here for inference
+            # self.actor_network is now the Agent instance, which has get_action
+            # (which internally calls get_discrete_action or get_continuous_action)
             action, _, _ = self.actor_network.get_action(obs_tensor)
 
             # For discrete actions, the action is an index (tensor). For continuous, it's a tensor of values.
@@ -174,8 +176,8 @@ if __name__ == "__main__":
 
     # Load the checkpoint
     # Actor will be initialized using the observation/action spaces from vec_env_for_actor_init
-    agent, loaded_checkpoint_args = load_checkpoint(args.checkpoint_path, vec_env_for_actor_init, args)
-    agent.to(device) # Move the whole agent to device
+    loaded_agent_instance, loaded_checkpoint_args = load_checkpoint(args.checkpoint_path, vec_env_for_actor_init, args)
+    loaded_agent_instance.to(device) # Move the whole agent to device
 
     print(f"Successfully loaded checkpoint. Model was trained with env_id: {loaded_checkpoint_args.env_id} and seed: {loaded_checkpoint_args.seed}")
     print(f"Evaluating on env_id: {eval_env_id_to_use} with seed: {eval_seed_from_cmd}")
@@ -185,7 +187,7 @@ if __name__ == "__main__":
 
     # Instantiate the agent wrapper
     agent_wrapper = PPOAgentWrapper(
-        actor_network=agent.actor, # Pass the actor part of the agent
+        actor_network=loaded_agent_instance, # Pass the whole Agent instance
         g2op_env_action_space=g2op_eval_env.action_space,
         gym_obs_converter=gym_env_for_eval_config.observation_space, # BoxGymObsSpace
         gym_act_converter=gym_env_for_eval_config.action_space,   # DiscreteActSpace

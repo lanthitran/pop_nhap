@@ -121,7 +121,7 @@ if __name__ == "__main__":
         4: {"HARD_OVERFLOW_THRESHOLD": 999, "NB_TIMESTEP_OVERFLOW_ALLOWED": 10, "SOFT_OVERFLOW_THRESHOLD": 1.0},
         5: {"HARD_OVERFLOW_THRESHOLD": 2.0, "NB_TIMESTEP_OVERFLOW_ALLOWED": 3, "SOFT_OVERFLOW_THRESHOLD": 1.0}
     }
-    parser.add_argument("--norm-obs", type=str2bool, default=True, help="Normalize observation")
+    parser.add_argument("--norm-obs", type=str2bool, default=False, help="Normalize observation")
     parser.add_argument("--use-heuristic", type=str2bool, default=True, help="Use heuristic")
 
     cmd_line_args = parser.parse_args()
@@ -183,11 +183,9 @@ if __name__ == "__main__":
     print(f"Evaluating on env_id: {eval_env_id_to_use} with seed: {eval_seed_from_cmd}")
 
     # --- Setup for Grid2Op Runner ---
-    g2op_eval_env = gym_env_for_eval_config.init_env # Get the raw Grid2Op environment
-
     # Instantiate the agent wrapper
     agent_wrapper = PPOAgentWrapper(
-        actor_network=loaded_agent_instance, # Pass the whole Agent instance
+        actor_network=loaded_agent_instance, # Pass the whole Agent instance (which has get_action)
         g2op_env_action_space=g2op_eval_env.action_space,
         gym_obs_converter=gym_env_for_eval_config.observation_space, # BoxGymObsSpace
         gym_act_converter=gym_env_for_eval_config.action_space,   # DiscreteActSpace
@@ -195,7 +193,8 @@ if __name__ == "__main__":
     )
 
     # Initialize Runner as per the requested pattern
-    runner = Runner(**g2op_eval_env.get_params_for_runner(),
+    # The Runner needs the environment instance that includes all desired wrappers (like heuristic)
+    runner = Runner(env=gym_env_for_eval_config, # Pass the outermost Gym env
                     agentClass=None, # We provide an instance
                     agentInstance=agent_wrapper)
 

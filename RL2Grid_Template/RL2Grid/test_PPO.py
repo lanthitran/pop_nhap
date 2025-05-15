@@ -2,7 +2,7 @@ import time
 import numpy as np
 import torch as th
 import gymnasium as gym
-from env.utils import make_env # To create the environment
+from env.utils import make_env, DiscreteActSpace # To create the environment and import DiscreteActSpace
 from alg.ppo.agent import Agent # To load the PPO Agent architecture (contains Actor)
 from common.checkpoint import PPOCheckpoint #to load the checkpoint
 from common.utils import set_random_seed, set_torch, str2bool

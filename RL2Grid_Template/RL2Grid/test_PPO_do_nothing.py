@@ -193,7 +193,8 @@ if __name__ == "__main__":
     results_summary = runner.run(nb_episode=args.num_runner_episodes,
                                  max_iter=-1,  # -1 means run episodes to their natural end
                                  pbar=tqdm, # Pass the tqdm class for progress bar
-                                 path_save=args.runner_output_dir)
+                                 path_save=args.runner_output_dir,
+                                 add_detailed_output = True )
 
     print("Grid2Op Runner evaluation finished.")
     print(f"Results summary: {results_summary}")

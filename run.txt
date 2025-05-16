@@ -29,6 +29,10 @@ D:
         
         python main.py --alg SAC --seed 42 --exp-tag my_first_run2 --cuda True --n-threads 4 --verbose True --track True  --wandb-mode online --checkpoint True --total-timesteps 1000000
 
+
+
+
+
         runs:
 
 
@@ -36,7 +40,7 @@ D:
         cd D:\grid2op\RL2Grid\RL2Grid
         conda activate rl2grid
 
-
+            python  test_PPO_do_nothing.py  --checkpoint-path "D:\grid2op\RL2Grid\RL2Grid\checkpoint\PPO_bus14_train_ZZZ_main_topo_idle_bsline_BASELINE_MINIbatches_4_nn_256_128_64_tanh_n_steps_400_envs_50_train_env_42_0_1747133018_43591.tar"  --num-runner-episodes 5   --runner-output-dir "./TEST_do_nothing_PPO_evaluation_results"  --seed 123    --eval-env-id "bus14_val"   --env-id "bus14_train"  --action-type "topology" --difficulty 0  --cuda True --env-config-path "scenario.json" --norm-obs True --use-heuristic True
             python  test_PPO.py  --checkpoint-path "D:\grid2op\RL2Grid\RL2Grid\checkpoint\PPO_bus14_train_ZZZ_main_topo_idle_bsline_BASELINE_MINIbatches_4_nn_256_128_64_tanh_n_steps_400_envs_50_train_env_42_0_1747133018_43591.tar"  --num-runner-episodes 5   --runner-output-dir "./TEST_my_PPO_evaluation_results"  --seed 123    --eval-env-id "bus14_val"   --env-id "bus14_train"  --action-type "topology" --difficulty 0  --cuda True --env-config-path "scenario.json" --norm-obs True --use-heuristic True
             python  test_dqn.py  --checkpoint-path "D:\grid2op\pop_nhap\RL2Grid_Template\RL2Grid\checkpoint\DQN_bus14_my_first_run_so4_42_0_1744825212_37510.tar"  --num-runner-episodes 5   --runner-output-dir "./TEST_my_dqn_evaluation_results"  --seed 123    --eval-env-id "bus14_val"   --env-id "bus14_train"  --action-type "topology" --difficulty 0  --cuda True --env-config-path "scenario.json" --norm-obs True --use-heuristic True
             python c:/Users/Admin/pop_nhap/RL2Grid_Template/RL2Grid/test_dqn.py --checkpoint-path "D:\grid2op\pop_nhap\RL2Grid_Template\RL2Grid\checkpoint\DQN_bus14_my_first_run_so4_42_0_1744825212_37510.tar"   --num-runner-episodes 5   --runner-output-dir "./my_dqn_evaluation_results/test"  --seed 123    --eval-env-id "bus14_val"   --env-id "bus14_train"  --action-type "topology" --difficulty 0  --cuda True --env-config-path "scenario.json" --norm-obs True --use-heuristic True 

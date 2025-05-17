@@ -15,6 +15,10 @@ D:
         tensorboard --logdir="D:\grid2op\RL2Grid\RL2Grid\runs\runs"  --reload_multifile=true
 
 
+
+
+
+
         python main.py --alg PPO --exp-tag my_   --additional-timesteps 500000 --total-timesteps 100 --action-type redispatch --env-id bus14_train  --n-threads 16  --n-envs 10 --wandb-mode offline --time-limit 4000 --checkpoint True --seed 42 --cuda True --verbose True --track True --norm-obs True --use-heuristic True
         python main.py --alg PPO --resume-run-name 
         # in PPO, total-timesteps has to be larger than n-steps?

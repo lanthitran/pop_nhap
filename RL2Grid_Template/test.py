@@ -21,6 +21,34 @@ class Calculator:
         if y == 0:
             raise ZeroDivisionError("Cannot divide by zero.")
         return x / y
+    def square_root(self, x: float) -> float:
+        """Calculates the square root of a number."""
+        if x < 0:
+            raise ValueError("Cannot calculate the square root of a negative number.")
+        return x**0.5
+
+    def log(self, x: float, base: float = 10) -> float:
+        """Calculates the logarithm of a number with a specified base."""
+        if x <= 0:
+            raise ValueError("Cannot calculate the logarithm of a non-positive number.")
+        if base <= 0 or base == 1:
+            raise ValueError("Invalid base for logarithm.")
+        return math.log(x, base)
+
+    def power(self, x: float, y: float) -> float:
+        """Calculates x raised to the power of y."""
+        return x**y
+
+    def factorial(self, n: int) -> int:
+        """Calculates the factorial of a non-negative integer."""
+        if not isinstance(n, int) or n < 0:
+            raise ValueError("Input must be a non-negative integer.")
+        if n == 0:
+            return 1
+        else:
+            return n * self.factorial(n - 1)
+import math # is this a bug? fix it
+
         
 # now i want to use the above class, create a simple script to test it
 if __name__ == "__main__":
@@ -33,5 +61,9 @@ if __name__ == "__main__":
     #print(calc.divide(10, 0))  # this should raise an error
     #print(calc.divide(10, 0))  # this should raise an error
     #print(calc.divide(10, 0))  # this should raise an error
+
+
+
+
 
         

@@ -69,6 +69,8 @@ if __name__ == "__main__":
 # nhap 2 
 # nhap 3 
 # main 
+# nhap 1 again 
+
 
 
 

@@ -76,4 +76,5 @@ if __name__ == "__main__":
 # mainnn 
 
 
-        
+        # nhap 111
+# nhap 1 lan 2 

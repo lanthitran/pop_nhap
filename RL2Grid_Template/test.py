@@ -75,3 +75,4 @@ if __name__ == "__main__":
 # nhap 111111111111111111
 
         # nhap 111
+# nhap 1 lan 2 

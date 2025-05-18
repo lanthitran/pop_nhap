@@ -1,0 +1,728 @@
+ProMP: Proximal Meta-Policy Search 
+
+Jonas Rothfuss∗ 
+UC Berkeley, KIT 
+jonas.rothfuss@gmail.com 
+Tamim Asfour 
+Karlsruhe Inst. of Technology (KIT) 
+Dennis Lee∗, Ignasi Clavera∗ 
+UC Berkeley 
+{dennisl88,iclavera}@berkeley.edu 
+Pieter Abbeel 
+UC Berkeley, Covariant.ai 
+
+Abstract 
+Credit assignment in meta-reinforcement learning (Meta-RL) is still poorly un derstood. Existing methods either neglect credit assignment to pre-adaptation behavior or implement it naively. This leads to poor sample-efficiency during meta-training as well as ineffective task identification strategies. In this work, we provide a theoretical analysis of credit assignment in gradient-based Meta-RL. Building on the gained insights we develop a novel meta-learning algorithm that overcomes both the issue of poor credit assignment and previous difficulties in estimating meta-policy gradients. Our approach leads to superior pre-adaptation policy behavior and consistently outperforms previous Meta-RL algorithms. 
+1 Sampling Distribution Credit Assignment in Meta-RL 
+Meta-Reinforcement Learning aims to learn a learning algorithm which is able to quickly learn the optimal policy for a task (MDP) T drawn from a distribution of tasks ρ(T ). Meta-RL is a multi stage process in which the agent, after a few sampled environment interactions, adapts its behavior to the given task. Despite its wide utilization, little work has been done to promote theoretical understanding of this process, leaving Meta-RL grounded on unstable foundations. Although the behavior prior to the adaptation step is instrumental for task identification, the interplay between pre-adaptation sampling and posterior performance of the policy remains poorly understood. In fact, prior work in gradient-based Meta-RL has either entirely neglected credit assignment to the pre-update distribution [4] or implemented such credit assignment in a naive way [1, 12]. 
+Gradient-based meta-learning approaches perform Meta-RL by learning the parameters θ of a policy πθ such that performing a single or few steps of vanilla policy gradient (VPG) with the given task leads to the optimal policy for that task. This meta-learning formulation, also known under the name of MAML, was first introduced by [4]. We refer to it as formulation I and can be expressed as maximizing the objective 
+JI(θ) = ET ∼ρ(T ) Eτ0∼PT (τ0|θ0)[R(τ0)]  with θ0:= U(θ, T ) = θ + α∇θEτ∼PT (τ|θ)[R(τ )] In that, U denotes the update function which depends on the task T , and performs one VPG step towards maximizing the performance of the policy in T . Later work proposes a slightly different notion of gradient-based Meta-RL, also known as E-MAML, that attempts to circumvent issues with the meta-gradient estimation in MAML [1, 12]: 
+
+JII (θ) = ET ∼ρ(T ) Eτ1:N ∼PT (τ1:N |θ) τ0∼PT (τ0|θ0) 
+ R(τ0)   with θ0:= U(θ, τ1:N ) = θ + α∇θXN 
+h 
+n=1 
+R(τ(n))i 
+
+Formulation II views U as a deterministic function that depends on N sampled trajectories from a specific task. In contrast to formulation I, the expectation over pre-update trajectories τ is applied outside of the update function. Formulation I (Fig. 1 left) propagates the credit assignment through 
+∗authors contributed equally to this work 
+32nd Conference on Neural Information Processing Systems (NIPS 2018), Montréal, Canada.
+the update step, thereby exploiting the full problem structure. In contrast, formulation II (Fig. 1 right) neglects the inherent structure, directly assigning credit from post-update return R0to the pre-update policy πθ which leads to noisier, less effective credit assignment. 
+Figure 1: Stochastic computation graphs of meta-learning formulation I (left) and formulation II (right). The red arrows illustrate the credit pre-update sampling distribution assignment 
+Both formulations optimize for the same objective, and are equivalent at the 0th order. However, because of the difference in their formulation, their gradients and the resulting optimization step differs. In the following, we shed light on how and where formulation II loses signal by analyzing the gradients of both formulations, which can be written as (see Appendix A for derivations) 
+
+∇θJ(θ) = ET ∼ρ(T ) 
+" 
+E τ∼PT (τ|θ) τ0∼PT (τ0|θ0) 
+  
+∇θJpost(τ , τ0) + ∇θJpre(τ , τ0) 
+ # 
+(1) 
+
+The first term ∇θJpost(τ , τ0) is equal in both formulations, but the second term, ∇θJpre(τ , τ0), differ: ∇θJII 
+pre(τ , τ0) = α∇θ log πθ(τ )R(τ0) (2) 
+
+∇θJIpre(τ , τ0) = α∇θ log πθ(τ ) 
+  
+(∇θ log πθ(τ )R(τ ))> | {z } ∇θJinner 
+(∇θ0 log πθ0 (τ0)R(τ0)) | {z } ∇θ0Jouter 
+  
+(3) 
+
+The credit assignment w.r.t. the pre-updated sampling distribution is carried out by the second term. In formulation II, ∇θJII 
+pre can be viewed as standard reinforcement learning on πθ with R(τ0) as reward signal, treating the update function U as part of the unknown dynamics of the system. This shifts the pre-update sampling distribution to better adaptation steps. Formulation I takes the causal dependence of PT (τ0|θ0) on PT (τ |θ) into account. It does so by maximizing the inner product of pre-update and post-update policy gradients (see Eq. 3). This steers the pre-update policy towards 1) larger post-updates returns 2) larger adaptation steps α∇θJinner, 3) better alignment of pre- and post-update policy gradients. When combined, these effects directly optimize for adaptation. As a result, we expect the first meta-policy gradient formulation, JI, to yield superior learning properties. 
+2 Low Variance Curvature Estimator 
+In the previous section we show that the formulation JIintroduced by [4] results in superior meta gradient updates, which should in principle lead to improved convergence properties. As we show in Appendix A.1, we can write the gradient of the meta-learning objective as 
+∇θJI(θ) = ET ∼ρ(T )hEτ0∼PT (τ0|θ0) ∇θ0 log PT (τ0|θ0)R(τ0)∇θU(θ, T ) i(4) 
+Since the update function U resembles a policy gradient step, its gradient ∇θU(θ, T ) involves computing the hessian of the reinforcement learning objective, i.e., ∇2θ Eτ∼PT (τ|θ)[R(τ )]. The expectation of the RL-objective is in general intractable its gradients are typically computed using a score function Monte Carlo estimator [15, 13]. However, score function surrogate objectives yield wrong higher order derivatives, resulting in strongly biased estimates of the RL-objective hessian. This can be overcome using DiCE formulation [5], but this leads to high variance estimates. To facilitate a sample efficient meta-learning, we introduce the low variance curvature (LVC) estimator: 
+
+JLVC(τ ) = 
+HX−1 t=0 
+πθ(at|st) 
+⊥(πθ(at|st))
+ HX−1 t0=t 
+r(st0 , at0 ) 
+! 
+τ ∼ PT (τ ) (5) 
+
+When compared to the DiCE, this estimator neglects the sequential dependence of πθ(at|st) within trajectories, which leads to a variance reduction, but makes the estimate biased. The choice of this objective function is motivated by findings in [6]: under certain conditions the bias of JLVC vanishes around local optima. The experiments in section 4.2 underpin the theoretical findings, showing that the low variance hessian estimates obtained through JLVC improve the sample-efficiency of meta-learning by a significant margin when compared to JDiCE. We refer the interested reader to Appendix B for derivations and a more detailed discussion. 
+2
+3 ProMP: Proximal Meta-Policy Search 
+Building on the previous sections, we develop a novel meta-policy search method based on the low variance curvature objective which aims to solve the Meta-RL formulation JI. To do so, we build upon the recently introduced PPO algorithm [11], which achieves comparable results to TRPO with the advantage of being a first order method. PPO uses a surrogate clipping objective JCLIP which allows it to safely take multiple gradient steps without re-sampling trajectories. 
+In case of Meta-RL, it does not suffice to just replace the post-update reward objective with JCLIP 
+T. In 
+order to safely perform multiple meta-gradient steps based on the same sampled data from a recent policy πθo, we also need to 1) account for changes in the pre-update action distribution πθ(at|st), and 2) bound changes in the pre-update state visitation distribution [7]. 
+We propose Proximal Meta-Policy Search (ProMP) which incorporates both the benefits of proximal policy optimization and the low variance curvature objective (see Alg. 1.) In order to comply with requirement 1), ProMP replaces the “stop gradient" importance weight πθ(at|st) 
+
+ratio πθ(at|st) 
+πθo(at|st)) , which results in the following objective "HX−1 
+⊥(πθ(at|st)) by the likelihood # 
+
+JLR 
+T(θ) = Eτ∼PT (τ,θo) 
+t=0 
+πθ(at|st) 
+πθo(at|st)Aπθo (st, at) 
+(6) 
+
+An important feature of this objective is that its derivatives w.r.t θ evaluated at θo are identical to those of the LVC objective, and it additionally accounts for changes in the pre-update action distribution. To satisfy condition 2) we extend the clipped meta-objective with a KL-penalty term between πθ and πθo. This KL-penalty term enforces a soft local “trust region" around πθo, preventing the shift in state visitation distribution to become large during optimization. This enables us to take multiple meta-policy gradient steps without re-sampling. Altogether, ProMP optimizes 
+JProMP 
+T(θ) = JCLIP 
+T(θ0) − ηD¯KL(πθo, πθ) s.t. θ0 = θ + α ∇θJLR 
+T(θ) , T ∼ ρ(T ) (7) 
+ProMP consolidates the insights developed throughout the course of this paper, while at the same time making maximal use of recently developed policy gradients algorithms. First, its meta-learning formulation exploits the full structural knowledge of gradient-based meta-learning. Second, it incorporates a low variance estimate of the RL-objective hessian. Third, ProMP controls the statistical distance of both pre- and post-adaptation policies, promoting efficient and stable meta-learning. All in all, ProMP consistently outperforms previous gradient-based meta-RL algorithms in sample complexity, wall clock time, and asymptotic performance (see Section 4.1). 
+4 Experiments 
+In order to empirically validate the theoretical arguments outlined above, this section provides a experimental analysis that aims to answer the following questions: (i) How does ProMP perform against previous Meta-RL algorithms? (ii) How do the lower variance but biased LVC gradient estimates compare to the high variance, unbiased DiCE estimates? (iii) Do the different formulations result in different pre-update exploration properties? The source code and the experiments data are available on our supplementary website.2 
+4.1 Meta-Gradient Based Comparison 
+We compare our method, ProMP, in sample complexity and asymptotic performance to four other gradient-based approaches: TRPO-MAML [4], E-MAML-TRPO, E-MAML-VPG [12], and LVC VPG, an ablated version of our method that uses the LVC objective in the adaptation step and meta-optimizes with vanilla policy gradient. These algorithms are benchmarked on three different locomotion tasks [3, 14] that require adaptation: the half-cheetah must switch between running forward and backward, the quadruped agent ant must run in different directions in the 2D-plane, and the hopper has adapt to different configuration of their dynamics. 
+The results (Fig. 2) highlight the strength of ProMP in terms of sample efficiency and final perfor mance. They also demonstrate the positive effect of the LVC objective: LVC-VPG, even though optimized with vanilla policy gradient, is often able to achieve comparable results to the the prior methods that are optimized with TRPO. When compared to E-MAML-VPG, LVC proves superior in performance which underpins the soundness of the theory developed throughout this paper. 
+2https://sites.google.com/view/pro-mp 
+3
+
+HalfCheetahFwdBack 
+AntRandDir 
+350 WalkerRandParams 
+
+300 Average return 
+250 200 150 100 
+50 0 
+180 160 140 120 100 
+300 250 200 150 100 
+50 0 
+
+0.00 0.25 0.50 0.75 1.00 
+0.0 1.5 3.0 4.5 
+0.0 0.4 0.8 1.2 1.6 
+Timesteps 1e8 
+1e7 
+1e8 
+
+ProMP (ours) MAML E-MAML-TRPO LVC-VPG E-MAML-VPG 
+Figure 2: Meta-learning curves of ProMP and four other gradient-based meta-learning algorithms in six different Mujoco environments. ProMP outperforms previous work in all the the environments. 
+4.2 Estimator Variance and Its Effect on Meta-Learning 
+
+In Section 2 we discussed how the DiCE formulation yields unbi ased but high variance estimates of the RL-objective hessian and served as motivation for the low variance curvature (LVC) estimator. Here we investigate the meta-gradient variance of both estimators as well as its implication on the learning performance. Specifically, we 
+Gradient Variance 
+Relative Std 
+40 
+20 
+0 
+report the relative standard deviation of the meta-policy gradients as well as the average return throughout the learning process in the HalfCheetahFwdBack environment. The results, depicted in Fig ure 3, highlight the advantage of the low variance curvature estimate. The trajectory level dependencies inherent in the DiCE estimator lead to a meta-gradient standard deviation that is on average two times higher when compared to LVC. As the learning curves indicate, the noisy gradients impede sample efficient meta-learning in case of DiCE. Meta-policy search based on the LVC estimator leads to substantially better learning properties. 
+4.3 Comparison of Initial Sampling Distributions 
+Here we evaluate the effect of the different objectives on the learned pre-update sampling distribution. We compare the low variance 
+0.0 1.5 3.0 4.5 Time steps 1e7 
+Return 
+Average Return 
+200 
+100 
+0 
+0.0 1.5 3.0 4.5 Time steps 1e7 
+LVC DiCE 
+Figure 3: Upper: Relative stan dard deviation of meta-policy gra dients. Lower: Return in the HalfCheetahFwdBack env. 
+
+curvature (LVC) estimator with TRPO (LVC-TRPO) against MAML [4] and E-MAML-TRPO [12] in a 2D environment on which the exploration behavior can be visualized. Each task of this environment corresponds to reaching a different corner location; however, the 2D agent only experiences reward when it is sufficiently close to the corner (translucent regions of Figure 4). Thus, to successfully identify the task, the agent must explore the different regions. We perform three inner adaptation steps on each task, allowing the agent to fully change its behavior from exploration to exploitation. 
+
+2 1 0 1 2 
+LVC 
+2 1 0 1 2 
+2 1 0 1 2 
+MAML 
+2 1 0 1 2 
+E-MAML 
+2 
+1 
+Pre-update 
+0 
+Post-update 
+1 
+2 
+2 1 0 1 2 
+
+Figure 4: Exploration patterns of the pre-update policy and exploitation post-update with different update functions. Through its superior credit assignment, the LVC objective learns a pre-update policy that is able to identify the current task and respectively adapt its policy, successfully reaching the goal (dark green circle). 
+The different exploration-exploitation strategies are displayed in Figure 4. Since the MAML imple mentation does not assign credit to the pre-update sampling trajectory, it is unable to learn a sound exploration strategy for task identification and thus fails to accomplish the task. On the other hand, E-MAML, which corresponds to formulation II, learns to explore in long but random paths: because it can only assign credit to batches of pre-update trajectories, there is no notion of which actions in particular facilitate good task adaptation. As consequence the adapted policy slightly misses the task-specific target. The LVC estimator, instead, learns a consistent pattern of exploration, visiting each of the four regions, which it harnesses to fully solve the task. 
+4
+Acknowledgments 
+Ignasi Clavera was supported by the La Caixa Fellowship. The research leading to these results has received funding from the German Research Foundation (DFG: Deutsche Forschungsgemeinschaft) under Priority Program on Autonomous Learning (SPP 1527) and was supported by Berkeley Deep Drive, Amazon Web Services, and Huawei. 
+References 
+[1] Maruan Al-Shedivat, Trapit Bansal, Umass Amherst, Yura Burda, Openai Ilya, Sutskever Openai, Igor Mordatch Openai, and Pieter Abbeel. Continuous Adaptation via Meta-Learning in Nonstationary and Competitive Environments. In ICLR, 2018. 
+[2] Jonathan Baxter and Peter L Bartlett. Infinite-Horizon Policy-Gradient Estimation. Technical report, 2001. 
+[3] Greg Brockman, Vicki Cheung, Ludwig Pettersson, Jonas Schneider, John Schulman, Jie Tang, and Wojciech Zaremba. OpenAI Gym. Technical report, 6 2016. 
+[4] Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks. In ICML, 2017. 
+[5] Jakob Foerster, Gregory Farquhar, Maruan Al-Shedivat, Tim Rocktäschel, Eric P Xing, and Shimon Whiteson. DiCE: The Infinitely Differentiable Monte Carlo Estimator. In ICML, 2018. 
+[6] Thomas Furmston, Guy Lever, David Barber, and Joelle Pineau. Approximate Newton Methods for Policy Search in Markov Decision Processes. Technical report, 2016. 
+[7] Sham Kakade and John Langford. Approximately Optimal Approximate Reinforcement Learn ing. In ICML, 2002. 
+[8] Da Li, Yongxin Yang, Yi-Zhe Song, and Timothy M Hospedales. Learning to Generalize: Meta-Learning for Domain Generalization. In AAAI, 2017. 
+[9] Alex Nichol, Joshua Achiam, and John Schulman. On First-Order Meta-Learning Algorithms. Technical report, 2018. 
+[10] John Schulman, Nicolas Heess, Theophane Weber, and Pieter Abbeel. Gradient Estimation Using Stochastic Computation Graphs. In NIPS, 2015. 
+[11] John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov Openai. Proximal Policy Optimization Algorithms. CoRR, 2017. 
+[12] Bradly C Stadie, Ge Yang, Rein Houthooft, Xi Chen, Yan Duan, Yuhuai Wu, Pieter Abbeel, and Ilya Sutskever. Some Considerations on Learning to Explore via Meta-Reinforcement Learning. Technical report, 2018. 
+[13] Richard S. Sutton, David Mcallester, Satinder Singh, and Yishay Mansour. Policy Gradient Methods for Reinforcement Learning with Function Approximation. In NIPS, 2000. 
+[14] Emanuel Todorov, Tom Erez, and Yuval Tassa. MuJoCo: A physics engine for model-based control. In IROS, pages 5026–5033. IEEE, 10 2012. 
+[15] Ronald J. Williams. Simple statistical gradient-following algorithms for connectionist reinforce ment learning. Machine Learning, 8(3-4):229–256, 5 1992. 
+5
+A Two Meta-Policy Gradient Formulations 
+In this section we discuss two different gradient-based meta-learning formulations, derive their gradients and analyze the differences between them. 
+A.1 Meta-Policy Gradient Formulation I 
+The first meta-learning formulation, known as MAML [4], views the inner update rule U(θ, T ) as a mapping from the pre-update parameter θ and the task T to an adapted policy parameter θ0. The update function can be viewed as stand-alone procedure that encapsulates sampling from the task-specific trajectory distribution PT (τ |πθ) and updating the policy parameters. Building on this concept, the meta-objective can be written as 
+JI(θ) = ET ∼ρ(T ) Eτ0∼PT (τ0|θ0)[R(τ0)] with θ0:= U(θ, T ) (8) The task-specific gradients follow as 
+∇θJIT(θ) = ∇θEτ0∼PT (τ0|θ0)[R(τ0)] (9) = Eτ0∼PT (τ0|θ0)[∇θ log PT (τ0|θ0)R(τ0)] (10) 
+= Eτ0∼PT (τ0|θ0)[∇θ0 log PT (τ0|θ0)R(τ0)∇θθ0] (11) 
+In order to derive the gradients of the inner update ∇θθ0 = ∇θU(θ, T ) it is necessary to know the structure of U. The main part of this paper assumes the inner update rule to be a policy gradient descent step 
+∇θU(θ, T ) = ∇θθ + α ∇θEτ∼PT (τ|θ)[R(τ )] (12) 
+= I + α∇2θ Eτ∼PT (τ|θ)[R(τ )] (13) 
+Thereby the second term in (13) is the local curvature (hessian) of the inner adaptation objective function. The correct hessian of the inner objective can be derived as follows: 
+∇2θ Eτ∼PT (τ|θ)[R(τ )] = ∇θ Eτ∼PT (τ|θ)[∇θ log πθ(τ )R(τ )] (14) Z 
+
+= ∇θ Z 
+= 
+PT (τ |θ)∇θ log πθ(τ )R(τ )dτ (15) 
+PT (τ |θ)∇θ log πθ(τ )∇θ log πθ(τ )>R(τ )+ (16) PT (τ |θ)∇2θlog πθ(τ )R(τ )dτ (17) 
+
+= Eτ∼PT (τ|θ) R(τ )∇2θlog πθ(τ ) + ∇θ log πθ(τ )∇θ log πθ(τ )>  (18) 
+A.2 Meta-Policy Gradient Formulation II 
+The second meta-reinforcement learning formulation views the the inner update θ0 = U(θ, τ 1:N ) as a deterministic function of the pre-update policy parameters θ and N trajectories τ1:N ∼ PT (τ1:N |θ) sampled from the pre-update trajectory distribution. This formulation was introduced in [1] and further discussed with respect to its exploration properties in [12]. 
+Viewing U as a function that adapts the policy parameters θ to a specific task T given policy rollouts in this task, the corresponding meta-learning objective can be written as 
+
+JII (θ) = ET ∼ρ(T ) 
+  
+h 
+Eτ 1:N ∼PT (τ 1:N |θ) 
+Eτ0∼PT (τ0|θ0) R(τ0) i with θ0:= U(θ, τ1:N ) (19) 
+
+Since the first part of the gradient derivation is agnostic to the inner update rule U(θ, τ 1:N ), we only assume that the inner update function U is differentiable w.r.t. θ. First we rewrite the meta-objective J(θ) as expectation of task specific objectives JII 
+T(θ) under the task distribution. This allows us to 
+express the meta-policy gradients as expectation of task-specific gradients: 
+∇θJII (θ) = ET ∼ρ(T ) ∇θJII 
+T(θ) (20) 
+6
+The task specific gradients can be calculated as follows 
+
+h 
+∇θJII 
+T(θ) = ∇θEτ∼PT (τ 1:N |θ) Z Z 
+Eτ0∼PT (τ0|θ0) R(τ0) i 
+= ∇θ 
+R(τ0) PT (τ0|θ0) PT (τ1:N |θ) dτ0dτ 
+
+= Eτ1:N ∼PT (τ1:N |θ) τ0∼PT (τ0|θ0) 
+  
+R(τ0)   
+    
+∇θ log PT (τ0|θ0) +XN i=1 
+!   
+∇θ log PT (τ(n)|θ) 
+!   
+
+= Eτ1:N ∼PT (τ1:N |θ) τ0∼PT (τ0|θ0) 
+R(τ0) 
+∇θ0 log PT (τ0|θ0)∇θθ0 +XN n=1 
+∇θ log PT (τ(n)|θ) 
+
+As in A.1 the structure of U(θ, τ1:N ) must be known in order to derive the gradient ∇θθ0. Since we assume the inner update to be vanilla policy gradient, the respective gradient follows as 
+
+U(θ, τ 1:N ) = θ+α1NXN n=1 
+∇θ log πθ(τ(n)))R(τ(n)) with ∇θ log πθ(τ ) = 
+HX−1 t=0 
+∇θ log πθ(at|st) 
+
+The respective gradient of U(θ, τ 1:N ) follows as 
+
+  
+∇θU(θ, τ 1:N ) = ∇θ 
+θ + α1NXN n=1 
+∇θ log πθ(τ(n)))R(τ(n)) 
+! 
+(21) 
+
+= I + α1NXN n=1 
+∇2θlog πθ(τ(n)))R(τ(n)) (22) 
+
+A.3 Comparing the Gradients of the Two Formulations 
+In the following we analyze the differences between the gradients derived for the two formulations. To do so, we begin with ∇θJIT(θ) by inserting the gradient of the inner adaptation step (13) into (11): ∇θJIT(θ) = Eτ0∼PT (τ0|θ0) ∇θ0 log PT (τ0|θ0)R(τ0)I + α∇2θ Eτ∼PT (τ|θ)[R(τ )]   (23) We can substitute the hessian of the inner objective by its derived expression from (18) and then rearrange the terms. Also note that ∇θ log PT (τ |θ) = ∇θ log πθ(τ ) = PH−1 
+
+H is the MDP horizon. ∇θJIT(θ) = Eτ0∼PT (τ0|θ0) 
+  
+  
+∇θ0 log PT (τ0|θ0)R(τ0) 
+t=1 log πθ(at|st) where 
+I + αEτ∼PT (τ|θ) R(τ ) (24) 
+
+∇2θlog πθ(τ ) + ∇θ log πθ(τ )∇θ log πθ(τ )>     (25) 
+ 
+ 
+
+= E τ∼PT (τ|θ) τ0∼PT (τ0|θ0) 
+∇θ0 log πθ0 (τ0)R(τ0) I + αR(τ )∇2θlog πθ(τ )  | {z } ∇θJpost(τ,τ0) 
+ 
+(26) 
+
++α∇θ0 log πθ0 (τ0)R(τ0)R(τ )∇θ log πθ(τ )∇θ log πθ(τ )> 
+ (27) 
+
+| {z } 
+∇θJIpre(τ,τ0) 
+Next, we rearrange the gradient of JII into a similar form as ∇θJIT(θ). For that, we start by inserting (22) for ∇θθ0and replacing the expectation over pre-update trajectories τ1:N by the expectation over 
+7
+
+a single trajectory τ . 
+∇θJIT(θ) = E τ∼PT (τ|θ) 
+τ0∼PT (τ0|θ0) 
+  
+R(τ0)∇θ0 log πθ(τ0)I + αR(τ )∇2θlog πθ(τ ))  
+| {z } ∇θJpost(τ,τ0) 
+  
++R(τ0)∇θ log πθ(τ ) 
+| {z } 
+∇θJIpre(τ,τ0) 
+(28) (29) 
+
+While the first part of the gradients match ((26) and (28)), the second part ((27) and (29)) differs. Since the second gradient term can be viewed as responsible for shifting the pre-update sampling distribution PT (τ |θ) towards higher post-update returns, we refer to it as ∇θJpre(τ , τ0) . To further analyze the difference between ∇θJIpre and ∇θJII 
+
+terms next to each other: 
+pre we slightly rearrange (27) and put both gradient  
+ 
+
+∇θJIpre(τ , τ0) = α∇θ log πθ(τ ) ∇θJII 
+(∇θ log πθ(τ )R(τ ))> | {z } ∇θJinner 
+(∇θ0 log πθ0 (τ0)R(τ0)) | {z } ∇θ0Jouter 
+ (30) 
+
+pre(τ , τ0) = α∇θ log πθ(τ )R(τ0) (31) 
+In the following we interpret and and compare of the derived gradient terms, aiming to provide intuition for the differences between the formulations: 
+The first gradient term Jpost that matches in both formulations corresponds to a policy gradient step on the post-update policy πθ0 . Since θ0itself is a function of θ, the term I + αR(τ )∇2θlog πθ(τ ))  can be seen as linear transformation of the policy gradient update R(τ0)∇θ0 log πθ(τ0) from the post-update parameter θ0into θ. Although Jpost takes into account the functional relationship between θ0and θ, it does not take into account the pre-update sampling distribution PT (τ |θ). 
+This is where ∇θJpre comes into play: ∇θJIpre can be viewed as policy gradient update of the pre update policy πθ w.r.t. to the post-update return R(τ0). Hence this gradient term aims to shift the pre-update sampling distribution so that higher post-update returns are achieved. However, ∇θJII 
+pre 
+does not take into account the causal dependence of the post-update policy on the pre-update policy. Thus a change in θ due to ∇θJII 
+pre may counteract the change due to ∇θJII 
+post. In contrast, ∇θJIpre takes 
+the dependence of the the post-update policy on the pre-update sampling distribution into account. Instead of simply weighting the gradients of the pre-update policy ∇θ log πθ(τ ) with R(τ0) as in ∇θJIpost, ∇θJIpost weights the gradients with inner product of the pre-update and post-update policy gradients. This inner product can be written as 
+∇θJinner>∇θ0Jouter = ||∇θJinner||2 · ||∇θ0Jouter||2 · cos(δ) (32) wherein δ denotes the angle between the the inner and outer pre-update and post-update policy gradi ents. Hence, ∇θJIpost steers the pre-update policy towards not only towards larger post-updates returns but also towards larger adaptation steps α∇θJinner, and better alignment of pre- and post-update policy gradients. This directly optimizes for maximal improvement/adaptation for the respective task. See [8, 9] for a comparable analysis in case of domain generalization and supervised meta-learning. Note that (32) allows formulation I to perform credit assignment on the trajectory level whereas formulation II can only assign credit to entire batches of N pre-update trajectories τ1:N . 
+B Estimating the Meta-Policy Gradients 
+When employing formulation I for gradient-based meta-learning, we aim maximize the loss J(θ) = ET ∼ρ(T ) Eτ0∼PT (τ0|θ0)[R(τ0)] with θ0:= θ + α ∇θEτ∼PT (τ|θ)[R(τ )] (33) by performing a form of gradient-descent on J(θ). Note that we, from now on, assume J := JIand thus omit the superscript indicating the respective meta-learning formulation. As shown in A.2 the gradient can be derived as ∇θJ(θ) = E(T)∼ρ(T)[∇θJT (θ)] with 
+
+∇θJT (θ) = Eτ0∼PT (τ0|θ0) 
+  
+∇θ0 log PT (τ0|θ0)R(τ0) 
+  
+I + α∇2θ Eτ∼PT (τ|θ)[R(τ )] 
+   
+(34) 
+
+where ∇2θJinner(θ) := ∇2θ Eτ∼PT (τ|θ)[R(τ )] denotes hessian of the inner adaptation objective w.r.t. θ. This section concerns the question of how to properly estimate this hessian. 
+8
+B.1 A decomposition of the hessian 
+Estimating the the hessian of the reinforcement learning objective has been discussed in [6] and [2] with focus on second order policy gradient methods. In the infinite horizon MDP case, [2] derive a decomposition of the hessian. In the following, we extend their finding to the finite horizon case. 
+Proposition. The hessian of the RL objective can be decomposed into four matrix terms: ∇2θJinner(θ) = H1 + H2 + H12 + H>12 (35) 
+where 
+
+H1 = Eτ∼PT (τ|θ) 
+"HX−1 t=0 
+∇θ log πθ(at, st)∇θ log πθ(at, st)> 
+ HX−1 t0=t 
+r(st0 , at0 ) 
+!# 
+(36) 
+H2 = Eτ∼PT (τ|θ) 
+"HX−1 t=0 
+∇2θlog πθ(at, st) 
+ HX−1 t0=t 
+r(st0 , at0 ) 
+!# 
+(37) 
+
+H12 = Eτ∼PT (τ|θ) 
+"HX−1 t=0 
+t(st, at)> 
+∇θ log πθ(at, st)∇θQπθ 
+# 
+(38) 
+
+Here Qπθ 
+t(st, at) = Eτt+1:H−1∼PT (·|θ) 
+hPH−1 
+t0=tr(st0 , at0 )|st, at 
+i 
+denotes the expected state-action 
+
+value function under policy πθ at time t. 
+Proof. As derived in (18), the hessian of Jinner(θ) follows as: 
+∇2θJinner = Eτ∼PT (τ|θ) R(τ )∇2θlog πθ(τ ) + ∇θ log πθ(τ )∇θ log πθ(τ )>   (39) 
+
+= Eτ∼PT (τ|θ) 
+"HX−1 t=0
+ Xt t0=0 
+∇2θlog πθ(at0 , st0 ) 
+! 
+r(st, at) 
+# 
+(40) 
+ 
+
++ Eτ∼PT (τ|θ) 
+  
+HX−1 t=0
+ Xt t0=0 
+∇θ log πθ(at0 , st0 ) 
+! Xt t0=0 
+∇θ log πθ(at0 , st0 ) 
+!> 
+r(st, at) 
+ 
+= Eτ∼PT (τ|θ) 
+"HX−1 t=0 
+∇2θlog πθ(at, st) 
+ HX−1 t0=t 
+r(st0 , at0 ) 
+!# 
+! 
+# 
+(41) (42) 
+
++ Eτ∼PT (τ|θ) 
+"HX−1 t=0
+ Xt t0=0 
+Xt h=0 
+∇θ log πθ(at0 , st0 )∇θ log πθ(ah, sh)> 
+r(st, at) 
+(43) 
+
+The term in (42) is equal to H2. We continue by showing that the remaining term in (43) is equivalent to H1 + H12 + H>12. For that, we split the inner double sum in (43) into three components: 
+
+Eτ∼PT (τ|θ) 
+"HX−1 
+t=0
+"HX−1 
+ Xt 
+t0=0 
+ Xt 
+Xt h=0 
+∇θ log πθ(at0 , st0 )∇θ log πθ(ah, sh)> ! 
+! 
+r(st, at) # 
+# 
+(44) 
+
+= Eτ∼PT (τ|θ) 
+t=0
+∇θ log πθ(at0 , st0 )∇θ log πθ(at0 , st0 )> t0=0 
+r(st, at)  
+(45) 
+ 
+
++ Eτ∼PT (τ|θ) 
+  
+HX−1 t=0 
+ 
+Xt t0=0 
+tX0−1 h=0 
+∇θ log πθ(at0 , st0 )∇θ log πθ(ah, sh)> 
+ r(st, at) 
+ (46) 
+
++ Eτ∼PT (τ|θ) 
+"HX−1 t=0
+ Xt t0=0 
+Xt 
+h=t0+1 
+∇θ log πθ(at0 , st0 )∇θ log πθ(ah, sh)> 9
+! 
+r(st, at) 
+# 
+(47) 
+
+By changing the backward looking summation over outer products into a forward looking summation of rewards, (45) can be shown to be equal to H1: 
+
+Eτ∼PT (τ|θ) 
+"HX−1 t=0
+ Xt t0=0 
+∇θ log πθ(at0 , st0 )∇θ log πθ(at0 , st0 )> 
+! 
+r(st, at) 
+# 
+(48) 
+= Eτ∼PT (τ|θ) 
+"HX−1 t=0 
+∇θ log πθ(at, st)∇θ log πθ(at, st)> 
+ HX−1 t0=t 
+r(st0 , at0 ) 
+!# 
+= H1 (49) 
+
+By simply exchanging the summation indices t0and h in (47) it is straightforward to show that (47) is the transpose of (46). Hence it is sufficient to show that (46) is equivalent to H12. However, instead of following the direction of the previous proof we will now start with the definition of H12 and derive the expression in (46). 
+
+H12 = Eτ∼PT (τ|θ) 
+The gradient of Qπθ 
+"HX−1 t=0 
+t(st, at)> 
+∇θ log πθ(at, st)∇θQπθ 
+# 
+(50) 
+(51) 
+
+tcan be expressed recursively:  Qπθ 
+
+∇θQπθ 
+t(st, at) = ∇θEst+1 at+1 
+t+1(st+1, at+1) (52) 
+ ∇θ log πθ(at+1, st+1)Qπθ 
+t+1(st+1, at+1) (53) 
+
+= Est+1 
+at+1 
+By induction, it follows that 
+t+1(st+1, at+1) + ∇θQπθ 
+
+∇θQπθ 
+t(st, at) = Eτt+1:H−1∼PT (·|θ) 
+" HX−1 t0=t+1 
+∇θ log πθ(at0 , st0 ) 
+ HX−1 h=t0 
+r(sh, ah) 
+!# 
+(54) 
+
+When inserting (54) into (50) and swapping the summation, we are able to show that H12 is equivalent to (46). 
+
+H12 = Eτ∼PT (τ|θ) 
+"HX−1 t=0 
+HX−1 
+t0=t+1 
+∇θ log πθ(at, st)∇θ log πθ(at0 , st0 )> 
+ HX−1 h=t0 
+r(sh, ah) 
+!# 
+(55) 
+
+= Eτ∼PT (τ|θ) 
+  
+HX−1 t=0 
+ 
+Xt t0=0 
+tX0−1 h=0 
+∇θ log πθ(at0 , st0 )∇θ log πθ(ah, sh)> 
+ 
+ r(st, at) 
+ 
+ (56) 
+
+This concludes the proof that the hessian of the expected sum of rewards under policy πθ and an MDP with finite time horizon H can be decomposed into H1 + H2 + H12 + H>12. 
+  
+B.2 Bias and variance of the curvature estimate 
+As shown in the previous section, ∇2θJDICE provides an unbiased estimate of the hessian of the inner objective Jinner = Eτ∼PT (τ|θ)[R(τ )]. However, recall the DICE objective involves a product of importance weights along the trajectory. 
+
+JDICE =HX−1 t=0
+ Yt t0=0 
+πθ(at0 |st0 ) ⊥(πθ(at0 |st0 ))
+! 
+r(st, at) (57) 
+
+This outer product of sums can be decomposed into three terms H1 + H12 + H>12 (see Appendix B.1). As noted by [6], H12 + H>12 is particularly difficult to estimate. In section 4.2 we empirically show that the high variance curvature estimates obtained with the DICE objective require large batch sizes and impede sample efficient learning. 
+In the following we develop a low variance curvature (LVC) estimator JLVC which matches JDICE at the gradient level and yields lower-variance estimates of the hessian by neglecting H12 +H>12. Before 
+10
+formally introducing JLVC, we motivate such estimator starting with the policy gradient estimate that was originally derived in [13], followed by marginalizing the trajectory level distribution PT (τ |θ) over states st and actions at. Note that we omit reward baselines for notational simplicity. 
+
+∇θJinner = Eτ∼PT (τ|θ) 
+"HX−1 t=0 
+∇θ log πθ(at|st) " 
+ HX−1 t0=t 
+r(st0 , at0 ) 
+!# 
+(58) 
+
+!# 
+HX−1 
+= 
+(59) 
+t=0 
+In that, pπθ 
+E st∼pπθ 
+t(st) 
+at∼πθ(at|st) 
+∇θ log πθ(at|st) 
+ HX−1 t0=t 
+r(st0 , at0 ) 
+
+t(st) denotes the state visitation frequency at time step t, i.e. the probability density of being in st after t steps under the policy πθ. In the general case pπθ 
+t(st) is intractable but depends 
+on the policy parameter θ. We make the simplifying assumption that pπθ 
+t(st) is fixed in a local 
+region of θ. Since we make this assumption at the gradient level, this corresponds to a 1st order Taylor expansion of pπθ 
+t(st) in θ. Note that this assumption is also used in the Monotonic Policy Improvement Theory [7, 10]. Based on this condition, the hessian follows as derivative of (59) whereby a “stop_gradient" expression around the state visitation frequency pπθ 
+
+order Taylor approximation: 
+" 
+Eτ ∇2θJLVC = ∇θHX−1 
+ HX−1 
+t(st) resembles the 1st !# 
+
+t=0 
+HX−1 
+Est∼⊥(pπθ 
+t(st)) 
+at∼πθ(at|st)   
+∇θ log πθ(at|st) 
+t0=t 
+r(st0 , at0 ) 
+ HX−1 
+(60) 
+! 
+= 
+Est∼⊥(pπθ 
+t(st)) 
+∇θ log πθ(at|st)∇θ log πθ(at|st)> 
+r(st0 , at0 ) 
+(61) 
+
+t=0 
+at∼πθ(at|st) 
++ ∇2θlog πθ(at|st) 
+ HX−1 t0=t 
+r(st0 , at0 ) 
+!   
+(62) 
+t0=t 
+
+Since the expectation in (60) is intractable it must be evaluated by a monte carlo estimate. However, simply replacing the expectation with an average of samples trajectories induces a wrong hessian that does not correspond to (62) since outer product of log-gradients would be missing when differentiated. To ensure that automatic differentiation still yields the correct hessian, we add a “dry" importance weight comparable to DICE: 
+
+∇θJLVC =HX−1 t=0 
+πθ(at|st) 
+⊥(πθ(at|st))∇θ log πθ(at|st) 
+ HX−1 t0=t 
+r(st0 , at0 ) 
+! 
+τ ∼ PT (τ |θ) (63) 
+
+When integrated this resembles the LVC “surrogate" objective JLVC. 
+
+JLVC =HX−1 t=0 
+πθ(at|st) 
+⊥(πθ(at|st))
+ HX−1 t0=t 
+r(st0 , at0 ) 
+! 
+τ ∼ PT (τ |θ) (64) 
+
+The gradients of JLVC match ∇θJDICE and resemble an unbiased policy gradient estimate: 
+
+∇θJLVC =HX−1 
+∇θπθ(at|st) 
+ HX−1 
+r(st0 , at0 ) 
+! 
+(65) 
+
+= 
+t=0 HX−1 
+⊥(πθ(at|st))πθ(at|st) 
+t0=t 
+ HX−1 
+! 
+
+t=0 
+HX−1 
+⊥(πθ(at|st))∇θ log πθ(at|st)  HX−1 
+r(st0 , at0 ) 
+t0=t 
+! 
+(66) 
+→ 
+t=0 
+∇θ log πθ(at|st) 11
+r(st0 , at0 ) 
+t0=t 
+(67) 
+
+The respective Hessian can be obtained by differentiating (66): 
+
+∇2θJLVC = ∇θHX−1 
+πθ(at|st) 
+⊥(πθ(at|st))∇θ log πθ(at|st) 
+ HX−1 
+r(st0 , at0 ) 
+! 
+(68) 
+
+t=0 
+t0=t 
+ HX−1 
+! 
+
+= 
+HX−1 t=0 
+πθ(at|st) 
+⊥(πθ(at|st))∇θ log πθ(at|st)∇θ log πθ(at|st)>  HX−1 
++πθ(at|st) 
+r(st0 , at0 ) 
+t0=t 
+! 
+(69) 
+
+⊥(πθ(at|st))∇2θlog πθ(at|st)  Xt 
+t0=t 
+r(st0 , at0 ) ! 
+(70) 
+→ 
+HX−1 t=0
+∇θ log πθ(at0 |st0 )∇θ log πθ(at|st)> t0=0 
+r(st, at) (71) 
++ 
+ Xt t0=0 
+∇2θlog πθ(at0 |st0 ) 
+! 
+r(st, at) (72) 
+
+In expectation ∇2θJLVC is equivalent to H1 + H2: 
+! 
+# 
+
+Eτ∼PT (τ|θ) JLVC = Eτ∼PT (τ|θ)"HX−1 t=0
+ Xt t0=0 
+∇θ log πθ(at0 |st0 )∇θ log πθ(at|st)> 
+r(st, at) (73) 
+
++ Eτ∼PT (τ|θ) 
+"HX−1 t=0
+ Xt t0=0 
+∇2θlog πθ(at0 |st0 ) 
+! 
+r(st, at) 
+# 
+= H1 + H2 
+(74) 
+
+The Hessian ∇2θJLVC no longer provides an unbiased estimate of ∇2θJinner since neglects the matrix term H12 + H>12. This approximation is based on the assumption that the state visitation distribution is locally unaffected by marginal changes in θ and leads to a substantial reduction of variance in the hessian estimate. [6] show that under certain conditions (i.e. infinite horizon MDP, sufficiently rich policy parameterisation) the term H12 + H>12 vanishes around a local optimum θ∗. Given that the conditions hold, this implies that Eτ [∇2θJLVC] → Eτ [∇2θJDICE] as θ → θ∗, i.e. the bias of the LCV estimator becomes negligible close to the local optimum. 
+C Proximal Meta-Policy Search 
+Algorithm 1 Proximal Meta-Policy Search (ProMP) 
+Require: Task distribution ρ, step sizes α, β, KL-penalty coefficient η, clipping range   1: Randomly initialize θ 
+2: while θ not converged do 
+3: Sample batch of tasks Ti ∼ ρ(T ) 
+4: for step n = 0, ..., N − 1 do 
+5: if n = 0 then 
+6: Set θo ← θ 
+7: for all Ti ∼ ρ(T ) do 
+8: Sample pre-update trajectories Di = {τi} from Ti using πθ 
+9: Compute adapted parameters θ0o,i ← θ + α ∇θJLR 
+Ti(θ) with Di = {τi} 
+10: Sample post-update trajectories D0i = {τ0i} from Ti using πθ0o,i 11: Update θ ← θ + βPTi ∇θJProMP 
+Ti(θ) using each D0i = {τ0i} 
+12

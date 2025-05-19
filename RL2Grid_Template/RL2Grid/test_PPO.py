@@ -219,7 +219,10 @@ if __name__ == "__main__":
                                  pbar=tqdm, # Pass the tqdm class for progress bar
                                  path_save=args.runner_output_dir,
                                  add_detailed_output = True )
-
+    # chron_id, chron_name, cum_reward, timestep, max_ts = ....
+    # should i create statistic? like the overall survival rate? maybe with a bar chart?
+    # maybe a bar chart with the episode number on the x axis and the reward on the y axis?
+    # 
 
     print("Grid2Op Runner evaluation finished.")
     print(f"Results summary: {results_summary}")

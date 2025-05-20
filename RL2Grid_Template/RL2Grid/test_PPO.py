@@ -16,6 +16,9 @@ from grid2op.Runner import Runner
 from grid2op.Parameters import Parameters
 from env.heuristic import RHO_SAFETY_THRESHOLD # Import the safety threshold
 from tqdm import tqdm # Import tqdm for the progress bar
+import matplotlib.pyplot as plt
+import os
+import json
 
 
 def load_checkpoint(checkpoint_path, envs, args):
@@ -218,15 +221,93 @@ if __name__ == "__main__":
                                  max_iter=-1,  # -1 means run episodes to their natural end
                                  pbar=tqdm, # Pass the tqdm class for progress bar
                                  path_save=args.runner_output_dir,
-                                 add_detailed_output = True )
-    # chron_id, chron_name, cum_reward, timestep, max_ts = ....
-    # should i create statistic? like the overall survival rate? maybe with a bar chart?
-    # maybe a bar chart with the episode number on the x axis and the reward on the y axis?
-    # 
+                                 add_detailed_output = True)
 
     print("Grid2Op Runner evaluation finished.")
     print(f"Results summary: {results_summary}")
     print(f"Detailed logs and results saved in: {args.runner_output_dir}")
+
+    # --- Plotting Results ---
+
+    if results_summary:
+        # Ensure the output directory exists
+        os.makedirs(args.runner_output_dir, exist_ok=True)
+
+        # 1. Save results_summary to a JSON file
+        # EpisodeData objects are not directly JSON serializable, so we'll store a string representation or exclude them.
+        # For simplicity, let's store the first 5 elements of each tuple.
+        serializable_summary = []
+        for res_tuple in results_summary:
+            serializable_summary.append({
+                "chronic_path": res_tuple[0],
+                "chronic_id": res_tuple[1],
+                "cumulative_reward": res_tuple[2],
+                "timesteps_survived": res_tuple[3],
+                "max_timesteps": res_tuple[4]
+                # res_tuple[5] is EpisodeData, which we are omitting for JSON
+            })
+        summary_file_path = os.path.join(args.runner_output_dir, "results_summary.json")
+        with open(summary_file_path, 'w') as f:
+            json.dump(serializable_summary, f, indent=4)
+        print(f"Saved results summary to: {summary_file_path}")
+
+        # Apply a style for dark gray background
+        plt.style.use('dark_background')
+
+        episode_numbers = np.arange(1, len(results_summary) + 1)
+        cumulative_rewards = [res[2] for res in results_summary]
+        timesteps_survived = [res[3] for res in results_summary]
+        max_timesteps = [res[4] for res in results_summary] # Assuming max_timesteps can vary per chronic
+        survival_rates = [(ts / mt * 100) if mt > 0 else 0 for ts, mt in zip(timesteps_survived, max_timesteps)]
+
+        # Ensure the output directory exists
+        # os.makedirs(args.runner_output_dir, exist_ok=True) # Already done above
+
+        # 2. Bar chart for cumulative rewards
+        plt.figure(figsize=(10, 6))
+        plt.bar(episode_numbers, cumulative_rewards, color='deepskyblue') # Changed color for better contrast on gray
+        plt.xlabel("Episode Number")
+        plt.ylabel("Cumulative Reward")
+        plt.title("Cumulative Reward per Episode")
+        plt.xticks(episode_numbers)
+        plt.grid(axis='y', linestyle='--')
+        plot_path_rewards = os.path.join(args.runner_output_dir, "episode_rewards.png")
+        plt.savefig(plot_path_rewards)
+        print(f"Saved episode rewards plot to: {plot_path_rewards}")
+        plt.close()
+
+        # 3. Line plot for survival rates
+        plt.figure(figsize=(10, 6))
+        plt.plot(episode_numbers, survival_rates, marker='o', linestyle='-', color='coral')
+        
+        # Add average survival rate line
+        if survival_rates:
+            avg_survival_rate = np.mean(survival_rates)
+            plt.axhline(avg_survival_rate, color='lightgreen', linestyle='--', label=f'Avg Survival: {avg_survival_rate:.2f}%')
+            plt.legend()
+
+        plt.xlabel("Episode Number")
+        plt.ylabel("Survival Rate (%)")
+        plt.title("Survival Rate per Episode")
+        plt.xticks(episode_numbers)
+        plt.ylim(0, 100)
+        # plt.grid(True, linestyle='--') # grid is handled by seaborn style
+        plot_path_survival = os.path.join(args.runner_output_dir, "survival_rates.png")
+        plt.savefig(plot_path_survival)
+        print(f"Saved survival rates plot to: {plot_path_survival}")
+        plt.close()
+
+        # 4. Histogram for episode durations (timesteps survived)
+        plt.figure(figsize=(10, 6))
+        plt.hist(timesteps_survived, bins=min(len(episode_numbers), 20), color='mediumseagreen', edgecolor='black') # Changed color
+        plt.xlabel("Episode Duration (Timesteps Survived)")
+        plt.ylabel("Frequency")
+        plt.title("Histogram of Episode Durations")
+        plt.grid(axis='y', linestyle='--')
+        plot_path_durations = os.path.join(args.runner_output_dir, "episode_durations_histogram.png")
+        plt.savefig(plot_path_durations)
+        print(f"Saved episode durations histogram to: {plot_path_durations}")
+        plt.close()
 
     # Clean up
     gym_env_for_eval_config.close()

@@ -11,6 +11,7 @@ from lightsim2grid import LightSimBackend
 from common.imports import np, gym
 from common.reward import LineMarginReward, RedispRewardv1, L2RPNRewardRegularized
 from .heuristic import GridOpRecoAndRevertBus, GridOpIdle, GridOpIdleNonLoop
+from .heuristic import GridOpRecoAndRevertBus, GridOpIdle, GridOpIdleNonLoop
 
 ENV_DIR = os.path.dirname(__file__)
 

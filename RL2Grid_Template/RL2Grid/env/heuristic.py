@@ -175,6 +175,30 @@ class GridOpNonLoop(GridOp):
         return heuristic_reward, done, info
 
 
+    def step(self, gym_action):
+        # Check risk BEFORE applying agent action
+        if not self._risk_overflow:
+            # If risky, ignore agent action and take a do-nothing step
+            # The environment will handle the risk internally or fail
+            # print("RISKY STATE DETECTED BEFORE AGENT ACTION. TAKING DO-NOTHING STEP.") # Optional debug
+            _, reward, done, info = self.init_env.step(self.init_env.action_space())
+            # No heuristic actions are applied after this step because the state was risky
+        else:
+            # If not risky, apply the agent's action
+            # print("SAFE STATE. APPLYING AGENT ACTION.") # Optional debug
+            #print(self.action_space.from_gym(gym_action)) ##PP
+            _, reward, done, info = self.init_env.step(self.action_space.from_gym(gym_action))
+
+        self.ep_reward += reward
+        gym_obs = self.observation_space.to_gym(self._obs)
+
+        if done:
+            info['episode'] = {'l': [self.init_env.nb_time_step], 'r': [self.ep_reward]}    # replacing the use of RecordEpisodeStatistics
+            #print(info)    ##PP
+            #print(info[detailed_infos_for_cascading_failures])    ##PP
+        return gym_obs, float(reward), done, False, info    # Truncation is always false in g2o envs
+        
+
 
 class GridOpIdleNonLoop(GridOpNonLoop):
     def _get_heuristic_actions(self):      

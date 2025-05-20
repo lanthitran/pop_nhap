@@ -38,7 +38,7 @@ D:
 
 
         runs:
-
+main_nonloop_idle_heu.py
 
         D: 
         cd D:\grid2op\RL2Grid\RL2Grid

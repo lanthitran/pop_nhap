@@ -138,3 +138,48 @@ class GridOpRecoAndRevertBus(GridOpReco, GridOpRevertBus):
       
         if actions: return actions
         return [self.init_env.action_space()]    
+    
+
+
+
+    # ============ NON LOOP =======================================================
+
+
+    
+# NEW CLASS: GridOpNonLoop
+class GridOpNonLoop(GridOp):
+    """
+    A GridOp wrapper that applies at most one heuristic action per call to `apply_actions`.
+    It does not loop to take as many heuristic actions as possible.
+    """
+    def apply_actions(self):
+        """
+        Tries to apply at most one heuristic action.
+        Returns the reward from the heuristic action, and the resulting done state and info.
+        If no heuristic action is taken, reward is 0, done is False (as it's called when not done),
+        and info is an empty dictionary.
+        """
+        use_heuristic, heuristic_reward = True, 0.
+
+        g2o_actions = self._get_heuristic_actions() # Get proposed heuristic actions
+        
+        if g2o_actions:  # If there are any heuristic actions proposed
+            g2o_act = g2o_actions[0]  # Take only the first one from the list
+            
+            # Execute the single heuristic step
+            _, reward, done, info = self.init_env.step(g2o_act)
+            heuristic_reward += reward    # Cumulate reward over heuristic steps
+            #print(f"HEURISTIC: {g2o_actions[0]} -> {reward} -> {heuristic_reward}")  ##PP
+            
+                
+        return heuristic_reward, done, info
+
+
+
+class GridOpIdleNonLoop(GridOpNonLoop):
+    def _get_heuristic_actions(self):      
+        if self._risk_overflow: return []
+        else: return [self.init_env.action_space()]    
+
+
+   

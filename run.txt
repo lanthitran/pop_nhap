@@ -38,14 +38,14 @@ D:
 
 
         runs:
-main_nonloop_idle_heu.py
+
 
         D: 
         cd D:\grid2op\RL2Grid\RL2Grid
         conda activate rl2grid
 
 
-            python main_topo_idle_bsline.py --alg PPO  --total-timesteps 3000000  --exp-tag ZZZ_main_topo_idle_bsline_BASELINE_COMPLETE_MINIbatches_40_nn_256_128_64_tanh_n_steps_400_envs_50_train_env --additional-timesteps 100000     --n-minibatches 40   --n-threads 16   --action-type topology   --gamma 0.9 --env-id bus14_train --n-envs 50 --n-steps 400 --vf-coef 0.5 --actor-lr 0.00003 --norm-adv True --norm-obs True --anneal-lr True --clip-coef 0.2 --critic-lr 0.0003    --difficulty 0 --gae-lambda 0.95   --clip-vfloss True --actor-act-fn tanh --actor-layers 256 128 64 --entropy-coef 0.01 --optimize-mem False --critic-act-fn tanh --critic-layers 512 256 256 --max-grad-norm 10   --update-epochs 40 --use-heuristic True --heuristic-type idle --env-config-path scenario.json --th-deterministic True     --wandb-mode offline --time-limit 9000 --seed 42 --cuda True --verbose True --track True  
+            python main_nonloop_idle_heu.py --alg PPO  --total-timesteps 30000000  --exp-tag ZZZ_main_topo_idle_bsline_BASELINE_COMPLETE_MINIbatches_4_nn_256_128_64_tanh_n_steps_400_envs_50_train_env --additional-timesteps 1000000     --n-minibatches 4   --n-threads 16   --action-type topology   --gamma 0.9 --env-id bus14_train --n-envs 50 --n-steps 400 --vf-coef 0.5 --actor-lr 0.00003 --norm-adv True --norm-obs True --anneal-lr True --clip-coef 0.2 --critic-lr 0.0003    --difficulty 0 --gae-lambda 0.95   --clip-vfloss True --actor-act-fn tanh --actor-layers 256 128 64 --entropy-coef 0.01 --optimize-mem False --critic-act-fn tanh --critic-layers 512 256 256 --max-grad-norm 10   --update-epochs 40 --use-heuristic True --heuristic-type idle --env-config-path scenario.json --th-deterministic True     --wandb-mode offline --time-limit 9000 --seed 42 --cuda True --verbose True --track True  
 
 
             python main_topo_idle_bsline.py --alg PPO  --total-timesteps 3000000  --exp-tag ZZZ_main_topo_idle_bsline_BASELINE_COMPLETE_MINIbatches_40_nn_256_128_64_tanh_n_steps_400_envs_50_train_env --additional-timesteps 100000     --n-minibatches 40   --n-threads 16   --action-type topology   --gamma 0.9 --env-id bus14_train --n-envs 50 --n-steps 400 --vf-coef 0.5 --actor-lr 0.00003 --norm-adv True --norm-obs True --anneal-lr True --clip-coef 0.2 --critic-lr 0.0003    --difficulty 0 --gae-lambda 0.95   --clip-vfloss True --actor-act-fn tanh --actor-layers 256 128 64 --entropy-coef 0.01 --optimize-mem False --critic-act-fn tanh --critic-layers 512 256 256 --max-grad-norm 10   --update-epochs 40 --use-heuristic True --heuristic-type idle --env-config-path scenario.json --th-deterministic True     --wandb-mode offline --time-limit 9000 --seed 42 --cuda True --verbose True --track True  

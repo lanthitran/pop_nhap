@@ -1,0 +1,21 @@
+    # maybe do this?: chron_id, chron_name, cum_reward, timestep, max_ts = .... NO
+    # should i create statistic? like the overall survival rate? 
+    # TODO: Consider creating visualizations of the evaluation results
+    # Potential visualizations could include:
+    # 1. Bar chart showing episode rewards (x-axis: episode number, y-axis: cumulative reward)
+    # 2. Line plot showing survival rate over episodes
+    # 3. Histogram of episode durations
+    
+    # The results_summary data structure contains tuples with the following information:
+    # - Path to chronic file (e.g., 'C:\\Users\\admin\\data_grid2op\\l2rpn_case14_sandbox_val\\chronics\\0014')
+    # - Chronic ID (e.g., '0014')
+    # - Cumulative reward (e.g., 0.0)
+    # - Number of timesteps survived (e.g., 1090)
+    # - Maximum possible timesteps (e.g., 8064)
+    # - EpisodeData object containing detailed episode information
+    
+    # Example of results_summary structure:
+    # [('C:\\Users\\admin\\data_grid2op\\l2rpn_case14_sandbox_val\\chronics\\0014', '0014', 0.0, 1090, 8064, <grid2op.Episode.EpisodeData.EpisodeData object>),
+    #  ('C:\\Users\\admin\\data_grid2op\\l2rpn_case14_sandbox_val\\chronics\\0016', '0016', 0.0, 1378, 8064, <grid2op.Episode.EpisodeData.EpisodeData object>),
+    #  ('C:\\Users\\admin\\data_grid2op\\l2rpn_case14_sandbox_val\\chronics\\0025', '0025', 0.0, 1086, 8064, <grid2op.Episode.EpisodeData.EpisodeData object>)]
+                        

@@ -153,6 +153,7 @@ class LineRootMarginReward(BaseReward):
         # TODO what if Hard OT is not 2.0?
         if hasattr(env, 'parameters') and hasattr(env.parameters, 'HARD_OVERFLOW_THRESHOLD'):
             self.hard_overflow_threshold_factor = dt_float(env.parameters.HARD_OVERFLOW_THRESHOLD)
+            print(f"HARD_OVERFLOW_THRESHOLD found in env.parameters: {self.hard_overflow_threshold_factor}")
         else:
             self.logger.warning(
                 "HARD_OVERFLOW_THRESHOLD not found in env.parameters. Defaulting to 2.0. "

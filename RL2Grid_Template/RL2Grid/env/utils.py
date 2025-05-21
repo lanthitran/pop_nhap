@@ -241,7 +241,12 @@ def make_env_TOPOLOGY_IDLE_RootReward(args, idx, resume_run=False, generate_clas
            cr.addReward("TopologyReward", DistanceReward(), 0.3)   # = 1 if topology is the original one, 0 if everything changed
         #else:   # TODO remove else -> redispatch should be higher weighted
         cr.addReward("redispatchReward", RedispRewardv1(), 0.3 if env_type == 'topology' else 0.6)  # Custom one, see common.rewards
-        cr.addReward("LineRootMarginReward", LineRootMarginReward(n_root=3), 0.3)  # n_root =
+        cr.addReward("LineRootMarginReward", LineRootMarginReward(
+            use_softmax=False,
+            temperature_softmax=1.0,
+            n_th_root_safe=3,
+            n_th_root_overflow=3
+        ), 0.3)
         cr.initialize(g2op_env)
 
         g2op_env.chronics_handler.set_chunk_size(100)    # Instead of loading all episode data, get chunks of 100

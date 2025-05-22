@@ -9,7 +9,7 @@ from grid2op.Reward import CombinedReward, IncreasingFlatReward, DistanceReward,
 from lightsim2grid import LightSimBackend
 
 from common.imports import np, gym
-from common.reward import LineMarginReward, RedispRewardv1, L2RPNRewardRegularized, LineRootMarginReward, LineSoftMaxRootMarginReward
+from common.reward import LineMarginReward, RedispRewardv1, L2RPNRewardRegularized, LineRootMarginReward, LineRootMarginRewardSafeRange, LineSoftMaxRootMarginReward
 from .heuristic import GridOpRecoAndRevertBus, GridOpIdle, GridOpIdleNonLoop
 from .heuristic import GridOpRecoAndRevertBus, GridOpIdle, GridOpIdleNonLoop
 
@@ -242,7 +242,7 @@ def make_env_TOPOLOGY_IDLE_RootReward(args, idx, resume_run=False, generate_clas
         #else:   # TODO remove else -> redispatch should be higher weighted
         cr.addReward("redispatchReward", RedispRewardv1(), 0.3 if env_type == 'topology' else 0.6)  # Custom one, see common.rewards
         cr.addReward("LineRootMarginReward", LineRootMarginReward(
-            n_root = 5
+            n_th_root=5
         ), 0.3)
         '''
         cr.addReward("LineSoftMaxRootMarginReward", LineSoftMaxRootMarginReward(
@@ -252,7 +252,13 @@ def make_env_TOPOLOGY_IDLE_RootReward(args, idx, resume_run=False, generate_clas
             n_th_root_overflow=5
         ), 0.3)        
         
-        LineRootMarginReward
+        
+        
+        cr.addReward("LineRootMarginRewardSafeRange", LineRootMarginRewardSafeRange(
+            n_th_root_safe = 5,
+            n_th_root_overflow = 5
+        ), 0.3)
+        
         '''
         
         cr.initialize(g2op_env)

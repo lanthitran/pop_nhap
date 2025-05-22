@@ -169,7 +169,7 @@ class LineRootMarginReward(BaseReward):
             thermal_limits = np.abs(env.get_thermal_limit(), dtype=dt_float)
             
             # Calculate rho (flow/limit ratio) for each line
-            rho = np.divide(ampere_flows, thermal_limits + 1e-2)
+            rho = np.divide(ampere_flows, thermal_limits + 1e-8)
             
             # Initialize root_point array
             root_point = np.zeros_like(rho, dtype=dt_float)
@@ -268,7 +268,7 @@ class LineRootMarginRewardSafeRange(BaseReward):
             thermal_limits = np.abs(env.get_thermal_limit(), dtype=dt_float)
             
             # Calculate rho (flow/limit ratio) for each line
-            rho = np.divide(ampere_flows, thermal_limits + 1e-2)
+            rho = np.divide(ampere_flows, thermal_limits + 1e-8)
             
             # Initialize root_point array
             root_point = np.zeros_like(rho, dtype=dt_float)
@@ -355,7 +355,7 @@ class LineSoftMaxRootMarginReward(BaseReward):
             thermal_limits = np.abs(env.get_thermal_limit(), dtype=dt_float)
             
             # Calculate rho (flow/limit ratio) for each line
-            rho = np.divide(ampere_flows, thermal_limits + 1e-2)
+            rho = np.divide(ampere_flows, thermal_limits + 1e-8)
             
             # Calculate softmax weights if enabled
             if self.use_softmax:

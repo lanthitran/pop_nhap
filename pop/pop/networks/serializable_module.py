@@ -8,6 +8,20 @@ T = TypeVar("T")
 
 
 class SerializableModule(ABC):
+    """
+    SerializableModule is an abstract base class that provides functionality for saving and loading model checkpoints.
+    It is used throughout the project to enable model persistence and resumable training.
+
+    Key features:
+    - Manages checkpoint file paths and naming
+    - Handles incremental checkpoint saving with counter suffixes
+    - Provides abstract methods for state serialization/deserialization
+    - Implements robust checkpoint loading with fallback to previous versions
+    - Used by BasePOP and other classes that need checkpoint functionality
+
+    The class is designed to work with PyTorch's save/load functionality and integrates
+    with the project's logging system.
+    """
     def __init__(self, log_dir: Optional[str], name: Optional[str]):
         self.log_file = self._get_log_file(log_dir, name)
         self.number_of_saves = 0

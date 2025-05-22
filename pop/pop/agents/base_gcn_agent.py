@@ -20,33 +20,56 @@ from pop.agents.replay_buffer import ReplayMemory, Transition
 from pop.configs.agent_architecture import AgentArchitecture
 from pop.networks.dueling_net import DuelingNet
 from pop.networks.serializable_module import SerializableModule
+"""
+BaseGCNAgent is a base class for Graph Convolutional Network (GCN) based reinforcement learning agents.
+It implements core functionality for training and inference using GCNs to process graph-structured observations.
+The agent uses a dueling network architecture with separate value and advantage streams for Q-learning.
 
+Key components:
+- Q-network and target network for stable learning
+- Replay memory for experience replay
+- Exploration module for action selection
+- Graph processing utilities for handling node and edge features
+
+This class serves as the foundation for implementing specific GCN-based RL agents in the project.
+| Hung |
+"""
 
 class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
+    """
+    Base class for GCN-based RL agents implementing core training and inference functionality.
+    Inherits from SerializableModule for 
+    model saving/loading and LoggableModule for logging.
+    | Hung |
+    """
 
     # These names are used to find files in the load directory
     # When loading an agent
-    target_network_name_suffix: str = "_target_network"
-    q_network_name_suffix: str = "_q_network"
-    optimizer_class: str = "th.optim.Adam"
+    target_network_name_suffix: str = "_target_network"  # Suffix for target network files | Hung |
+    q_network_name_suffix: str = "_q_network"  # Suffix for Q-network files | Hung |
+    optimizer_class: str = "th.optim.Adam"  # Default optimizer class | Hung |
 
     def __init__(
         self,
-        agent_actions: Optional[int],
-        node_features: Optional[List[str]],
-        architecture: Optional[AgentArchitecture],
-        training: bool,
-        name: str,
-        device: str,
-        log_dir: Optional[str],
-        tensorboard_dir: Optional[str],
-        feature_ranges: Dict[str, Tuple[float, float]],
-        edge_features: Optional[List[str]] = None,
-        single_node_features: Optional[int] = None,
+        agent_actions: Optional[int],  # Number of possible actions | Hung |
+        node_features: Optional[List[str]],  # List of node feature names | Hung |
+        architecture: Optional[AgentArchitecture],  # Network architecture configuration | Hung |
+        training: bool,  # Whether agent is in training mode | Hung |
+        name: str,  # Agent name | Hung |
+        device: str,  # Device to run on (CPU/GPU) | Hung |
+        log_dir: Optional[str],  # Directory for logging | Hung |
+        tensorboard_dir: Optional[str],  # Directory for tensorboard logs | Hung |
+        feature_ranges: Dict[str, Tuple[float, float]],  # Valid ranges for features | Hung |
+        edge_features: Optional[List[str]] = None,  # List of edge feature names | Hung |
+        single_node_features: Optional[int] = None,  # Size of single node feature vector | Hung |
     ):
         SerializableModule.__init__(self, name=name, log_dir=log_dir)
         LoggableModule.__init__(self, tensorboard_dir=tensorboard_dir)
-
+        """
+        Initialize the GCN agent with network architecture and training configuration.
+        Sets up Q-network, target network, optimizer, and exploration module.
+        | Hung |
+        """
         # Agent Architecture
         self.feature_ranges = feature_ranges
         self.architecture = architecture
@@ -115,18 +138,25 @@ class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
         self.exploration: ExplorationModule = get_exploration_module(self)
 
     def get_exploration_logs(self) -> Dict[str, Any]:
+        """Get current exploration module state for logging | Hung |"""
         return self.exploration.get_state_to_log()
 
     def get_name(self):
+        """Get agent name | Hung |"""
         return self.name
 
     def set_cpu_affinity(self, cpus: List[int]):
+        """Set CPU affinity for the process | Hung |"""
         psutil.Process().cpu_affinity(cpus)
 
     def compute_loss(
         self, transitions_batch: Transition, sampling_weights: Tensor
     ) -> Tuple[Tensor, Tensor]:
-
+        """
+        Compute Huber loss and TD errors for a batch of transitions.
+        Uses target network for stable Q-learning updates.
+        | Hung |
+        """
         observation_batch = self.batch_observations(transitions_batch.observation)
         next_observation_batch = self.batch_observations(
             transitions_batch.next_observation
@@ -179,6 +209,7 @@ class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
         return loss, td_errors
 
     def get_memory(self) -> ReplayMemory:
+        """Get the replay memory buffer | Hung |"""
         return self.memory
 
     def _take_action(
@@ -186,7 +217,11 @@ class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
         transformed_observation: DGLHeteroGraph,
         mask: Optional[List[int]] = None,
     ) -> int:
-
+        """
+        Internal method to select action based on Q-values.
+        Uses advantage stream for action selection.
+        | Hung |
+        """
         # -> (actions)
         advantages: Tensor = self.q_network.advantage(transformed_observation)
         action = int(th.argmax(advantages).item())
@@ -196,11 +231,17 @@ class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
         return action
 
     def q_value(self, transformed_observation: DGLHeteroGraph, action: int):
+        """Get Q-value for given observation and action | Hung |"""
         return self.q_network(transformed_observation).squeeze()[action].item()
 
     def take_action(
         self, transformed_observation: DGLHeteroGraph, mask: Optional[List[int]] = None
     ) -> Tuple[int, float]:
+        """
+        Select action using exploration strategy during training or greedy selection during evaluation.
+        Returns selected action and its Q-value.
+        | Hung |
+        """
         if self.edge_features is not None and transformed_observation.num_edges() == 0:
             transformed_observation.add_edges([0], [0])
             self._add_fake_edge_features(transformed_observation)
@@ -222,12 +263,19 @@ class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
         next_observation: DGLHeteroGraph,
         done: bool,
     ) -> None:
+        """Store transition in replay memory | Hung |"""
+        
         self._cast_features_to_float32(observation)
         self._cast_features_to_float32(next_observation)
 
         self.memory.push(observation, action, next_observation, reward, done)
 
     def learn(self) -> Optional[float]:
+        """
+        Perform one step of Q-learning update using experience replay.
+        Returns loss value if update was performed.
+        | Hung |
+        """
         if len(self.memory) < self.architecture.batch_size:
             return None
         if (
@@ -260,6 +308,8 @@ class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
         return loss.item()
 
     def _add_fake_edge_features(self, graph: dgl.DGLGraph):
+        """Add zero-valued edge features to graph if needed | Hung |"""
+        
         if self.edge_features_schema is not None:
             for edge_feature in self.edge_features_schema:
                 graph.edata[edge_feature] = th.zeros((1,)).to(self.device)
@@ -267,7 +317,8 @@ class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
             raise Exception("Called add_fake_edge_features without features")
 
     def _add_fake_node(self, graph: dgl.DGLGraph):
-
+        """Add zero-valued node features to graph if needed | Hung |"""
+        
         graph.add_nodes(1)
         if not self.single_node_features:
             for node_feature in self.node_features_schema:
@@ -278,6 +329,8 @@ class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
             ).to(self.device)
 
     def _cast_features_to_float32(self, graph: DGLHeteroGraph):
+        """Convert all node and edge features to float32 | Hung |"""
+        
         for feature in graph.node_attr_schemes().keys():
             graph.ndata[feature] = graph.ndata[feature].type(th.float32)
         for feature in graph.edge_attr_schemes().keys():
@@ -293,7 +346,11 @@ class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
         stop_decay: bool = False,
     ) -> Tuple[Optional[float], float]:
         # This method is redefined by ExplorationModule.apply_intrinsic_reward() at runtime if training=True
-
+        """
+        Internal step method handling memory updates and learning.
+        Can be modified by exploration module during training.
+        | Hung |
+        """
         if done:
             self.episodes += 1
             self.alive_steps = 0
@@ -324,7 +381,12 @@ class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
         done: bool,
         stop_decay: bool = False,
     ) -> Tuple[Optional[float], float]:
-
+        """
+        Main step method handling observation processing and learning updates.
+        Manages graph structure and applies exploration during training.
+        | Hung |
+        """
+        
         self._cast_features_to_float32(observation)
         self._cast_features_to_float32(next_observation)
 
@@ -370,6 +432,8 @@ class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
     def get_state(
         self,
     ) -> Dict[str, Any]:
+        """Get complete agent state for saving | Hung |"""
+        
         return {
             "optimizer_state": self.optimizer.state_dict(),
             "q_network_state": self.q_network.state_dict(),
@@ -402,6 +466,8 @@ class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
         learning_steps: int,
         reset_exploration: bool = False,
     ) -> None:
+        """Load saved agent state | Hung |"""
+        
         self.alive_steps = alive_steps
         self.train_steps = train_steps
         self.learning_steps = learning_steps
@@ -414,12 +480,15 @@ class BaseGCNAgent(SerializableModule, LoggableModule, ABC):
 
     @staticmethod
     def batch_observations(graphs: List[DGLHeteroGraph]) -> DGLHeteroGraph:
+        """Batch multiple graphs into a single graph | Hung |"""
         return dgl.batch(graphs)
 
     @staticmethod
     def from_networkx_to_dgl(
         graph: nx.Graph, node_features: List[str], edge_features: List[str], device: str
     ) -> DGLHeteroGraph:
+        """Convert NetworkX graph to DGL graph with features | Hung |"""
+
         return dgl.from_networkx(
             graph.to_directed(),
             node_attrs=node_features if len(graph.nodes) > 0 else [],

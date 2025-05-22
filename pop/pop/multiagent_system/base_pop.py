@@ -42,7 +42,7 @@ from pop.multiagent_system.dictatorship_penalizer import DictatorshipPenalizer
 from pop.multiagent_system.reward_distributor import Incentivizer
 import random
 
-
+# Start of selection
 class BasePOP(AgentWithConverter, SerializableModule, LoggableModule):
     def __init__(
         self,
@@ -1343,7 +1343,7 @@ class BasePOP(AgentWithConverter, SerializableModule, LoggableModule):
             node_attrs=[self.architecture.pop.head_manager_embedding_name],
             device=self.device,
         )
-
+# End of selection
 
 def train(
     env: BaseEnv,

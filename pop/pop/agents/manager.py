@@ -24,12 +24,23 @@ logging.getLogger("lightning").addHandler(logging.NullHandler())
 logging.getLogger("lightning").propagate = False
 
 warnings.filterwarnings("ignore", category=UserWarning)
-
+"""
+Manager is a distributed agent class that extends BaseGCNAgent to provide distributed computing capabilities using Ray.
+It manages the training and inference of GCN-based reinforcement learning agents across multiple processes.
+The class handles node embeddings, action selection, and state management for distributed training.
+| Hung |
+"""
 
 @ray.remote(
     num_gpus=0 if not th.cuda.is_available() else PER_PROCESS_GPU_MEMORY_FRACTION,
 )
 class Manager(BaseGCNAgent):
+    """
+    A distributed manager class that coordinates GCN agent operations across multiple processes.
+    Inherits from BaseGCNAgent and uses Ray for distributed computing.
+    Handles node embeddings, action selection, and state management for distributed training.
+    | Hung |
+    """
     def __init__(
         self,
         agent_actions: int,
@@ -42,6 +53,11 @@ class Manager(BaseGCNAgent):
         edge_features: Optional[List[str]] = None,
         single_node_features: Optional[int] = None,
     ):
+        """
+        Initialize the distributed manager with agent configuration and network architecture.
+        Sets up the base GCN agent and initializes embedding size.
+        | Hung |
+        """
         BaseGCNAgent.__init__(
             self,
             agent_actions=agent_actions,
@@ -60,9 +76,18 @@ class Manager(BaseGCNAgent):
         self.embedding_size = self.q_network.get_embedding_size()
 
     def get_embedding_size(self) -> int:
+        """
+        Returns the size of the node embeddings used by the network.
+        | Hung |
+        """
         return self.embedding_size
 
     def get_node_embeddings(self, transformed_observation: DGLHeteroGraph) -> Tensor:
+        """
+        Computes node embeddings for the given graph observation.
+        Handles edge cases where no edges exist by adding a fake edge.
+        | Hung |
+        """
         if self.edge_features is not None:
             if transformed_observation.num_edges() == 0:
                 transformed_observation.add_edge([0], [0])
@@ -73,7 +98,11 @@ class Manager(BaseGCNAgent):
         self, transformed_observation: DGLHeteroGraph, mask: List[int] = None
     ) -> int:
         # Mask must be not none
-
+        """
+        Selects an action based on the Q-network's advantage values and action masking.
+        Returns the index of the action with highest advantage after masking.
+        | Hung |
+        """
         action_list = list(range(self.actions))
 
         # -> (actions)
@@ -88,6 +117,12 @@ class Manager(BaseGCNAgent):
 
     @staticmethod
     def factory(checkpoint: Dict[str, Any], **kwargs) -> ObjectRef:
+        """
+        Creates a new distributed manager instance from a checkpoint.
+        Handles loading of network states, optimizer states, and training parameters.
+        Returns a Ray object reference to the created manager.
+        | Hung |
+        """
         manager: ObjectRef = Manager.remote(
             agent_actions=checkpoint["agent_actions"],
             node_features=checkpoint["node_features"],

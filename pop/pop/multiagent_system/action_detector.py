@@ -1,8 +1,16 @@
 from collections import deque
 from typing import List
 
-
 class ActionDetector:
+    """
+    A class that detects and penalizes repeated actions in a multi-agent system.
+    This helps prevent agents from getting stuck in action loops and encourages exploration.
+    
+    Args:
+        loop_length (int): Length of action history to check for repetitions. Defaults to 1.
+        penalty_value (float): Penalty value to apply for repeated actions. Defaults to 0.
+        repeatable_actions (List[int]): List of action IDs that are allowed to be repeated without penalty.
+    """
     def __init__(
         self,
         loop_length: int = 1,

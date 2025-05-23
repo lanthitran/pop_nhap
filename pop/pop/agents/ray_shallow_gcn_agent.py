@@ -6,6 +6,8 @@ from ray import ObjectRef
 
 from pop.agents.base_gcn_agent import BaseGCNAgent
 from pop.configs.agent_architecture import AgentArchitecture
+
+
 """
 RayShallowGCNAgent is a simplified version of the GCN agent that implements a 
 minimal interface for distributed computing using Ray. It serves as a lightweight 

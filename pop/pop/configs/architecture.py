@@ -5,9 +5,12 @@ import toml
 
 from pop.configs.agent_architecture import AgentArchitecture
 from pop.configs.type_aliases import ParsedTOMLDict
+
+
 """
-This module defines the core architecture configuration classes for the POP (Power Optimization Platform) system.
+This module defines the core architecture configuration classes for the POP (Power Optimization Platform?) system.
 It provides data structures and initialization logic for managing different components of the power system architecture.
+| Hung |
 """
 
 @dataclass(frozen=True)
@@ -44,6 +47,7 @@ class POPArchitecture:
         generator_storage_only: Whether generators are storage-only
         remove_no_action: Whether to remove no-action option
         manager_remove_no_action: Whether manager should remove no-action option
+    | Hung |
     """
     node_features: List[str]
     edge_features: List[str]
@@ -85,6 +89,7 @@ class Architecture:
         agent: AgentArchitecture instance for agent configuration
         manager: AgentArchitecture instance for manager configuration
         head_manager: AgentArchitecture instance for head manager configuration
+    | Hung |
     """
     pop: POPArchitecture
     
@@ -109,6 +114,7 @@ class Architecture:
             network_architecture_implementation_folder_path: Path to network implementation folder
             network_architecture_frame_folder_path: Path to network frame folder
             load_from_dict: Optional dictionary to load configuration from
+        | Hung |
         """
         if load_from_dict is not None:
             object.__setattr__(self, "pop", POPArchitecture(**load_from_dict["pop"]))

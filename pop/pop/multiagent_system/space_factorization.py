@@ -13,23 +13,38 @@ from pop.community_detection.community_detector import Community
 from grid2op.Exceptions.IllegalActionExceptions import IllegalAction
 from tqdm import tqdm
 
-Substation = int
-EncodedAction = int
+"""
+This module handles space factorization for multi-agent systems in power grid operations.
+It provides functionality for action space factorization, observation factorization,
+and graph community splitting. The code is essential for distributed decision-making
+in power grid control. | Hung |
+"""
 
+# Type aliases for better code readability | Hung |
+Substation = int  # Represents a substation ID in the power grid | Hung |
+EncodedAction = int  # Represents an encoded action ID | Hung |
 
 class HashableAction:
+    """
+    A wrapper class that makes BaseAction objects hashable for use in dictionaries.
+    This is crucial for action lookup tables and caching. 
+    | Hung |
+    """
     def __init__(self, action: BaseAction):
         self.action = action
-        self.hash = hashlib.md5()
+        self.hash = hashlib.md5()  # Using MD5 for hashing action impacts | Hung |
 
     def __key(self):
+        # Creates a unique key based on action's impact on grid objects | Hung |
         return str(self.action.impact_on_objects()).encode()
 
     def __hash__(self):
+        # Generates a hash value for the action | Hung |
         self.hash.update(self.__key())
         return int(self.hash.hexdigest(), base=16)
 
     def __eq__(self, other):
+        # Compares two HashableAction objects | Hung |
         if isinstance(other, HashableAction):
             return self.__key() == other.__key()
         return NotImplemented
@@ -45,6 +60,12 @@ def _get_topological_action_owner(
     line_origin_to_node: np.array,
     line_extremity_to_node: np.array,
 ):
+    """
+    Determines which substation owns a topological action based on the object type.
+    Used for action space factorization. 
+    | Hung |
+    """
+    # Maps different grid components to their owning substations | Hung |
     if topological_object["object_type"] == "line (origin)":
         return line_origin_to_node[topological_object["object_id"]]
     elif topological_object["object_type"] == "line (extremity)":
@@ -64,7 +85,12 @@ def _assign_action_gen_only(
     generator_to_node: np.array,
     encoded_action: int,
 ) -> Optional[Tuple[int, int]]:
-
+    """
+    Assigns generator-only actions to their respective substations.
+    Used when only generator actions are considered. 
+    | Hung |
+    """
+    # Extract action types and impact | Hung |
     (
         _,
         _,
@@ -76,9 +102,11 @@ def _assign_action_gen_only(
     ) = action.get_types()
     action_impact = action.impact_on_objects()
 
+    # Ensure only one action type is present | Hung |
     if [topology, line, redispatching, curtailment].count(True) > 1:
         return
 
+    # Handle redispatching actions | Hung |
     if redispatching:
         for generator in action_impact["redispatch"]["generators"]:
             return generator_to_node[generator["gen_id"]], encoded_action
@@ -94,6 +122,12 @@ def _assign_action(
     composite_actions: bool = False,
     generator_storage_only: bool = False,
 ) -> Optional[Tuple[int, int]]:
+    """
+    Assigns actions to their respective substations based on the action type
+    and impact. Handles various types of grid actions. 
+    | Hung |
+    """
+    # Extract action types and impact | Hung |
     (
         _,
         _,
@@ -105,19 +139,23 @@ def _assign_action(
     ) = action.get_types()
     action_impact = action.impact_on_objects()
 
+    # Validate action composition | Hung |
     if not composite_actions:
         if [topology, line, redispatching, curtailment].count(True) > 1:
             return
 
+    # Handle redispatching actions | Hung |
     if redispatching:
         for generator in action_impact["redispatch"]["generators"]:
             return generator_to_node[generator["gen_id"]], encoded_action
 
+    # Check for unsupported action types | Hung |
     if storage:
         raise Exception("Storage not supported: " + str(action_impact))
     if curtailment:
         raise Exception("Curtailment not supported: " + str(action_impact))
 
+    # Handle topological and line actions | Hung |
     if not generator_storage_only:
         if topology:
             action_impact_on_topology = action_impact["topology"]
@@ -153,18 +191,29 @@ def _assign_action(
 
 
 def generate_redispatching_action_space(env, actions_per_generator: int = 10):
+    """
+    Generates the action space for redispatching operations.
+    Creates actions for both redispatchable and renewable generators. 
+    | Hung |
+    """
     print("Generating redispatching action space")
     print("WARNING: ignoring actions on storage")
+    
+    # Initialize data structures | Hung |
     sub_to_action_space = {sub: [] for sub in range(env.n_sub)}
     all_actions = []
     lookup_table = {}
     converter = IdToAct(env.action_space)
 
+    # Set up curtailment values | Hung |
     curtailment_values = np.linspace(0.1, 0.9, actions_per_generator)
     curtailment_actions_available = True
 
     print("Available curtailment values\n" + str(curtailment_values))
+    
+    # Process each generator | Hung |
     for gen, sub in enumerate(env.gen_to_subid):
+        # Handle redispatchable generators | Hung |
         if env.gen_redispatchable[gen]:
             redispatching_values = np.linspace(
                 -env.gen_max_ramp_down[gen],
@@ -187,6 +236,7 @@ def generate_redispatching_action_space(env, actions_per_generator: int = 10):
                     sub_to_action_space[sub].append(action)
                     all_actions.append(action)
 
+        # Handle renewable generators | Hung |
         if env.gen_renewable[gen] and curtailment_actions_available:
             try:
                 for curtailment_value in curtailment_values:
@@ -203,10 +253,12 @@ def generate_redispatching_action_space(env, actions_per_generator: int = 10):
                 print("Ignoring renewable generators")
                 curtailment_actions_available = False
 
+    # Ensure each substation has at least one action | Hung |
     for _, action_space in sub_to_action_space.items():
         if not action_space:
             action_space.append(env.action_space({}))
 
+    # Create lookup table | Hung |
     converter.init_converter(all_actions=all_actions)
     converter_actions = list(converter.all_actions)
     for action in converter_actions:

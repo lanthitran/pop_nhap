@@ -9,6 +9,8 @@ from pop.configs.placeholders_handling import (
     replace_placeholders,
 )
 from pop.configs.type_aliases import ParsedTOMLDict
+
+
 """
 This module defines the core data structures for representing neural network architectures in the POP framework.
 It provides a flexible way to define and load network architectures from TOML configuration files.
@@ -29,6 +31,7 @@ This module is a crucial part of the POP framework as it:
 - Enables configuration-driven network design through TOML files
 - Supports template-based architecture definitions with placeholders
 - Allows for dynamic parameter resolution through backward references
+| Hung |
 """
 
 @dataclass(frozen=True)
@@ -41,6 +44,7 @@ class NetworkLayer:
         type (str): Type of the neural network layer (e.g., 'conv', 'linear')
         module (str): Python module path where the layer implementation can be found
         kwargs (Dict): Dictionary of keyword arguments for layer initialization
+    | Hung |
     """
     name: str
     type: str
@@ -60,6 +64,7 @@ class NetworkArchitecture:
     
     Attributes:
         layers (List[NetworkLayer]): List of network layers in the architecture
+    | Hung |
     """
     layers: List[NetworkLayer]
 
@@ -82,6 +87,7 @@ class NetworkArchitecture:
         The initialization supports two modes:
         1. Direct loading from a dictionary of layer configurations
         2. Loading from TOML files using a frame-implementation pattern
+        | Hung |
         """
         if load_from_dict:
             object.__setattr__(

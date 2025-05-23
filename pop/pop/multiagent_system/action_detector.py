@@ -10,6 +10,7 @@ class ActionDetector:
         loop_length (int): Length of action history to check for repetitions. Defaults to 1.
         penalty_value (float): Penalty value to apply for repeated actions. Defaults to 0.
         repeatable_actions (List[int]): List of action IDs that are allowed to be repeated without penalty.
+    | Hung |
     """
     def __init__(
         self,

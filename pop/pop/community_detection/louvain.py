@@ -7,6 +7,14 @@ from networkx.algorithms.community import modularity
 from pop.community_detection.power_supply_modularity import power_supply_modularity
 
 
+"""
+This module implements the Louvain method for community detection in networks.
+The Louvain method is a greedy optimization method that extracts communities from 
+large networks by optimizing modularity. It is particularly efficient for large 
+networks and can handle both directed and undirected graphs.
+| Hung |
+"""
+
 def louvain_communities(
     G,
     partition: List[Set[int]],
@@ -18,7 +26,24 @@ def louvain_communities(
     alpha: float = 0.5,
     beta: float = 0.5,
 ):
-
+    """
+    Find communities in a graph using the Louvain method.
+    
+    Args:
+        G: NetworkX graph
+        partition: Initial partition of the graph
+        weight: Edge attribute to use as weight
+        resolution: Resolution parameter for modularity
+        threshold: Minimum modularity gain to continue optimization
+        seed: Random seed for reproducibility
+        enable_power_supply_modularity: Whether to use power supply modularity
+        alpha: Alpha parameter for power supply modularity
+        beta: Beta parameter for power supply modularity
+    
+    Returns:
+        List of sets containing the nodes in each community
+    | Hung |
+    """
     d = louvain_partitions(
         G,
         partition,
@@ -45,7 +70,27 @@ def louvain_partitions(
     alpha: float = 0.5,
     beta: float = 0.5,
 ):
-
+    """
+    Generate partitions of the graph using the Louvain method.
+    
+    This is a generator function that yields partitions at each level
+    of the Louvain algorithm until no further improvement is possible.
+    
+    Args:
+        G: NetworkX graph
+        partition: Initial partition of the graph
+        weight: Edge attribute to use as weight
+        resolution: Resolution parameter for modularity
+        threshold: Minimum modularity gain to continue optimization
+        seed: Random seed for reproducibility
+        enable_power_supply_modularity: Whether to use power supply modularity
+        alpha: Alpha parameter for power supply modularity
+        beta: Beta parameter for power supply modularity
+    
+    Yields:
+        List of sets containing the nodes in each community
+    | Hung |
+    """
     partition = partition
     if enable_power_supply_modularity:
         mod = power_supply_modularity(G, partition, alpha, beta)
@@ -99,6 +144,24 @@ def _one_level(G, m, partition, resolution=1, is_directed=False, seed=None):
     seed : integer, random_state, or None (default)
         Indicator of random number generation state.
         See :ref:`Randomness<randomness>`.
+    """
+    """
+        Calculate one level of the Louvain partitions tree.
+    
+    This function implements one iteration of the Louvain algorithm,
+    where nodes are moved between communities to maximize modularity.
+    
+    Args:
+        G: NetworkX Graph/DiGraph
+        m: Size of the graph G
+        partition: Current partition of the graph
+        resolution: Resolution parameter for modularity
+        is_directed: Whether G is a directed graph
+        seed: Random seed for reproducibility
+    
+    Returns:
+        Tuple of (partition, inner_partition, improvement)
+    | Hung |
     """
     node2com = {u: i for i, u in enumerate(G.nodes())}
     inner_partition = [{u} for u in G.nodes()]
@@ -173,6 +236,17 @@ def _neighbor_weights(nbrs, node2com):
     node2com : dictionary
            Dictionary with all graph's nodes as keys and their community index as value.
     """
+    """
+        Calculate weights between node and its neighbor communities.
+    
+    Args:
+        nbrs: Dictionary with nodes' neighbours as keys and their edge weight as value
+        node2com: Dictionary with all graph's nodes as keys and their community index as value
+    
+    Returns:
+        Dictionary mapping community indices to total edge weights
+    | Hung |
+    """
     weights = defaultdict(float)
     for nbr, wt in nbrs.items():
         weights[node2com[nbr]] += wt
@@ -181,6 +255,21 @@ def _neighbor_weights(nbrs, node2com):
 
 def _gen_graph(G, partition):
     """Generate a new graph based on the partitions of a given graph"""
+    
+    """
+        Generate a new graph based on the partitions of a given graph.
+    
+    This function creates a new graph where nodes represent communities
+    and edges represent connections between communities.
+    
+    Args:
+        G: Original graph
+        partition: Current partition of the graph
+    
+    Returns:
+        New graph representing communities
+    | Hung |
+    """
     H = G.__class__()
     node2com = {}
     for i, part in enumerate(partition):
@@ -200,6 +289,13 @@ def _gen_graph(G, partition):
 
 
 def _convert_multigraph(G, weight, is_directed):
+    """
+    Convert a Multigraph to normal Graph.
+    
+    This function combines multiple edges between the same nodes
+    | Hung |
+    """
+
     """Convert a Multigraph to normal Graph"""
     if is_directed:
         H = nx.DiGraph()

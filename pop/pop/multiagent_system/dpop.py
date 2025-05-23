@@ -21,25 +21,44 @@ import random
 from pop.multiagent_system.dictatorship_penalizer import DictatorshipPenalizer
 
 
+""" 
+DPOP (Distributed Partially Observable Planning) class implements a hierarchical multi-agent system
+for power grid control using reinforcement learning. It extends BasePOP with distributed capabilities
+and manages a hierarchy of agents including a head manager and community managers. | Hung |
+
+This class implements a distributed multi-agent system for power grid control using reinforcement learning.
+Key components:
+ - Head Manager: Top-level agent that coordinates community managers
+ - Community Managers: Mid-level agents that manage groups of substations
+ - Substation Agents: Low-level agents that control individual substations
+The system uses Ray for distributed computing and implements a hierarchical decision-making process. | Hung |
+| Hung |
+"""
+
 class DPOP(BasePOP):
     def __init__(
         self,
-        env: BaseEnv,
-        name: str,
-        architecture: Architecture,
-        training: bool,
-        seed: int,
-        feature_ranges: Dict[str, Tuple[float, float]],
-        checkpoint_dir: Optional[str] = None,
-        tensorboard_dir: Optional[str] = None,
-        device: Optional[str] = None,
-        local: bool = False,
-        pre_train: bool = False,
+        env: BaseEnv,  # Grid2Op environment for power grid simulation | Hung |
+        name: str,     # Identifier for this DPOP instance | Hung |
+        architecture: Architecture,  # Neural network architecture configuration | Hung |
+        training: bool,  # Whether in training or evaluation mode | Hung |
+        seed: int,     # Random seed for reproducibility | Hung |
+        feature_ranges: Dict[str, Tuple[float, float]],  # Valid ranges for features | Hung |
+        checkpoint_dir: Optional[str] = None,  # Directory to save model checkpoints | Hung |
+        tensorboard_dir: Optional[str] = None,  # Directory for tensorboard logs | Hung |
+        device: Optional[str] = None,  # Computing device (CPU/GPU) | Hung |
+        local: bool = False,  # Whether to run in local mode | Hung |
+        pre_train: bool = False,  # Whether in pre-training phase | Hung |
     ):
+        # Set CPU affinity to specific cores for better performance | Hung |
         process = psutil.Process()
         process.cpu_affinity(list(range(0, 14)))
         print("Running on cores: " + str(process.cpu_affinity()))
+        
+        # Initialize Ray for distributed computing | Hung |
         ray.init(local_mode=local, num_cpus=len(process.cpu_affinity()) * 2)
+        
+        # Initialize parent class with basic configuration | Hung |
         super(DPOP, self).__init__(
             env=env,
             name=name,
@@ -52,6 +71,9 @@ class DPOP(BasePOP):
             pre_train=pre_train,
             feature_ranges=feature_ranges,
         )
+
+        # Extract node features from architecture configuration | Hung |
+        # This determines the size of neural network layers | Hung |
         try:
             node_features = self.architecture.manager.embedding.layers[-1].kwargs[
                 "out_feats"
@@ -59,9 +81,13 @@ class DPOP(BasePOP):
         except KeyError:
             # If last layer is an activation one
             # Should make this general
+            # If last layer is an activation one, get features from second-to-last layer | Hung |
             node_features = self.architecture.manager.embedding.layers[-2].kwargs[
                 "out_feats"
             ]
+
+        # Define feature ranges for different components | Hung |
+        # These ranges are used for normalization and validation | Hung |
         sub_ranges = {
             "sub_" + str(n_sub): tuple([0, 1]) for n_sub in range(self.env.n_sub * 2)
         }
@@ -74,6 +100,7 @@ class DPOP(BasePOP):
         }
 
         # Head Manager Initialization
+        # Creates the top-level manager with remote capabilities using Ray | Hung |
         self.head_manager: Optional[Manager] = Manager.remote(
             agent_actions=self.env.n_sub * 2,
             node_features=[self.architecture.pop.head_manager_embedding_name],
@@ -88,6 +115,9 @@ class DPOP(BasePOP):
                 "node_features": {**sub_ranges, **embedding_ranges, **action_ranges}
             },
         )
+
+        # Initialize dictatorship penalty if configured | Hung |
+        # This helps prevent any single agent from dominating decision-making | Hung |
         if self.architecture.pop.dictatorship_penalty:
             self.dictatorship_penalty = DictatorshipPenalizer(
                 {choice: 1 for choice in range(self.env.n_sub)},
@@ -95,9 +125,12 @@ class DPOP(BasePOP):
             )
 
     def get_action(self, graph: dgl.DGLHeteroGraph) -> Tuple[int, Optional[float]]:
+        # Get action from head manager or random action during pre-training | Hung |
+        # During pre-training, actions are random to encourage exploration | Hung |
         if self.pre_train:
             return random.sample(list(range(graph.num_nodes())), 1)[0], None
         else:
+            # Filters out invalid actions based on current state | Hung |
             mask = [
                 node
                 for node in range(graph.num_nodes())
@@ -105,10 +138,12 @@ class DPOP(BasePOP):
                 or graph.ndata["embedding_community_action"][node][-1].item() != 0
             ]
 
+            # Get action from head manager using Ray for distributed execution | Hung |
             chosen_node, q_value = ray.get(
                 self.head_manager.take_action.remote(graph, mask=mask)
             )
 
+        # Log exploration metrics | Hung |
         self.log_exploration(
             "head_manager",
             ray.get(self.head_manager.get_exploration_logs.remote()),
@@ -119,20 +154,24 @@ class DPOP(BasePOP):
 
     def _extra_step(
         self,
-        action: int,
-        reward: float,
-        next_sub_graphs: Dict[Community, dgl.DGLHeteroGraph],
-        next_substation_to_encoded_action: Dict[Substation, EncodedAction],
-        next_graph: nx.Graph,
-        done: bool,
-        next_communities: List[Community],
-        next_community_to_manager: Dict[Community, Manager],
+        action: int,  # Selected action | Hung |
+        reward: float,  # Reward received | Hung |
+        next_sub_graphs: Dict[Community, dgl.DGLHeteroGraph],  # Next state sub-graphs | Hung |
+        next_substation_to_encoded_action: Dict[Substation, EncodedAction],  # Next actions | Hung |
+        next_graph: nx.Graph,  # Next state graph | Hung |
+        done: bool,  # Whether episode is done | Hung |
+        next_communities: List[Community],  # Next state communities | Hung |
+        next_community_to_manager: Dict[Community, Manager],  # Next state managers | Hung |
     ):
+        # Calculate dictatorship penalty if enabled | Hung |
+        # Penalizes actions that give too much control to a single agent | Hung |
         penalty = 0
         if self.architecture.pop.dictatorship_penalty:
             penalty = self.dictatorship_penalty.penalty(action)
 
         if done:
+            # Handle terminal state | Hung |
+            # Updates the head manager with final state information | Hung |
             loss, full_reward = ray.get(
                 self.head_manager.step.remote(
                     observation=self.summarized_graph,
@@ -144,6 +183,8 @@ class DPOP(BasePOP):
                 )
             )
         else:
+            # Get next state information | Hung |
+            # Computes the next state representation for the head manager | Hung |
             next_community_to_substation, _ = self._get_manager_actions(
                 next_graph,
                 next_sub_graphs,
@@ -152,6 +193,8 @@ class DPOP(BasePOP):
                 next_community_to_manager,
             )
 
+            # Compute summarized graph for next state | Hung |
+            # Creates a compact representation of the next state | Hung |
             next_summarized_graph: dgl.DGLHeteroGraph = self._compute_summarized_graph(
                 next_graph,
                 next_sub_graphs,
@@ -161,6 +204,7 @@ class DPOP(BasePOP):
                 new_community_to_manager_dict=next_community_to_manager,
             )
 
+            # Update head manager with new state information | Hung |
             loss, full_reward = ray.get(
                 self.head_manager.step.remote(
                     observation=self.summarized_graph,
@@ -172,6 +216,7 @@ class DPOP(BasePOP):
                 )
             )
 
+        # Log training metrics | Hung |
         self.log_step(
             losses=[loss],
             implicit_rewards=[full_reward - reward],
@@ -181,23 +226,26 @@ class DPOP(BasePOP):
         )
 
     def get_state(self: "DPOP") -> Dict[str, Any]:
+        # Get current state including head manager state | Hung |
+        # Used for saving checkpoints and resuming training | Hung |
         state: Dict[str, Any] = super().get_state()
         state["head_manager_state"] = ray.get(self.head_manager.get_state.remote())
         return state
 
     @staticmethod
     def factory(
-        checkpoint: Dict[str, Any],
-        env: Optional[BaseEnv] = None,
-        tensorboard_dir: Optional[str] = None,
-        checkpoint_dir: Optional[str] = None,
-        name: Optional[str] = None,
-        training: Optional[bool] = None,
-        local: bool = False,
-        pre_train: bool = False,
-        reset_exploration: bool = False,
-        architecture: Optional[Architecture] = None,
+        checkpoint: Dict[str, Any],  # Checkpoint data to load | Hung |
+        env: Optional[BaseEnv] = None,  # Environment instance | Hung |
+        tensorboard_dir: Optional[str] = None,  # Tensorboard directory | Hung |
+        checkpoint_dir: Optional[str] = None,  # Checkpoint directory | Hung |
+        name: Optional[str] = None,  # Instance name | Hung |
+        training: Optional[bool] = None,  # Training mode | Hung |
+        local: bool = False,  # Local mode flag | Hung |
+        pre_train: bool = False,  # Pre-training flag | Hung |
+        reset_exploration: bool = False,  # Reset exploration flag | Hung |
+        architecture: Optional[Architecture] = None,  # Architecture configuration | Hung |
     ) -> "DPOP":
+        # Create DPOP instance from checkpoint | Hung |
         dpop: "DPOP" = DPOP(
             env=env,
             name=checkpoint["name"] if name is None else name,

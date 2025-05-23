@@ -48,6 +48,7 @@ def get_network(
         
     Returns:
         A sequential model containing the configured layers
+    | Hung |
     """
     if is_graph_network:
         model: dgl_nn.Sequential = dgl_nn.Sequential()
@@ -69,6 +70,8 @@ def _parse_layer(self: Union["GCN", "DuelingNet"], layer: NetworkLayer) -> str:
         
     Returns:
         String representation of layer initialization code
+
+        | Hung |
     """
     return (
         (
@@ -111,6 +114,8 @@ def _replace_dynamic_placeholder(
         
     Returns:
         String with placeholders replaced by actual values
+    
+    | Hung |
     """
     while re.match(r"<\w*>", placeholder):
         open_bracket = placeholder.find("<")

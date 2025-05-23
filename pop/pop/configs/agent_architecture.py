@@ -5,9 +5,12 @@ from typing import Any, ClassVar, List, Optional, Type
 
 from pop.configs.network_architecture import NetworkArchitecture
 from pop.configs.type_aliases import EventuallyNestedDict
+
+
 """
 This module defines the architecture and configuration classes for reinforcement learning agents.
 It provides a framework for different exploration strategies and network architectures used in deep RL.
+| Hung |
 """
 
 @dataclass(frozen=True)
@@ -15,22 +18,32 @@ class ExplorationParameters(abc.ABC):
     """
     Abstract base class for exploration strategy parameters.
     Defines the interface that all exploration strategies must implement.
+    | Hung |
     """
     @abc.abstractmethod
     def __init__(self, d: dict):
-        """Initialize exploration parameters from a dictionary."""
+        """
+        Initialize exploration parameters from a dictionary.
+        | Hung |
+        """
         ...
 
     @staticmethod
     @abc.abstractmethod
     def network_architecture_fields() -> List[List[str]]:
-        """Return list of network architecture field paths for this exploration strategy."""
+        """
+        Return list of network architecture field paths for this exploration strategy.
+        | Hung |
+        """
         ...
 
     @staticmethod
     @abc.abstractmethod
     def get_method() -> str:
-        """Return the name of this exploration method."""
+        """
+        Return the name of this exploration method.
+        | Hung |
+        """
         ...
 
 
@@ -39,6 +52,7 @@ class InverseModelArchitecture:
     """
     Architecture for the inverse model used in curiosity-driven exploration.
     Predicts actions from state transitions.
+    | Hung |
     """
     embedding: NetworkArchitecture  # Network for state embedding
     action_prediction_stream: NetworkArchitecture  # Network for action prediction
@@ -51,6 +65,7 @@ class RandomNetworkDistillerArchitecture:
     """
     Architecture for the random network distillation component.
     Used to measure state novelty in exploration.
+    | Hung |
     """
     network: NetworkArchitecture  # The distillation network
     learning_rate: float  # Learning rate for optimization
@@ -62,6 +77,7 @@ class EpisodicMemoryParameters(ExplorationParameters):
     """
     Parameters for episodic memory-based exploration.
     Uses memory of past states to encourage exploration of novel states.
+    | Hung |
     """
     method: str  # Exploration method identifier
     size: int  # Size of the episodic memory
@@ -73,10 +89,18 @@ class EpisodicMemoryParameters(ExplorationParameters):
 
     @staticmethod
     def get_method() -> str:
+        """
+        Return the episodic memory exploration method identifier.
+        | Hung |
+        """
         return "episodic_memory"
 
     @staticmethod
     def network_architecture_fields() -> List[List[str]]:
+        """
+        Return the network architecture field paths for episodic memory exploration.
+        | Hung |
+        """
         return [
             ["random_network_distiller", "network"],
             ["inverse_model", "embedding"],
@@ -84,6 +108,10 @@ class EpisodicMemoryParameters(ExplorationParameters):
         ]
 
     def __init__(self, d: dict):
+        """
+        Initialize episodic memory parameters from a dictionary.
+        | Hung |
+        """
         super().__init__(d)
         object.__setattr__(self, "method", d["method"])
         object.__setattr__(self, "size", d["size"])
@@ -107,6 +135,7 @@ class EpsilonGreedyParameters(ExplorationParameters):
     """
     Parameters for epsilon-greedy exploration strategy.
     Balances exploration and exploitation using an epsilon parameter.
+    | Hung |
     """
     method: str  # Exploration method identifier
     max_epsilon: float  # Initial exploration rate
@@ -115,9 +144,17 @@ class EpsilonGreedyParameters(ExplorationParameters):
 
     @staticmethod
     def get_method() -> str:
+        """
+        Return the epsilon-greedy exploration method identifier.
+        | Hung |
+        """
         return "epsilon_greedy"
 
     def __init__(self, d: dict):
+        """
+        Initialize epsilon-greedy parameters from a dictionary.
+        | Hung |
+        """
         super().__init__(d)
         object.__setattr__(self, "method", d["method"])
         object.__setattr__(self, "max_epsilon", d["max_epsilon"])
@@ -126,6 +163,10 @@ class EpsilonGreedyParameters(ExplorationParameters):
 
     @staticmethod
     def network_architecture_fields() -> List[List[str]]:
+        """
+        Return empty list as epsilon-greedy doesn't use network architectures.
+        | Hung |
+        """
         return []
 
 
@@ -135,16 +176,29 @@ class EpsilonEpisodicParameters(
 ):
     """
     Combined exploration strategy using both epsilon-greedy and episodic memory.
+    | Hung |
     """
     @staticmethod
     def get_method() -> str:
+        """
+        Return the combined epsilon-episodic exploration method identifier.
+        | Hung |
+        """
         return "epsilon_episodic"
 
     def __init__(self, d: dict):
+        """
+        Initialize combined epsilon-episodic parameters from a dictionary.
+        | Hung |
+        """
         super().__init__(d)
 
     @staticmethod
     def network_architecture_fields() -> List[List[str]]:
+        """
+        Return network architecture fields from episodic memory component.
+        | Hung |
+        """
         return EpisodicMemoryParameters.network_architecture_fields()
 
 
@@ -153,6 +207,7 @@ class ReplayMemoryParameters:
     """
     Parameters for the replay memory buffer.
     Stores and samples past experiences for training.
+    | Hung |
     """
     alpha: float  # Priority exponent
     max_beta: float  # Maximum importance sampling weight
@@ -166,6 +221,7 @@ class AgentArchitecture:
     """
     Main architecture class defining the structure of the reinforcement learning agent.
     Includes network architectures, exploration strategy, and training parameters.
+    | Hung |
     """
     embedding: NetworkArchitecture  # State embedding network
     advantage_stream: NetworkArchitecture  # Advantage estimation network
@@ -196,6 +252,7 @@ class AgentArchitecture:
             network_architecture_implementation_folder_path: Path to network implementations
             network_architecture_frame_folder_path: Path to network frames
             load_from_dict: Dictionary containing saved state
+        | Hung |
         """
         if load_from_dict is not None:
             object.__setattr__(
@@ -297,7 +354,16 @@ class AgentArchitecture:
         implementation_folder_path: Optional[str] = None,
         frame_folder_path: Optional[str] = None,
     ) -> None:
-
+        """
+        Parse and initialize network architectures for exploration strategy.
+        
+        Args:
+            d: Dictionary containing network configurations
+            exploration_module_cls: Class of exploration strategy
+            implementation_folder_path: Path to network implementations
+            frame_folder_path: Path to network frames
+        | Hung |
+        """
         for (
             network_architecture_keys
         ) in exploration_module_cls.network_architecture_fields():
@@ -321,6 +387,19 @@ class AgentArchitecture:
 
     @staticmethod
     def _get_exploration_module_cls(d: dict) -> Type[ExplorationParameters]:
+        """
+        Get the appropriate exploration strategy class based on configuration.
+        
+        Args:
+            d: Dictionary containing exploration configuration
+            
+        Returns:
+            Class implementing the specified exploration strategy
+            
+        Raises:
+            Exception: If exploration method is not specified or invalid
+        | Hung |
+        """
         exploration_method = d.get("method")
         available_exploration_methods = [
             subclass for subclass in ExplorationParameters.__subclasses__()
@@ -340,10 +419,33 @@ class AgentArchitecture:
 
     @staticmethod
     def _deep_get(di: dict, keys: List[str]):
+        """
+        Get a value from a nested dictionary using a list of keys.
+        
+        Args:
+            di: Dictionary to search in
+            keys: List of keys defining the path to the value
+            
+        Returns:
+            Value at the specified path or None if not found
+        | Hung |
+        """
         return reduce(lambda d, key: d.get(key) if d else None, keys, di)
 
     @staticmethod
     def _deep_update(mapping: dict, keys: List[str], value: Any) -> dict:
+        """
+        Update a value in a nested dictionary using a list of keys.
+        
+        Args:
+            mapping: Dictionary to update
+            keys: List of keys defining the path to update
+            value: New value to set
+            
+        Returns:
+            Updated dictionary
+        | Hung |
+        """
         k = keys[0]
         if k in mapping and isinstance(mapping[k], dict) and len(keys) > 1:
             mapping[k] = AgentArchitecture._deep_update(mapping[k], keys[1:], value)

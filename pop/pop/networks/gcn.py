@@ -33,6 +33,25 @@ import dgl.nn.pytorch as dgl_nn
 # ----------------------------------------------------------------#
 
 
+"""
+Graph Convolutional Network (GCN) implementation for processing graph-structured data.
+
+This class implements a GCN that can handle both node and edge features, with feature 
+normalization and self-loop addition capabilities. It's designed to work with DGL 
+(DGLHeteroGraph) and supports batched graph processing.
+
+Key components:
+- Feature normalization using MinMaxScaler
+- Support for both node and edge features
+- Self-loop addition for graph processing
+- Multi-headed attention support
+- State management for serialization
+
+The network processes graph data to produce node embeddings that can be used for 
+downstream tasks like classification or regression.
+| Hung |
+"""
+
 class GCN(nn.Module, SerializableModule):
     def __init__(
         self,
@@ -43,6 +62,18 @@ class GCN(nn.Module, SerializableModule):
         log_dir: Optional[str] = None,
         edge_features: Optional[int] = None,
     ) -> None:
+        """
+        Initializes the GCN with specified architecture and feature configurations.
+        
+        Args:
+            node_features: Number of input node features
+            architecture: Network architecture configuration
+            name: Network identifier
+            feature_ranges: Valid ranges for node/edge features
+            log_dir: Optional directory for logging
+            edge_features: Optional number of edge features
+        | Hung |
+        """
         nn.Module.__init__(self)
         SerializableModule.__init__(self, log_dir, name)
 
@@ -79,6 +110,22 @@ class GCN(nn.Module, SerializableModule):
         self.architecture: NetworkArchitecture = architecture
 
     def forward(self, g: DGLHeteroGraph) -> Tensor:
+        """
+        Forward pass of the GCN.
+        
+        Processes input graph by:
+        1. Adding self-loops
+        2. Normalizing features
+        3. Applying graph convolution
+        4. Handling multi-headed attention if present
+        
+        Args:
+            g: Input DGLHeteroGraph
+            
+        Returns:
+            Tensor: Node embeddings after processing
+        | Hung |
+        """
         g = self._add_self_loop_to_batched_graph(g)
         node_embeddings: Tensor
 
@@ -112,6 +159,15 @@ class GCN(nn.Module, SerializableModule):
         return node_embeddings
 
     def get_embedding_dimension(self) -> int:
+        """
+        Returns the dimension of the output embeddings.
+        
+        Handles cases where the last layer might be an activation layer.
+        
+        Returns:
+            int: Dimension of the output embeddings
+        | Hung |
+        """
         try:
             return int(self.architecture.layers[-1].kwargs["out_feats"])
         except KeyError:
@@ -119,6 +175,13 @@ class GCN(nn.Module, SerializableModule):
             return int(self.architecture.layers[-2].kwargs["out_feats"])
 
     def get_state(self) -> Dict[str, Any]:
+        """
+        Returns the current state of the network for serialization.
+        
+        Returns:
+            Dict containing network state and configuration
+        | Hung |
+        """
         return {
             "name": self.name,
             "network_state": self.state_dict(),
@@ -131,7 +194,16 @@ class GCN(nn.Module, SerializableModule):
 
     @staticmethod
     def factory(checkpoint: Dict[str, Any], **kwargs) -> "GCN":
-
+        """
+        Creates a new GCN instance from a checkpoint.
+        
+        Args:
+            checkpoint: Dictionary containing saved network state
+            
+        Returns:
+            GCN: Reconstructed network
+        | Hung |
+        """
         gcn: "GCN" = GCN(
             node_features=checkpoint["node_features"],
             edge_features=checkpoint["edge_features"],
@@ -148,6 +220,17 @@ class GCN(nn.Module, SerializableModule):
 
     @staticmethod
     def _to_tensor(d: Dict[str, Tensor], scaler: MinMaxScaler) -> Tensor:
+        """
+        Converts dictionary of features to normalized tensor.
+        
+        Args:
+            d: Dictionary of feature tensors
+            scaler: MinMaxScaler for normalization
+            
+        Returns:
+            Tensor: Normalized feature tensor
+        | Hung |
+        """
         features: List[Tensor] = list(d.values())
         stacked_features = th.stack(features).transpose(0, 1)
         if len(features) == 1:
@@ -158,6 +241,16 @@ class GCN(nn.Module, SerializableModule):
 
     @staticmethod
     def _add_self_loop_to_batched_graph(g: DGLHeteroGraph) -> DGLHeteroGraph:
+        """
+        Adds self-loops to a batched graph while preserving batch information.
+        
+        Args:
+            g: Input DGLHeteroGraph
+            
+        Returns:
+            DGLHeteroGraph: Graph with added self-loops
+        | Hung |
+        """
         num_nodes = g.batch_num_nodes()
         num_edges = g.batch_num_edges()
         g = dgl.add_self_loop(g)

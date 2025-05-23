@@ -8,11 +8,34 @@ import numpy as np
 from pop.community_detection.louvain import louvain_communities
 from pop.community_detection.power_supply_modularity import belong_to_same_community
 
-
+# Type alias for a community, which is a frozen set of node IDs   | Hung |
+# This ensures communities are immutable and hashable   | Hung |
 Community = FrozenSet[int]
 
 
 class CommunityDetector:
+    """
+    A class for detecting communities in dynamic networks using the Dynamo algorithm.
+    
+    This detector implements a dynamic community detection approach that:
+    1. Handles evolving networks over time
+    2. Maintains community structure while adapting to changes
+    3. Uses the Louvain method as its base algorithm
+    
+    Key features:
+    - Resolution parameter to control community size
+    - Threshold for modularity gain
+    - Support for power supply modularity
+    - Seed for reproducibility
+    
+    Example usage:
+    ```python
+    detector = CommunityDetector(seed=42)
+    communities = detector.dynamo(graph_t, graph_t1, comm_t)
+    ```
+    | Hung |
+    """
+    
     def __init__(
         self,
         seed: int,
@@ -20,6 +43,16 @@ class CommunityDetector:
         threshold: float = 1e-6,
         enable_power_supply_modularity=False,
     ) -> None:
+        """
+        Initialize the community detector.
+        
+        Args:
+            seed: Random seed for reproducibility
+            resolution: Controls community size (higher = smaller communities)
+            threshold: Minimum modularity gain to continue optimization
+            enable_power_supply_modularity: Whether to use power supply modularity
+        | Hung |
+        """
         self.resolution: float = resolution
         self.threshold: float = threshold
         self.seed: int = seed
@@ -27,15 +60,54 @@ class CommunityDetector:
 
     @staticmethod
     def community_coherence(graph: nx.Graph, community: Set[int]) -> int:
+        """
+        Calculate the internal coherence of a community.
+        
+        This measures how well connected the community is internally.
+        Higher values indicate stronger internal connections.
+        
+        Args:
+            graph: The network graph
+            community: Set of node IDs in the community
+            
+        Returns:
+            Sum of internal edge weights
+        | Hung |
+        """
         adjacency_matrix = nx_linalg.adjacency_matrix(graph)
         return sum([adjacency_matrix[i, j] for i, j in zip(community, community)])
 
     @staticmethod
     def community_degree(graph: nx.Graph, community: Set[int]) -> int:
+        """
+        Calculate the total degree of all nodes in a community.
+        
+        Args:
+            graph: The network graph
+            community: Set of node IDs in the community
+            
+        Returns:
+            Sum of degrees of all nodes in the community
+        | Hung |
+        """
         return sum([graph.degree[i] for i in community])
 
     @staticmethod
     def get_community(node: int, communities: List[Set[int]]) -> Set[int]:
+        """
+        Find which community a node belongs to.
+        
+        Args:
+            node: Node ID to find
+            communities: List of community sets
+            
+        Returns:
+            The community containing the node
+            
+        Raises:
+            Exception if node not found in any community
+        | Hung |
+        """
         for community in communities:
             if node in community:
                 return community
@@ -55,6 +127,27 @@ class CommunityDetector:
         - C_1: a set of communities to be separated into singleton communities
         - C_2: a set of two-vertices communities to be created
         """
+        """
+                Initialize intermediate community structure for dynamic updates.
+        
+        This method handles:
+        1. Edge additions/removals
+        2. Node additions/removals
+        3. Community splitting/merging
+        
+        Args:
+            graph_t: Previous timestep graph
+            graph_t1: Current graph
+            comm_t: Previous community structure
+            
+        Returns:
+            Tuple of:
+            - Set of singleton communities to create
+            - Set of two-vertex communities to create
+        | Hung |
+        
+        """
+    
         singleton_communities: set = set()  # C1
         two_vertices_communities: set = set()  # C2
 
@@ -177,6 +270,34 @@ class CommunityDetector:
         - initialize an intermediate community structure
         - repeat the last two steps of Louvain algorithm on the intermediate
           community structure until the modularity gain is negligible
+        """
+        """
+                Main method implementing the Dynamo algorithm for dynamic community detection.
+        
+        This method:
+        1. Handles initial community detection if no previous structure exists
+        2. Updates communities based on network changes
+        3. Uses Louvain method for optimization
+        
+        Args:
+            graph_t: Previous timestep graph
+            graph_t1: Current graph (optional)
+            comm_t: Previous community structure (optional)
+            alpha: Parameter for power supply modularity
+            beta: Parameter for power supply modularity
+            
+        Returns:
+            List of frozen sets representing communities
+            
+        Example:
+        ```python
+        # Initial detection
+        communities = detector.dynamo(graph)
+        
+        # Dynamic update
+        new_communities = detector.dynamo(graph_t, graph_t1, communities)
+        ```
+        | Hung |
         """
         if not comm_t and not graph_t1:
             return [

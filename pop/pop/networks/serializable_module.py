@@ -21,6 +21,7 @@ class SerializableModule(ABC):
 
     The class is designed to work with PyTorch's save/load functionality and integrates
     with the project's logging system.
+    | Hung |
     """
     def __init__(self, log_dir: Optional[str], name: Optional[str]):
         self.log_file = self._get_log_file(log_dir, name)

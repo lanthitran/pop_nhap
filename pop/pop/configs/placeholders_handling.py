@@ -6,6 +6,7 @@ import numexpr as ne
 """
 This module handles placeholder and backward reference replacements in configuration dictionaries.
 It provides functionality to resolve references between different layers and parameters in a neural network configuration.
+| Hung |
 """
 
 def replace_backward_reference(
@@ -23,6 +24,7 @@ def replace_backward_reference(
         
     Returns:
         The value with all backward references replaced and optionally evaluated
+    | Hung |
     """
     if not isinstance(value_to_replace, str):
         return value_to_replace
@@ -75,6 +77,7 @@ def replace_placeholders(
         
     Returns:
         Dictionary with all placeholders replaced with their corresponding implementation values
+    | Hung |
     """
     return {
         layer_name: {

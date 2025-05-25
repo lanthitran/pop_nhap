@@ -97,6 +97,22 @@ def main(args):
     envs = gym.vector.AsyncVectorEnv([make_env_TOPOLOGY_IDLE_BSLINE(args, i, resume_run=checkpoint.resumed, params=grid_params) for i in range(args.n_envs)])
     dummy_env = envs.env_fns[0]()
     max_steps = dummy_env.init_env.chronics_handler.max_episode_duration()
+
+    # Print observation and action space information
+    print("\nEnvironment spaces:")
+    
+    #print(f"Observation space: {dummy_env.observation_space}")    
+    print(f"Observation shape: {dummy_env.observation_space.shape}")
+    print(f"Action space: {dummy_env.action_space}")
+    if hasattr(dummy_env.action_space, "n"):
+        print(f"Action space size: {dummy_env.action_space.n}")
+    
+    # For Grid2Op specific information
+    print("\nGrid2Op environment details:")
+    print(f"Grid size: {dummy_env.init_env.n_sub} substations, {dummy_env.init_env.n_line} lines")
+    print(f"Number of generators: {dummy_env.init_env.n_gen}")
+    print(f"Number of loads: {dummy_env.init_env.n_load}")
+    
     dummy_env.close()
 
     set_random_seed(args.seed)

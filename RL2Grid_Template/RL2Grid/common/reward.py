@@ -296,12 +296,7 @@ class LineRootMarginRewardSafeRange(BaseReward):
             res = self.reward_min
 
         return res
-    
-# TO_DO: done: This reward is not implemented yet, i want to use soft max, 
-# this Reward almost like LineRootMarginReward, but instead of just sum root point of each like with equal factor, 
-# i want the factor of each like is the soft max of rho, so that lines with higher rho have higher factor. 
-# Like  for each line, the factor would be e to the power of rho, 
-# divided by the total of softmax(root point) of all lines (normalized)
+
 
 class LineSoftMaxRootMarginReward(BaseReward):
     """
@@ -313,6 +308,7 @@ class LineSoftMaxRootMarginReward(BaseReward):
     1. Calculate margin = (thermal limit - flow) / thermal limit
     2. Calculate root point = margin^(1/n) where n can be different for safe vs overflow lines
     3. If use_softmax=True, calculate softmax weight = exp(rho/temperature) / sum(exp(rho/temperature))
+       - For disconnected lines (rho=0) and overflow lines (rho>1), use rho=1 for weight calculation
     4. Final contribution = root_point * (softmax_weight if use_softmax else 1)
     
     The reward is the sum of all line contributions, normalized by number of lines.
@@ -366,7 +362,13 @@ class LineSoftMaxRootMarginReward(BaseReward):
             
             # Calculate softmax weights if enabled
             if self.use_softmax:
-                exp_rho = np.exp(rho / self.temperature_softmax) # TODO: disconnected lines with rho = 0 will have really small weights??
+                # Create a copy of rho for weight calculation
+                rho_for_weights = rho.copy()
+                # Set rho=1 for disconnected lines (rho=0) and overflow lines (rho>1)
+                rho_for_weights[rho == 0] = 1.0  # Disconnected lines
+                rho_for_weights[rho > 1.0] = 1.0  # Overflow lines
+                
+                exp_rho = np.exp(rho_for_weights / self.temperature_softmax)
                 softmax_weights = exp_rho / np.sum(exp_rho)
             else:
                 softmax_weights = np.ones_like(rho)
@@ -398,6 +400,121 @@ class LineSoftMaxRootMarginReward(BaseReward):
             
             # Normalize by total number of lines
             res = (connected_lines_reward + disconnected_lines_penalty) / self.n_line
+        else:
+            res = self.reward_min
+
+        return res
+
+
+
+
+# TO_DO: done: This reward is not implemented yet, i want to use soft max, 
+# this Reward almost like LineRootMarginReward, but instead of just sum root point of each like with equal factor, 
+# i want the factor of each like is the soft max of rho, so that lines with higher rho have higher factor. 
+# Like  for each line, the factor would be e to the power of rho, 
+# divided by the total of softmax(root point) of all lines (normalized)
+
+class LineSoftMaxRootMarginRewardUpgraded(BaseReward):
+    """
+    This reward calculates and punishes based on margin of each line using softmax weighting.
+    The margin calculation is similar to LineRootMarginReward, but each line's contribution
+    is weighted by its softmax-normalized rho value.
+    
+    For each line:
+    1. Calculate margin = (thermal limit - flow) / thermal limit
+    2. Calculate root point = margin^(1/n) where n can be different for safe vs overflow lines
+    3. If use_softmax=True, calculate softmax weight = exp(rho/temperature) / sum(exp(rho/temperature))
+       - For disconnected lines and overflow lines (rho>1), use rho=1 for weight calculation
+    4. Final contribution = root_point * (softmax_weight if use_softmax else 1)
+    
+    The reward is the sum of all line contributions.
+    This gives higher importance to lines with higher rho values when use_softmax=True.
+
+    Args:
+        logger: 
+        use_softmax (bool): If True, applies softmax weighting to line contributions based on their rho values
+        temperature_softmax (float): Temperature parameter for softmax calculation. Higher values make the distribution more uniform
+        n_th_root_safe (int): The nth root to use for calculating margin rewards for lines operating within limits (rho <= 1.0)
+        n_th_root_overflow (int): The nth root to use for calculating margin penalties for lines operating above limits (rho > 1.0)
+    """
+    def __init__(self, logger=None, 
+                 use_softmax: bool = False,
+                 temperature_softmax: float = 1.0,
+                 n_th_root_safe: int = 5,
+                 n_th_root_overflow: int = 5):
+        BaseReward.__init__(self, logger=logger)
+        self.use_softmax = use_softmax
+        self.temperature_softmax = temperature_softmax
+        self.n_th_root_safe = n_th_root_safe
+        self.n_th_root_overflow = n_th_root_overflow
+        self.root_power_safe = 1.0 / self.n_th_root_safe
+        self.root_power_overflow = 1.0 / self.n_th_root_overflow
+
+    def initialize(self, env):
+        self.reward_min = dt_float(-1.0)
+        self.reward_max = dt_float(1.0)  
+        self.penalty = dt_float(-1.0)
+        self.n_line = env.backend.n_line
+  
+        # TO_DO what if Hard OT is not 2.0?
+        if hasattr(env, 'parameters') and hasattr(env.parameters, 'HARD_OVERFLOW_THRESHOLD'):
+            self.hard_overflow_threshold_factor = dt_float(env.parameters.HARD_OVERFLOW_THRESHOLD)
+            print(f"HARD_OVERFLOW_THRESHOLD found in env.parameters: {self.hard_overflow_threshold_factor}")
+        else:
+            self.logger.warning(
+                "HARD_OVERFLOW_THRESHOLD not found in env.parameters. Defaulting to 2.0. "
+                "Ensure this aligns with your environment's settings."
+            )
+            self.hard_overflow_threshold_factor = dt_float(2.0)
+
+    def __call__(self, action, env, has_error, is_done, is_illegal, is_ambiguous):
+        if not is_done and not has_error:
+            # Get line flows and thermal limits
+            ampere_flows = np.abs(env.backend.get_line_flow(), dtype=dt_float)
+            thermal_limits = np.abs(env.get_thermal_limit(), dtype=dt_float)
+            
+            # Calculate rho (flow/limit ratio) for each line
+            rho = np.divide(ampere_flows, thermal_limits + 1e-8)
+            
+            # Calculate softmax weights if enabled
+            if self.use_softmax:
+                # Create a copy of rho for weight calculation
+                rho_for_weights = rho.copy()
+                # Set rho=1 for disconnected lines and overflow lines (rho>1)
+                rho_for_weights[~env.current_obs.line_status] = 1.0  # Disconnected lines
+                rho_for_weights[rho > 1.0] = 1.0  # Overflow lines
+                
+                exp_rho = np.exp(rho_for_weights / self.temperature_softmax)
+                softmax_weights = exp_rho / np.sum(exp_rho)
+            else:
+                softmax_weights = np.ones_like(rho)
+            
+            # Initialize root_point array
+            root_point = np.zeros_like(rho, dtype=dt_float)
+            
+            # For lines with rho <= 1.0, use n-th root of margin
+            mask_safe = rho <= 1.0
+            margin_safe = 1.0 - rho[mask_safe]
+            root_point[mask_safe] = np.power(margin_safe, self.root_power_safe)
+            
+            # For lines with rho > 1.0, use n-th root of margin and normalize using Hard OT
+            mask_overflow = ~mask_safe
+            margin_overflow = 1.0 - rho[mask_overflow]
+            
+            # Calculate root point at hard OT for normalization
+            hard_ot_margin = 1.0 - self.hard_overflow_threshold_factor
+            hard_ot_root_point = np.power(np.abs(hard_ot_margin), self.root_power_overflow)  # make sure it is positive
+            # Normalize overflow margins using hard OT root point
+            root_point[mask_overflow] = np.sign(margin_overflow) * np.power(np.abs(margin_overflow), self.root_power_overflow) / hard_ot_root_point
+            
+            # Set penalty for disconnected lines
+            root_point[~env.current_obs.line_status] = self.penalty
+            
+            # Apply softmax weights to root points if softmax is enabled
+            weighted_root_points = root_point * softmax_weights if self.use_softmax else root_point
+
+            # Sum all weighted root points
+            res = weighted_root_points.sum()
         else:
             res = self.reward_min
 

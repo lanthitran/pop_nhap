@@ -9,7 +9,7 @@ from common.checkpoint import PPOCheckpoint, SACCheckpoint, DQNCheckpoint, TD3Ch
 from common.utils import set_random_seed, set_torch, str2bool
 from common.imports import ap, gym, th, np
 from env.config import get_env_args
-from env.utils import make_env_with_L2RPNReward, make_env_TOPOLOGY_with_L2RPNReward, make_env_TOPOLOGY_IDLE_BSLINE
+from env.utils import make_env_with_L2RPNReward, make_env_TOPOLOGY_with_L2RPNReward, make_env_TOPOLOGY_IDLE_BSLINE, make_env_TOPOLOGY_IDLE_BSLINE_TRULY, make_env_TOPOLOGY_IDLE_L2RPN_BSLINE_TRULY, make_env_TOPOLOGY_IDLE_L2RPNRewardRegularized_BSLINE_TRULY
 from grid2op.Parameters import Parameters
 
 ALGORITHMS  = {'DQN': DQN, 'PPO': PPO, 'SAC': SAC, 'TD3': TD3}
@@ -25,7 +25,7 @@ ENV_PARAMS = {
     },
     2: {
         "HARD_OVERFLOW_THRESHOLD": 999,
-        "NB_TIMESTEP_OVERFLOW_ALLOWED": 30,
+        "NB_TIMESTEP_OVERFLOW_ALLOWED": 70,
         "SOFT_OVERFLOW_THRESHOLD": 1.0
     },
     3: {
@@ -47,7 +47,7 @@ ENV_PARAMS = {
 
 # *** CHOOSE THE DIFFICULTY LEVEL HERE ***
 # Set to a number between 1 (easiest) and 5 (hardest)
-PARAM_LEVEL = 1
+PARAM_LEVEL = 5
 
 def main(args):
     assert args.time_limit <= 100440, f"Invalid time limit: {args.time_limit}. Timeout limit is : 100440"
@@ -94,9 +94,25 @@ def main(args):
         print(f"Warning: Invalid param level {PARAM_LEVEL}. Using default parameters.")
     
     #envs = gym.vector.SyncVectorEnv([make_env(args, i, resume_run=checkpoint.resumed, params=grid_params) for i in range(args.n_envs)])
-    envs = gym.vector.AsyncVectorEnv([make_env_TOPOLOGY_IDLE_BSLINE(args, i, resume_run=checkpoint.resumed, params=grid_params) for i in range(args.n_envs)])
+    envs = gym.vector.AsyncVectorEnv([make_env_TOPOLOGY_IDLE_L2RPNRewardRegularized_BSLINE_TRULY(args, i, resume_run=checkpoint.resumed, params=grid_params) for i in range(args.n_envs)])
     dummy_env = envs.env_fns[0]()
     max_steps = dummy_env.init_env.chronics_handler.max_episode_duration()
+
+    # Print observation and action space information
+    print("\nEnvironment spaces:")
+    
+    #print(f"Observation space: {dummy_env.observation_space}")    
+    print(f"Observation shape: {dummy_env.observation_space.shape}")
+    print(f"Action space: {dummy_env.action_space}")
+    if hasattr(dummy_env.action_space, "n"):
+        print(f"Action space size: {dummy_env.action_space.n}")
+    
+    # For Grid2Op specific information
+    print("\nGrid2Op environment details:")
+    print(f"Grid size: {dummy_env.init_env.n_sub} substations, {dummy_env.init_env.n_line} lines")
+    print(f"Number of generators: {dummy_env.init_env.n_gen}")
+    print(f"Number of loads: {dummy_env.init_env.n_load}")
+    
     dummy_env.close()
 
     set_random_seed(args.seed)

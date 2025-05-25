@@ -78,8 +78,8 @@ class PPO:
                 # TRY NOT TO MODIFY: execute the game and log data.
                 try:
                     next_obs, reward, terminations, truncations, infos = envs.step(action.cpu().numpy())
-                    #print(reward)                              ##PP
-                    print([f"{r:.1f}" for r in reward])         ##PP
+                    print(reward, global_step)                              ##PP
+                    print([f"{r:.4f}" for r in reward])         ##PP
                     #print("next_obs:", next_obs)               ##PP
                     #print("terminations:", terminations)       ##PP
                     #print("truncations:", truncations)          ##PP

@@ -78,6 +78,12 @@ class PPO:
                 # TRY NOT TO MODIFY: execute the game and log data.
                 try:
                     next_obs, reward, terminations, truncations, infos = envs.step(action.cpu().numpy())
+                    #print(reward)                              ##PP
+                    print([f"{r:.1f}" for r in reward])         ##PP
+                    #print("next_obs:", next_obs)               ##PP
+                    #print("terminations:", terminations)       ##PP
+                    #print("truncations:", truncations)          ##PP
+                    #print("infos:", infos)                       ##PP
                 except:
                     ckpt.set_record(args, agent.actor, agent.critic, global_step, actor_optim, critic_optim, logger.wb_path, iteration)
                     ckpt.save()
@@ -93,7 +99,8 @@ class PPO:
                     for info in infos['final_info']:
                         if info and "episode" in info:
                             survival = info['episode']['l'][0]/max_steps
-                            if args.verbose: print(f"global steps={global_step}, length={info['episode']['l'][0]}, survival={survival*100:.3f}%, return={info['episode']['r'][0]}")
+                            _return = info['episode']['r'][0]
+                            if args.verbose: print(f"glb steps={global_step}, lnth={info['episode']['l'][0]}, s_rate={survival*100:.0f}%, return={_return:.1f}")
                             if track: logger.store_metrics(survival, info)
                             break
 

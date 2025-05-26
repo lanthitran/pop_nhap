@@ -9,7 +9,8 @@ from common.checkpoint import PPOCheckpoint, SACCheckpoint, DQNCheckpoint, TD3Ch
 from common.utils import set_random_seed, set_torch, str2bool
 from common.imports import ap, gym, th, np
 from env.config import get_env_args
-from env.utils import make_env_with_L2RPNReward, make_env_TOPOLOGY_with_L2RPNReward, make_env_TOPOLOGY_IDLE_BSLINE, make_env_TOPOLOGY_IDLE_BSLINE_TRULY, make_env_TOPOLOGY_IDLE_L2RPN_BSLINE_TRULY, make_env_TOPOLOGY_IDLE_L2RPNRewardRegularized_BSLINE_TRULY
+def make_env_TOPOLOGY_RECO_REVERT_RL2GridLineMarginReward_BSLINE_TRULY(args, idx, resume_run=False, generate_class=False, async_vec_env=False, params=None):
+from env.utils import make_env_with_L2RPNReward, make_env_TOPOLOGY_with_L2RPNReward, make_env_TOPOLOGY_IDLE_BSLINE, make_env_TOPOLOGY_IDLE_BSLINE_TRULY, make_env_TOPOLOGY_IDLE_L2RPN_BSLINE_TRULY, make_env_TOPOLOGY_RECO_REVERT_L2RPNRewardRegularized_BSLINE_TRULY, make_env_TOPOLOGY_RECO_REVERT_RL2GridLineMarginReward_BSLINE_TRULY
 from grid2op.Parameters import Parameters
 
 ALGORITHMS  = {'DQN': DQN, 'PPO': PPO, 'SAC': SAC, 'TD3': TD3}
@@ -94,7 +95,7 @@ def main(args):
         print(f"Warning: Invalid param level {PARAM_LEVEL}. Using default parameters.")
     
     #envs = gym.vector.SyncVectorEnv([make_env(args, i, resume_run=checkpoint.resumed, params=grid_params) for i in range(args.n_envs)])
-    envs = gym.vector.AsyncVectorEnv([make_env_TOPOLOGY_IDLE_L2RPNRewardRegularized_BSLINE_TRULY(args, i, resume_run=checkpoint.resumed, params=grid_params) for i in range(args.n_envs)])
+    envs = gym.vector.AsyncVectorEnv([make_env_TOPOLOGY_RECO_REVERT_RL2GridLineMarginReward_BSLINE_TRULY(args, i, resume_run=checkpoint.resumed, params=grid_params) for i in range(args.n_envs)])
     dummy_env = envs.env_fns[0]()
     max_steps = dummy_env.init_env.chronics_handler.max_episode_duration()
 

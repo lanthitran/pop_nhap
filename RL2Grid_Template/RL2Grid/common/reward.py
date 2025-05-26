@@ -408,11 +408,7 @@ class LineSoftMaxRootMarginReward(BaseReward):
 
 
 
-# TO_DO: done: This reward is not implemented yet, i want to use soft max, 
-# this Reward almost like LineRootMarginReward, but instead of just sum root point of each like with equal factor, 
-# i want the factor of each like is the soft max of rho, so that lines with higher rho have higher factor. 
-# Like  for each line, the factor would be e to the power of rho, 
-# divided by the total of softmax(root point) of all lines (normalized)
+
 
 class LineSoftMaxRootMarginRewardUpgraded(BaseReward):
     """
@@ -436,6 +432,7 @@ class LineSoftMaxRootMarginRewardUpgraded(BaseReward):
         temperature_softmax (float): Temperature parameter for softmax calculation. Higher values make the distribution more uniform
         n_th_root_safe (int): The nth root to use for calculating margin rewards for lines operating within limits (rho <= 1.0)
         n_th_root_overflow (int): The nth root to use for calculating margin penalties for lines operating above limits (rho > 1.0)
+        | Hung |
     """
     def __init__(self, logger=None, 
                  use_softmax: bool = False,

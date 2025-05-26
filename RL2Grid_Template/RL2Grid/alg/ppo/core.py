@@ -79,7 +79,7 @@ class PPO:
                 try:
                     next_obs, reward, terminations, truncations, infos = envs.step(action.cpu().numpy())
                     print(reward, global_step)                              ##PP
-                    print([f"{r:.4f}" for r in reward])         ##PP
+                    #print([f"{r:.4f}" for r in reward])         ##PP
                     #print("next_obs:", next_obs)               ##PP
                     #print("terminations:", terminations)       ##PP
                     #print("truncations:", truncations)          ##PP

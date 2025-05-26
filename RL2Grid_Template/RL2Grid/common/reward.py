@@ -408,8 +408,6 @@ class LineSoftMaxRootMarginReward(BaseReward):
 
 
 
-
-
 class LineSoftMaxRootMarginRewardUpgraded(BaseReward):
     """
     This reward calculates and punishes based on margin of each line using softmax weighting.
@@ -423,9 +421,10 @@ class LineSoftMaxRootMarginRewardUpgraded(BaseReward):
        - For disconnected lines and overflow lines (rho>1), use rho=1 for weight calculation
     4. Final contribution = root_point * (softmax_weight if use_softmax else 1)
     
-    The reward is the sum of all line contributions.
-    This gives higher importance to lines with higher rho values when use_softmax=True.
-
+    The reward is normalized to [-1, 1] in both cases:
+    - With softmax: Normalized through softmax weights
+    - Without softmax: Normalized by dividing by number of lines
+    
     Args:
         logger: 
         use_softmax (bool): If True, applies softmax weighting to line contributions based on their rho values
@@ -484,7 +483,7 @@ class LineSoftMaxRootMarginRewardUpgraded(BaseReward):
                 exp_rho = np.exp(rho_for_weights / self.temperature_softmax)
                 softmax_weights = exp_rho / np.sum(exp_rho)
             else:
-                softmax_weights = np.ones_like(rho)
+                softmax_weights = np.ones_like(rho) / self.n_line  # Normalize by number of lines
             
             # Initialize root_point array
             root_point = np.zeros_like(rho, dtype=dt_float)
@@ -507,8 +506,8 @@ class LineSoftMaxRootMarginRewardUpgraded(BaseReward):
             # Set penalty for disconnected lines
             root_point[~env.current_obs.line_status] = self.penalty
             
-            # Apply softmax weights to root points if softmax is enabled
-            weighted_root_points = root_point * softmax_weights if self.use_softmax else root_point
+            # Apply weights to root points
+            weighted_root_points = root_point * softmax_weights
 
             # Sum all weighted root points
             res = weighted_root_points.sum()

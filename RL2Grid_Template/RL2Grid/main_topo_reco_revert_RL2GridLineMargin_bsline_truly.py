@@ -9,7 +9,6 @@ from common.checkpoint import PPOCheckpoint, SACCheckpoint, DQNCheckpoint, TD3Ch
 from common.utils import set_random_seed, set_torch, str2bool
 from common.imports import ap, gym, th, np
 from env.config import get_env_args
-def make_env_TOPOLOGY_RECO_REVERT_RL2GridLineMarginReward_BSLINE_TRULY(args, idx, resume_run=False, generate_class=False, async_vec_env=False, params=None):
 from env.utils import make_env_with_L2RPNReward, make_env_TOPOLOGY_with_L2RPNReward, make_env_TOPOLOGY_IDLE_BSLINE, make_env_TOPOLOGY_IDLE_BSLINE_TRULY, make_env_TOPOLOGY_IDLE_L2RPN_BSLINE_TRULY, make_env_TOPOLOGY_RECO_REVERT_L2RPNRewardRegularized_BSLINE_TRULY, make_env_TOPOLOGY_RECO_REVERT_RL2GridLineMarginReward_BSLINE_TRULY
 from grid2op.Parameters import Parameters
 

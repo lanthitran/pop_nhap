@@ -13,7 +13,10 @@ from env.utils import (
     make_env_with_L2RPNReward,
     make_env_TOPOLOGY_with_L2RPNReward,
     make_env_TOPOLOGY_IDLE_BSLINE,
-    make_env_TOPOLOGY_RecoAndRevert_LineSoftMaxRootMarginReward
+    make_env_TOPOLOGY_RecoAndRevert_LineSoftMaxRootMarginReward,
+    make_env_TOPOLOGY_Idle_LineSoftMaxRootMarginReward,
+    make_env_TOPOLOGY_Idle_L2RPNRewardRegularized_BSLINE_TRULY,
+    make_env_TOPOLOGY_Idle_RL2GridLineMarginReward_BSLINE_TRULY
 )
 from grid2op.Parameters import Parameters
 
@@ -99,7 +102,7 @@ def main(args):
         print(f"Warning: Invalid param level {PARAM_LEVEL}. Using default parameters.")
     
     #envs = gym.vector.SyncVectorEnv([make_env(args, i, resume_run=checkpoint.resumed, params=grid_params) for i in range(args.n_envs)])
-    envs = gym.vector.AsyncVectorEnv([make_env_TOPOLOGY_RecoAndRevert_LineSoftMaxRootMarginReward(args, i, resume_run=checkpoint.resumed, params=grid_params) for i in range(args.n_envs)])
+    envs = gym.vector.AsyncVectorEnv([make_env_TOPOLOGY_Idle_RL2GridLineMarginReward_BSLINE_TRULY(args, i, resume_run=checkpoint.resumed, params=grid_params) for i in range(args.n_envs)])
     dummy_env = envs.env_fns[0]()
     max_steps = dummy_env.init_env.chronics_handler.max_episode_duration()
 
@@ -118,7 +121,6 @@ def main(args):
     print(f"Number of generators: {dummy_env.init_env.n_gen}")
     print(f"Number of loads: {dummy_env.init_env.n_load}")
     
-
     dummy_env.close()
 
     set_random_seed(args.seed)

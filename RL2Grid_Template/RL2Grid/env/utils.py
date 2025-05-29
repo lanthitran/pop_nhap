@@ -5,15 +5,50 @@ from gymnasium.wrappers import NormalizeObservation
 import grid2op
 from grid2op.Environment import MultiEnvMultiProcess
 from grid2op.gym_compat import GymEnv, BoxGymObsSpace, BoxGymActSpace, DiscreteActSpace # if we import gymnasium, GymEnv will convert to Gymnasium!   
-from grid2op.Reward import CombinedReward, IncreasingFlatReward, DistanceReward, RedispReward, N1Reward, L2RPNReward
+from grid2op.Reward import (
+    CombinedReward, 
+    IncreasingFlatReward, 
+    DistanceReward, 
+    RedispReward, 
+    N1Reward, 
+    L2RPNReward,
+    FlatReward
+)
 from lightsim2grid import LightSimBackend
 
 from common.imports import np, gym
-from common.reward import LineMarginReward, RedispRewardv1, L2RPNRewardRegularized, LineRootMarginReward, LineRootMarginRewardSafeRange, LineSoftMaxRootMarginReward, LineSoftMaxRootMarginRewardUpgraded
+from common.reward import (
+    LineMarginReward,
+    RedispRewardv1,
+    L2RPNRewardRegularized,
+    LineRootMarginReward,
+    LineRootMarginRewardSafeRange,
+    LineSoftMaxRootMarginReward,
+    LineSoftMaxRootMarginRewardUpgraded
+)
 from .heuristic import GridOpRecoAndRevertBus, GridOpIdle, GridOpIdleNonLoop
 from .heuristic import GridOpRecoAndRevertBus, GridOpIdle, GridOpIdleNonLoop
 
 ENV_DIR = os.path.dirname(__file__)
+
+
+
+REWARD_CLASS_MAP = {
+    "IncreasingFlatReward": IncreasingFlatReward,
+    "TopologyReward": DistanceReward,
+    "LineMarginReward": LineMarginReward,
+    "RedispRewardv1": RedispRewardv1,
+    "L2RPNRewardRegularized": L2RPNRewardRegularized,
+    "LineRootMarginReward": LineRootMarginReward,
+    "LineRootMarginRewardSafeRange": LineRootMarginRewardSafeRange,
+    "LineSoftMaxRootMarginReward": LineSoftMaxRootMarginReward,
+    "LineSoftMaxRootMarginRewardUpgraded": LineSoftMaxRootMarginRewardUpgraded,
+    "L2RPNReward": L2RPNReward,
+    "N1Reward": N1Reward, # Note: N1Reward needs l_id, not easily configurable via simple CLI string yet.
+    "FlatReward": FlatReward,
+}
+
+
 
 def load_config(file_path):
 
@@ -41,6 +76,75 @@ def norm_action_limits(gym_env, attrs):
 
     return mult_factor, add_factor
 
+
+def _configure_rewards(cr, g2op_env, args, default_reward_setup_func):
+    """
+    Configures rewards for the environment.
+    Prioritizes CLI arguments if provided, otherwise uses the default_reward_setup_func.
+    """
+    env_type = args.action_type.lower()
+
+    if args.reward_fn and args.reward_factors:
+        if len(args.reward_fn) != len(args.reward_factors):
+            raise ValueError(
+                f"Number of reward functions ({len(args.reward_fn)}: {args.reward_fn}) must match "
+                f"number of reward factors ({len(args.reward_factors)}: {args.reward_factors})."
+            )
+
+        for fn_name, factor in zip(args.reward_fn, args.reward_factors):
+            if fn_name in REWARD_CLASS_MAP:
+                RewardClass = REWARD_CLASS_MAP[fn_name]
+                reward_instance = None
+                try:
+                    if fn_name == "IncreasingFlatReward":
+                        reward_instance = RewardClass(per_timestep=1/g2op_env.chronics_handler.max_episode_duration())
+                    elif fn_name == "LineSoftMaxRootMarginRewardUpgraded":
+                        reward_instance = RewardClass(
+                            use_softmax=args.reward_param_lsmrm_use_softmax,
+                            temperature_softmax=args.reward_param_lsmrm_temp_softmax,
+                            n_th_root_safe=args.reward_param_lsmrm_n_safe,
+                            n_th_root_overflow=args.reward_param_lsmrm_n_overflow
+                        )
+                    elif fn_name == "LineSoftMaxRootMarginReward":
+                        reward_instance = RewardClass(
+                            use_softmax=args.reward_param_lsmrm_use_softmax,
+                            temperature_softmax=args.reward_param_lsmrm_temp_softmax,
+                            n_th_root_safe=args.reward_param_lsmrm_n_safe,
+                            n_th_root_overflow=args.reward_param_lsmrm_n_overflow
+                        )
+                    elif fn_name == "LineRootMarginReward":
+                        reward_instance = RewardClass(n_th_root=args.reward_param_lrmr_n_root)
+                    elif fn_name == "LineRootMarginRewardSafeRange":
+                        reward_instance = RewardClass(
+                            n_th_root_safe=args.reward_param_lrmrsr_n_safe,
+                            n_th_root_overflow=args.reward_param_lrmrsr_n_overflow
+                        )
+                    elif fn_name == "N1Reward":
+                        print(f"Warning: N1Reward requires specific 'l_id' which is not configurable via CLI yet. Skipping {fn_name}.")
+                    else: # For rewards with no specific constructor args from our list
+                        reward_instance = RewardClass()
+
+                    if reward_instance:
+                        cr.addReward(fn_name, reward_instance, float(factor))
+                except Exception as e:
+                    print(f"Warning: Could not instantiate or add reward function '{fn_name}' with factor {factor}. Error: {e}. Skipping.")
+            else:
+                print(f"Warning: Reward function '{fn_name}' not found in REWARD_CLASS_MAP. Skipping.")
+    else:
+        default_reward_setup_func(cr, g2op_env, env_type, args) # Pass args for reward-specific defaults
+
+    cr.initialize(g2op_env)
+
+def _default_rewards_make_env(cr, g2op_env, env_type, args):
+    cr.addReward("IncreasingFlatReward",
+                IncreasingFlatReward(per_timestep=1/g2op_env.chronics_handler.max_episode_duration()),
+                0.1)
+    if env_type == 'topology':
+       cr.addReward("TopologyReward", DistanceReward(), 0.3)
+    cr.addReward("redispatchReward", RedispRewardv1(), 0.3 if env_type == 'topology' else 0.6)
+    cr.addReward("LineMarginReward", LineMarginReward(), 0.3)
+
+
 def make_env(args, idx, resume_run=False, generate_class=False, async_vec_env=False, params=None):
     def thunk():
 
@@ -65,17 +169,10 @@ def make_env(args, idx, resume_run=False, generate_class=False, async_vec_env=Fa
             #other_rewards={f"line_{l_id}": N1Reward(l_id=l_id) for l_id in range(186)}
             backend=LightSimBackend()  # detailed_infos_for_cascading_failures=True
         ) 
-        cr = g2op_env.get_reward_instance() 
-        # Per step (cumulative) positive reward for staying alive; reaches 1 at the end of the episode
-        cr.addReward("IncreasingFlatReward", 
-                    IncreasingFlatReward(per_timestep=1/g2op_env.chronics_handler.max_episode_duration()),
-                    0.1)
-        if env_type == 'topology': 
-           cr.addReward("TopologyReward", DistanceReward(), 0.3)   # = 1 if topology is the original one, 0 if everything changed
-        #else:   # TODO remove else -> redispatch should be higher weighted
-        cr.addReward("redispatchReward", RedispRewardv1(), 0.3 if env_type == 'topology' else 0.6)  # Custom one, see common.rewards
-        cr.addReward("LineMarginReward", LineMarginReward(), 0.3)  # Custom one, see common.rewards
-        cr.initialize(g2op_env)
+        
+        cr = g2op_env.get_reward_instance()
+        _configure_rewards(cr, g2op_env, args, _default_rewards_make_env)
+
         g2op_env.chronics_handler.set_chunk_size(100)    # Instead of loading all episode data, get chunks of 100
         if generate_class:
             g2op_env.generate_classes()
@@ -186,10 +283,16 @@ def make_env(args, idx, resume_run=False, generate_class=False, async_vec_env=Fa
 
         if args.norm_obs: gym_env = NormalizeObservation(gym_env)
         
-        if args.use_heuristic: 
-            gym_env = GridOpRecoAndRevertBus(gym_env)
-        else: gym_env = gym.wrappers.RecordEpisodeStatistics(gym_env)            
-    
+        if args.use_heuristic:
+            if args.heuristic_type == "idle":
+                gym_env = GridOpIdle(gym_env)
+            elif args.heuristic_type == "reco_revert":
+                gym_env = GridOpRecoAndRevertBus(gym_env)
+            elif args.heuristic_type == "idle_non_loop":
+                gym_env = GridOpIdleNonLoop(gym_env)
+        else:
+            gym_env = gym.wrappers.RecordEpisodeStatistics(gym_env)
+        
         return gym_env
     
     # Return the environment object with custom serialization methods

@@ -15,7 +15,32 @@ def get_env_args():
 
     # Normalization
     parser.add_argument("--norm-obs", type=str2bool, default=True, help="Toggle normalize observations")
-    parser.add_argument("--use-heuristic", type=str2bool, default=True, help="Toggles heuristics for base operations")
+    
+    # Heuristic
+    parser.add_argument("--use-heuristic", type=str2bool, default=True, help="Toggles heuristics for base operations. If True, heuristic_type is used.")
+    parser.add_argument("--heuristic_type", type=str, default="idle",
+                        choices=["idle", "reco_revert", "idle_non_loop"],
+                        help="Specify the type of heuristic to use if --use-heuristic is True.")
+    
+
+    
+    # Custom Rewards via CLI
+    parser.add_argument("--reward_fn", nargs='+', type=str, default=None, 
+                        help="List of reward function names to use (e.g., IncreasingFlatReward LineMarginReward)")
+    parser.add_argument("--reward_factors", nargs='+', type=float, default=None, 
+                        help="List of corresponding reward factors (e.g., 0.1 0.9)")
+
+    # Parameters for specific rewards (if specified in --reward_fn)
+    # LineRootMarginReward
+    parser.add_argument("--reward_param_lrmr_n_root", type=int, default=5, help="n_th_root for LineRootMarginReward")
+    # LineRootMarginRewardSafeRange
+    parser.add_argument("--reward_param_lrmrsr_n_safe", type=int, default=5, help="n_th_root_safe for LineRootMarginRewardSafeRange")
+    parser.add_argument("--reward_param_lrmrsr_n_overflow", type=int, default=5, help="n_th_root_overflow for LineRootMarginRewardSafeRange")
+    # LineSoftMaxRootMarginReward & LineSoftMaxRootMarginRewardUpgraded (shared for simplicity, can be split if needed)
+    parser.add_argument("--reward_param_lsmrm_use_softmax", type=str2bool, default=False, help="use_softmax for LineSoftMaxRootMarginReward variants")
+    parser.add_argument("--reward_param_lsmrm_temp_softmax", type=float, default=1.0, help="temperature_softmax for LineSoftMaxRootMarginReward variants")
+    parser.add_argument("--reward_param_lsmrm_n_safe", type=int, default=7, help="n_th_root_safe for LineSoftMaxRootMarginReward variants")
+    parser.add_argument("--reward_param_lsmrm_n_overflow", type=int, default=7, help="n_th_root_overflow for LineSoftMaxRootMarginReward variants")
 
     # Parse the arguments
     params, _ = parser.parse_known_args()

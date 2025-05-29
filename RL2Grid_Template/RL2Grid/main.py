@@ -9,7 +9,7 @@ from common.checkpoint import PPOCheckpoint, SACCheckpoint, DQNCheckpoint, TD3Ch
 from common.utils import set_random_seed, set_torch, str2bool
 from common.imports import ap, gym, th, np
 from env.config import get_env_args
-from env.utils import make_env, make_env_with_L2RPNReward
+from env.utils import make_env
 from grid2op.Parameters import Parameters
 from grid2op.gym_compat import GymObservationSpace
 
@@ -48,7 +48,7 @@ ENV_PARAMS = {
 
 # *** CHOOSE THE DIFFICULTY LEVEL HERE ***
 # Set to a number between 1 (easiest) and 5 (hardest)
-PARAM_LEVEL = 1
+PARAM_LEVEL = 5
 
 def main(args):
     assert args.time_limit <= 100440, f"Invalid time limit: {args.time_limit}. Timeout limit is : 100440"

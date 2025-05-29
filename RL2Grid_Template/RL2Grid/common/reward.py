@@ -515,3 +515,25 @@ class LineSoftMaxRootMarginRewardUpgraded(BaseReward):
             res = self.reward_min
 
         return res
+
+
+class OverloadReward(BaseReward):
+    def __init__(self, logger=None):
+        super().__init__(logger=logger)
+        self.penalty = dt_float(-1.0)
+        self.min_reward = dt_float(-5.0)
+
+    def __call__(self, action: np.ndarray, env, 
+                 has_error: bool, is_done: bool, is_illegal: bool,
+                 is_ambiguous: bool) -> float:
+        if has_error or is_illegal or is_ambiguous:
+            return self.min_reward
+
+        ampere_flows = np.abs(env.backend.get_line_flow(), dtype=dt_float)
+        thermal_limits = np.abs(env.get_thermal_limit(), dtype=dt_float)
+        margin = np.divide(thermal_limits - ampere_flows, thermal_limits + 1e-10)
+
+        penalty_disconnection = self.penalty * sum(~env.current_obs.line_status) / (env.current_obs.n_line * 0.1)
+        penalty_overload = margin[margin < 0].sum() / (env.current_obs.n_line * 0.1)
+
+        return (penalty_overload + penalty_disconnection) 

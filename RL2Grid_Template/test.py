@@ -1,90 +1,56 @@
-#laptop, public 
-# sss
-# private
-# private 2
-#create a simple class for numerical calculations, pls always define types for variables
-class Calculator:
-    def add(self, x: float, y: float) -> float:
-        """Adds two numbers."""
-        return x + y
+import numpy as np
 
-    def subtract(self, x: float, y: float) -> float:
-        """Subtracts two numbers."""
-        return x - y
+next_obs = np.array([
+    1.,          86.4,         85.1,          3.3,          0.,
+    0.,          86.87001,     -1.6918808,   -4.817273,   -10.137186,
+  -10.137186,    -9.145282,     0.,           1.,           1.,
+    1.,           1.,           1.,           1.,           1.,
+    1.,           1.,           1.,           1.,           1.,
+    1.,           1.,           1.,           1.,           1.,
+    1.,           1.,           1.,          23.2,         90.1,
+   47.6,          7.2,         12.,          29.5,          9.3,
+    3.5,          5.8,         13.1,         15.4,         -1.6918808,
+   -4.817273,    -6.5112042,   -4.7619767,  -10.137186,   -10.4845295,
+  -10.683826,   -10.500909,   -10.778994,   -10.806669,   -11.431918,
+    0.38441375,   0.35148522,   0.31405112,   0.32421306,   0.7505744,
+    0.3594117,    0.22512984,   0.57502663,   0.5250146,    0.7758381,
+    0.26508304,   0.3921261,    0.31850535,   0.45990786,   0.43199277,
+    0.5405013,    0.63376886,   1.0293176,    0.5004717,    0.41924238,
+    0.,           0.,           0.,           0.,           0.,
+    0.,           0.,           0.,           0.,           0.,
+    0.,           0.,           0.,           0.,           0.,
+    0.,           0.,           0.,           0.,           0.,
+    0.,           0.,           0.,           0.,           0.,
+    0.,           0.,           0.,           0.,           0.,
+    0.,           0.,           0.,           0.,           0.,
+    0.,           0.,           0.,           0.,           0.,
+    0.,           0.,           0.,           0.,           0.,
+    0.,           0.,           0.,           0.,           0.,
+    0.,           1.,           0.,           0.,           1.,
+    1.,           1.,           1.,           1.,           1.,
+    1.,           1.,           1.,           1.,           1.,
+    1.,           1.,           1.,           1.,           2.,
+    1.,           2.,           1.,           1.,           1.,
+    1.,           1.,           1.,           1.,           1.,
+    1.,           1.,           1.,           1.,           1.,
+    1.,           1.,           1.,           1.,           1.,
+    1.,           1.,           1.,           1.,           1.,
+    1.,           1.,           1.,           1.,           1.,
+    1.,           1.,           1.,           1.,           1.,
+    1.    
+])
 
-    def multiply(self, x: float, y: float) -> float:
-        """Multiplies two numbers."""
-        return x * y
+# Search for the start index of rho (first value in rho sequence)
+rho_reference_start = 0.38441375
+start_index = np.where(np.isclose(next_obs, rho_reference_start))[0][0]
 
-    def divide(self, x: float, y: float) -> float:
-        """Divides two numbers.  Handles division by zero."""
-        if y == 0:
-            raise ZeroDivisionError("Cannot divide by zero.")
-        return x / y
-    def square_root(self, x: float) -> float:
-        """Calculates the square root of a number."""
-        if x < 0:
-            raise ValueError("Cannot calculate the square root of a negative number.")
-        return x**0.5
+# Extract rho values
+rho = next_obs[start_index:start_index + 20]
 
-    def log(self, x: float, base: float = 10) -> float:
-        """Calculates the logarithm of a number with a specified base."""
-        if x <= 0:
-            raise ValueError("Cannot calculate the logarithm of a non-positive number.")
-        if base <= 0 or base == 1:
-            raise ValueError("Invalid base for logarithm.")
-        return math.log(x, base)
-
-    def power(self, x: float, y: float) -> float:
-        """Calculates x raised to the power of y."""
-        return x**y
-
-    def factorial(self, n: int) -> int:
-        """Calculates the factorial of a non-negative integer."""
-        if not isinstance(n, int) or n < 0:
-            raise ValueError("Input must be a non-negative integer.")
-        if n == 0:
-            return 1
-        else:
-            return n * self.factorial(n - 1)
-import math # is this a bug? fix it
-
-        
-# now i want to use the above class, create a simple script to test it
-if __name__ == "__main__":
-    calc = Calculator()
-    print(calc.add(2, 3))
-    print(calc.subtract(5, 2))
-    print(calc.multiply(4, 6))
-    print(calc.divide(10, 2))
-    print(calc.divide(10, 0))  # this should raise an error
-    #print(calc.divide(10, 0))  # this should raise an error
-    #print(calc.divide(10, 0))  # this should raise an error
-    #print(calc.divide(10, 0))  # this should raise an error
-
-
-
-# 1 
-# nhap 1 
-# nhap 2 
-# nhap 3 
-# main 
-# nhap 1 again 
-
-
-# nhap 111111111111111111
-# mainnn 
-
-
-        # nhap 111
-# nhap 1 lan 2 
-# nhap 1 lan 3
-
-
-
-# nhap 
-# nhap 2 
-
-# rebase ???
-
-# main 
+# Output results
+print(f"rho starts at index: {start_index}")
+print("rho =", rho)
+zz = 55
+rho = next_obs[zz:zz + 20]
+print(f"rho starts at index: {zz}")
+print("rho =", rho)

@@ -24,7 +24,8 @@ from common.reward import (
     LineRootMarginReward,
     LineRootMarginRewardSafeRange,
     LineSoftMaxRootMarginReward,
-    LineSoftMaxRootMarginRewardUpgraded
+    LineSoftMaxRootMarginRewardUpgraded,
+    OverloadReward
 )
 from .heuristic import GridOpRecoAndRevertBus, GridOpIdle, GridOpIdleNonLoop
 from .heuristic import GridOpRecoAndRevertBus, GridOpIdle, GridOpIdleNonLoop
@@ -46,7 +47,8 @@ REWARD_CLASS_MAP = {
     "L2RPNReward": L2RPNReward,
     "N1Reward": N1Reward, # Note: N1Reward needs l_id, not easily configurable via simple CLI string yet.
     "FlatReward": FlatReward,
-}
+    "OverloadReward": OverloadReward,
+    }
 
 
 
@@ -98,6 +100,8 @@ def _configure_rewards(cr, g2op_env, args, default_reward_setup_func):
                 try:
                     if fn_name == "IncreasingFlatReward":
                         reward_instance = RewardClass(per_timestep=1/g2op_env.chronics_handler.max_episode_duration())
+                    elif fn_name == "FlatReward":
+                        reward_instance = RewardClass(per_timestep=1)
                     elif fn_name == "LineSoftMaxRootMarginRewardUpgraded":
                         reward_instance = RewardClass(
                             use_softmax=args.reward_param_lsmrm_use_softmax,

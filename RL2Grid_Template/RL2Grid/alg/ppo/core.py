@@ -77,13 +77,98 @@ class PPO:
   
                 # TRY NOT TO MODIFY: execute the game and log data.
                 try:
+                    print("------------------------------")
+                    print("Action:", action.cpu().numpy())       ##PP
                     next_obs, reward, terminations, truncations, infos = envs.step(action.cpu().numpy())
-                    print(reward, global_step)                              ##PP
+                    print("Reward:", reward, global_step)    
                     #print([f"{r:.4f}" for r in reward])         ##PP
                     #print("next_obs:", next_obs)               ##PP
+                    rho_values = np.array([round(x, 2) for x in next_obs[0][55:75]])
+                    print("Rho values:", rho_values)
+                    #print("Rho values:", [f"{r:.2f}" for r in rho_values])
                     #print("terminations:", terminations)       ##PP
                     #print("truncations:", truncations)          ##PP
                     #print("infos:", infos)                       ##PP
+                    # Only print exception if it exists in final_info
+                    if 'final_info' in infos and infos['final_info'] is not None:
+                        for info in infos['final_info']:
+                            if info and 'exception' in info:
+                                print("Exception:", info['exception'])
+                    '''
+                    infos is always like this:
+                    infos: {'final_observation': array([array([517.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
+                0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
+                0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
+                0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
+                0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
+                0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
+                0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
+                0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
+                0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
+                0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
+                0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,
+                0.,   0.,   0.,   0.,   0.,   0.,   0.,   0.,  -1.,  -1.,  -1.,
+               -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,
+               -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,
+               -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,
+               -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,
+               -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.,  -1.],
+             dtype=float32)                                                    ],
+      dtype=object), '_final_observation': array([ True]), 'final_info': array([{'disc_lines': array([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+              -1, -1, -1]), 'is_illegal': False, 'is_ambiguous': False, 'is_dispatching_illegal': False, 'is_illegal_reco': False, 'reason_alarm_illegal': None, 'reason_alert_illegal': None, 'opponent_attack_line': None, 'opponent_attack_sub': None, 'opponent_attack_duration': 0, 'exception': [Grid2OpException BackendError BackendError('Divergence of DC powerflow (non connected grid) at the initialization of AC powerflow. Detailed error: ErrorType.SolverSolve')], 'time_series_id': 'C:\\Users\\admin\\data_grid2op\\l2rpn_case14_sandbox_train\\chronics\\0829', 'rewards': {}, 'episode': {'l': [517], 'r': [1.653963565826416]}}],
+      dtype=object), '_final_info': array([ True])}
+
+
+
+
+                    this is next_obs, 
+                    [[  1.          86.4         85.1          3.3          0.
+    0.          86.87001     -1.6918808   -4.817273   -10.137186
+  -10.137186    -9.145282     0.           1.           1.
+    1.           1.           1.           1.           1.
+    1.           1.           1.           1.           1.
+    1.           1.           1.           1.           1.
+    1.           1.           1.          23.2         90.1
+   47.6          7.2         12.          29.5          9.3
+    3.5          5.8         13.1         15.4         -1.6918808
+   -4.817273    -6.5112042   -4.7619767  -10.137186   -10.4845295
+  -10.683826   -10.500909   -10.778994   -10.806669   -11.431918
+    0.38441375   0.35148522   0.31405112   0.32421306   0.7505744
+    0.3594117    0.22512984   0.57502663   0.5250146    0.7758381
+    0.26508304   0.3921261    0.31850535   0.45990786   0.43199277
+    0.5405013    0.63376886   1.0293176    0.5004717    0.41924238
+    0.           0.           0.           0.           0.
+    0.           0.           0.           0.           0.
+    0.           0.           0.           0.           0.
+    0.           0.           0.           0.           0.
+    0.           0.           0.           0.           0.
+    0.           0.           0.           0.           0.
+    0.           0.           0.           0.           0.
+    0.           0.           0.           0.           0.
+    0.           0.           0.           0.           0.
+    0.           0.           0.           0.           0.
+    0.           1.           0.           0.           1.
+    1.           1.           1.           1.           1.
+    1.           1.           1.           1.           1.
+    1.           1.           1.           1.           2.
+    1.           2.           1.           1.           1.
+    1.           1.           1.           1.           1.
+    1.           1.           1.           1.           1.
+    1.           1.           1.           1.           1.
+    1.           1.           1.           1.           1.
+    1.           1.           1.           1.           1.
+    1.           1.           1.           1.           1.
+    1.           1.           1.           1.           1.
+    1.        ]]
+    rho is :  0.38441375   0.35148522   0.31405112   0.32421306   0.7505744
+    0.3594117    0.22512984   0.57502663   0.5250146    0.7758381
+    0.26508304   0.3921261    0.31850535   0.45990786   0.43199277
+    0.5405013    0.63376886   1.0293176    0.5004717    0.41924238
+
+    
+                    '''
+
+
                 except:
                     ckpt.set_record(args, agent.actor, agent.critic, global_step, actor_optim, critic_optim, logger.wb_path, iteration)
                     ckpt.save()
@@ -100,7 +185,8 @@ class PPO:
                         if info and "episode" in info:
                             survival = info['episode']['l'][0]/max_steps
                             _return = info['episode']['r'][0]
-                            if args.verbose: print(f"glb steps={global_step}, lnth={info['episode']['l'][0]}, s_rate={survival*100:.0f}%, return={_return:.1f}")
+                            if args.verbose: print(f"GLB steps={global_step}, lnth={info['episode']['l'][0]}, S_RATE={survival*100:.0f}%, RETURN={_return:.1f}")
+                            print("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
                             if track: logger.store_metrics(survival, info)
                             break
 

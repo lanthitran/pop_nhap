@@ -1,56 +1,22 @@
-import numpy as np
+# Create a list of dictionaries
+a = b = [{} for _ in range(2)]  # a and b point to the same list
 
-next_obs = np.array([
-    1.,          86.4,         85.1,          3.3,          0.,
-    0.,          86.87001,     -1.6918808,   -4.817273,   -10.137186,
-  -10.137186,    -9.145282,     0.,           1.,           1.,
-    1.,           1.,           1.,           1.,           1.,
-    1.,           1.,           1.,           1.,           1.,
-    1.,           1.,           1.,           1.,           1.,
-    1.,           1.,           1.,          23.2,         90.1,
-   47.6,          7.2,         12.,          29.5,          9.3,
-    3.5,          5.8,         13.1,         15.4,         -1.6918808,
-   -4.817273,    -6.5112042,   -4.7619767,  -10.137186,   -10.4845295,
-  -10.683826,   -10.500909,   -10.778994,   -10.806669,   -11.431918,
-    0.38441375,   0.35148522,   0.31405112,   0.32421306,   0.7505744,
-    0.3594117,    0.22512984,   0.57502663,   0.5250146,    0.7758381,
-    0.26508304,   0.3921261,    0.31850535,   0.45990786,   0.43199277,
-    0.5405013,    0.63376886,   1.0293176,    0.5004717,    0.41924238,
-    0.,           0.,           0.,           0.,           0.,
-    0.,           0.,           0.,           0.,           0.,
-    0.,           0.,           0.,           0.,           0.,
-    0.,           0.,           0.,           0.,           0.,
-    0.,           0.,           0.,           0.,           0.,
-    0.,           0.,           0.,           0.,           0.,
-    0.,           0.,           0.,           0.,           0.,
-    0.,           0.,           0.,           0.,           0.,
-    0.,           0.,           0.,           0.,           0.,
-    0.,           0.,           0.,           0.,           0.,
-    0.,           1.,           0.,           0.,           1.,
-    1.,           1.,           1.,           1.,           1.,
-    1.,           1.,           1.,           1.,           1.,
-    1.,           1.,           1.,           1.,           2.,
-    1.,           2.,           1.,           1.,           1.,
-    1.,           1.,           1.,           1.,           1.,
-    1.,           1.,           1.,           1.,           1.,
-    1.,           1.,           1.,           1.,           1.,
-    1.,           1.,           1.,           1.,           1.,
-    1.,           1.,           1.,           1.,           1.,
-    1.,           1.,           1.,           1.,           1.,
-    1.    
-])
 
-# Search for the start index of rho (first value in rho sequence)
-rho_reference_start = 0.38441375
-start_index = np.where(np.isclose(next_obs, rho_reference_start))[0][0]
+# Print both a and b
+print("a:", a)
+print("b:", b)
 
-# Extract rho values
-rho = next_obs[start_index:start_index + 20]
 
-# Output results
-print(f"rho starts at index: {start_index}")
-print("rho =", rho)
-zz = 55
-rho = next_obs[zz:zz + 20]
-print(f"rho starts at index: {zz}")
-print("rho =", rho)
+
+# Modify the list itself through b
+b[0]["y"] = 343433443
+
+# Print both a and b
+print("a:", a)
+print("b:", b)
+
+# Check if a is b (same list object)
+print("a is b:", a is b)
+
+# Check if a[0] is b[0] (same dict object inside)
+print("a[0] is b[0]:", a[0] is b[0])

@@ -3,10 +3,10 @@ import numpy as np
 import grid2op
 from grid2op.gym_compat import GymEnv, DiscreteActSpace
 from lightsim2grid import LightSimBackend
-from typing import Tuple, List, Dict
+from typing import Tuple, List, Dict, Any
 
 
-def create_environment(env_id: str, difficulty: int) -> Tuple[grid2op.Environment, GymEnv]:
+def create_environment(env_id: str, difficulty: int) -> Tuple[Any, GymEnv]:
     """
     Create and configure the Grid2Op and Gym environments.
     
@@ -20,17 +20,17 @@ def create_environment(env_id: str, difficulty: int) -> Tuple[grid2op.Environmen
     # Create the base environment
     g2op_env = grid2op.make(
         "l2rpn_case14_sandbox",
-        reward_class=None,
+        #reward_class=None,
         backend=LightSimBackend()
     )
     
     # Create gym environment
     gym_env = GymEnv(g2op_env)
-    
-    # Load and configure action space
-    env_dir = os.path.dirname(__file__)
-    loaded_action_space = np.load(f"{env_dir}/action_spaces/{env_id}_action_space.npy", allow_pickle=True)
-    
+        
+    # Load the action space
+    loaded_action_space = np.load(f"D:/grid2op/pop_nhap/RL2Grid_Template/RL2Grid/env/action_spaces/{env_id}_action_space.npy", allow_pickle=True)
+    #loaded_action_space = np.load(f"D:\grid2op\pop_nhap\RL2Grid_Template\RL2Grid/env/action_spaces/{env_id}_action_space.npy", allow_pickle=True)
+
     # Calculate number of actions based on difficulty
     n_actions = np.geomspace(50, len(loaded_action_space), num=3).astype(int)[difficulty]
     
@@ -112,14 +112,14 @@ def print_summary_statistics(g2op_env, n_actions: int):
 def main():
     """Main function to run the action space analysis."""
     # Configuration
-    env_id = "bus_14"
+    env_id = "bus14"
     difficulty = 0
     
     # Create environments
     g2op_env, gym_env = create_environment(env_id, difficulty)
     
     # Get number of actions
-    n_actions = len(gym_env.action_space)
+    n_actions = gym_env.action_space.n
     
     # Print header
     print(f"\nAnalyzing {n_actions} actions for {env_id} at difficulty {difficulty}\n")

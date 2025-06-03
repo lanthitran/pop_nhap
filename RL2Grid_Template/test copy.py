@@ -4,6 +4,7 @@ import grid2op
 from grid2op.gym_compat import GymEnv, DiscreteActSpace
 from lightsim2grid import LightSimBackend
 from typing import Tuple, List, Dict, Any
+import matplotlib.pyplot as plt
 
 
 def create_environment(env_id: str, difficulty: int) -> Tuple[Any, GymEnv]:
@@ -109,6 +110,102 @@ def print_summary_statistics(g2op_env, n_actions: int):
     print(f"Number of power lines: {g2op_env.n_line}")
 
 
+def plot_substation_impacts(g2op_env, all_analyses: List[Dict]):
+    """
+    Create a bar chart showing how many actions impact each substation.
+    
+    Args:
+        g2op_env: The Grid2Op environment
+        all_analyses: List of action analysis results
+    """
+    # Count impacts per substation
+    substation_impacts = np.zeros(g2op_env.n_sub)
+    for analysis in all_analyses:
+        for sub_id in analysis['impacted_subs']:
+            substation_impacts[sub_id] += 1
+    
+    # Print total number of substation-impacting actions
+    total_sub_impacts = int(substation_impacts.sum())
+    print(f"Total number of substation-impacting actions: {total_sub_impacts}")
+    
+    # Create figure with dark background
+    plt.style.use('dark_background')
+    fig, ax = plt.subplots(figsize=(12, 6))
+    
+    # Create bar chart
+    bars = ax.bar(range(g2op_env.n_sub), substation_impacts)
+    
+    # Customize the plot
+    ax.set_xlabel('Substation ID', fontsize=12)
+    ax.set_ylabel('Number of Impacting Actions', fontsize=12)
+    ax.set_title('Number of Actions Impacting Each Substation', fontsize=14, pad=20)
+    
+    # Add value labels on top of each bar
+    for bar in bars:
+        height = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width()/2., height,
+                f'{int(height)}',
+                ha='center', va='bottom')
+    
+    # Customize grid and ticks
+    ax.grid(True, alpha=0.3)
+    ax.set_xticks(range(g2op_env.n_sub))
+    
+    # Adjust layout and display
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_line_impacts(g2op_env, all_analyses: List[Dict]):
+    """
+    Create a bar chart showing how many actions impact each power line.
+
+    Args:
+        g2op_env: The Grid2Op environment
+        all_analyses: List of action analysis results
+    """
+    # Count impacts per line
+    line_impacts = np.zeros(g2op_env.n_line)
+    for analysis in all_analyses:
+        for line_id in analysis['impacted_lines']:
+            line_impacts[line_id] += 1
+
+    # Print total number of line-impacting actions (sum of all impacts)
+    total_line_impacts = int(line_impacts.sum())
+    print(f"Total number of line-impacting actions: {total_line_impacts}")
+
+    # Print number of actions that impact at least one line
+    num_actions_with_line_impact = sum(1 for analysis in all_analyses if len(analysis['impacted_lines']) > 0)
+    print(f"Number of actions that impact at least one line: {num_actions_with_line_impact}")
+
+    # Create figure with dark background
+    plt.style.use('dark_background')
+    fig, ax = plt.subplots(figsize=(12, 6))
+
+    # Create bar chart
+    bars = ax.bar(range(g2op_env.n_line), line_impacts)
+
+    # Customize the plot
+    ax.set_xlabel('Line ID', fontsize=12)
+    ax.set_ylabel('Number of Impacting Actions', fontsize=12)
+    ax.set_title('Number of Actions Impacting Each Power Line', fontsize=14, pad=20)
+
+    # Add value labels on top of each bar
+    for bar in bars:
+        height = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width()/2., height,
+                f'{int(height)}',
+                ha='center', va='bottom')
+
+    # Customize grid and ticks
+    ax.grid(True, alpha=0.3)
+    ax.set_xticks(range(g2op_env.n_line))
+
+    # Adjust layout and display
+    plt.tight_layout()
+    plt.show()
+
+
 def main():
     """Main function to run the action space analysis."""
     # Configuration
@@ -126,13 +223,19 @@ def main():
     print("="*80)
     
     # Analyze each action
+    all_analyses = []
     for action_id in range(n_actions):
         action = gym_env.action_space.from_gym(action_id)
         analysis = analyze_action(action, action_id, g2op_env)
         print_action_analysis(analysis)
+        all_analyses.append(analysis)
     
     # Print summary
     print_summary_statistics(g2op_env, n_actions)
+    
+    # Create visualization
+    plot_substation_impacts(g2op_env, all_analyses)
+    plot_line_impacts(g2op_env, all_analyses)
 
 
 if __name__ == "__main__":

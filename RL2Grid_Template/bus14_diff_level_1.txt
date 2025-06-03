@@ -1,0 +1,3820 @@
+
+Analyzing 209 actions for bus14 at difficulty 1
+
+================================================================================
+
+Action 0:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+----------------------------------------
+
+Action 1:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 2:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 3:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 4:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 5:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 14 [on substation 13]
+	 	 - Switch bus of load id 10 [on substation 13]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 13
+----------------------------------------
+
+Action 6:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 7:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of load id 8 [on substation 11]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 11
+----------------------------------------
+
+Action 8:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 9:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 10:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 11 [on substation 8]
+	 	 - Switch bus of line (origin) id 19 [on substation 8]
+	 	 - Switch bus of load id 5 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 11:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 12:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 13:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of load id 7 [on substation 10]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 10
+----------------------------------------
+
+Action 14:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 15:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 4 [on substation 4]
+	 	 - Switch bus of line (extremity) id 6 [on substation 4]
+	 	 - Switch bus of line (origin) id 17 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 16:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 17:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([14])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 14
+----------------------------------------
+
+Action 18:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 19:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 11 [on substation 8]
+	 	 - Switch bus of line (extremity) id 16 [on substation 8]
+	 	 - Switch bus of load id 5 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 20:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 6 [on substation 4]
+	 	 - Switch bus of line (origin) id 17 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 21:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 22:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 23:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 24:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([18])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 18
+----------------------------------------
+
+Action 25:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 26:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 27:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 28:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 29:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 30:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 31:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 32:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 33:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 34:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 19 [on substation 6]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 6
+----------------------------------------
+
+Action 35:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 36:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 18 [on substation 6]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 6
+----------------------------------------
+
+Action 37:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 38:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 39:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 40:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 41:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 42:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 43:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 44:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 45:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 46:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 47:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 48:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 49:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 50:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 51:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 52:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 53:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 54:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 55:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 56:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 57:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 18 [on substation 6]
+	 	 - Switch bus of line (extremity) id 19 [on substation 6]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 6
+----------------------------------------
+
+Action 58:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 59:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 60:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 61:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 8 [on substation 5]
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 62:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 16 [on substation 8]
+	 	 - Switch bus of load id 5 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 63:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of load id 5 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 64:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 13 [on substation 12]
+	 	 - Switch bus of line (origin) id 14 [on substation 12]
+	 	 - Switch bus of load id 9 [on substation 12]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 12
+----------------------------------------
+
+Action 65:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of load id 10 [on substation 13]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 13
+----------------------------------------
+
+Action 66:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 14 [on substation 13]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 13
+----------------------------------------
+
+Action 67:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([0])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 0
+----------------------------------------
+
+Action 68:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([1])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 1
+----------------------------------------
+
+Action 69:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([2])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 2
+----------------------------------------
+
+Action 70:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([3])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 3
+----------------------------------------
+
+Action 71:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([4])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 4
+----------------------------------------
+
+Action 72:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([5])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 5
+----------------------------------------
+
+Action 73:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 13 [on substation 12]
+	 	 - Switch bus of line (origin) id 14 [on substation 12]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 12
+----------------------------------------
+
+Action 74:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([6])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 6
+----------------------------------------
+
+Action 75:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([8])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 8
+----------------------------------------
+
+Action 76:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([9])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 9
+----------------------------------------
+
+Action 77:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([10])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 10
+----------------------------------------
+
+Action 78:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([11])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 11
+----------------------------------------
+
+Action 79:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([12])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 12
+----------------------------------------
+
+Action 80:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([13])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 13
+----------------------------------------
+
+Action 81:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([15])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 15
+----------------------------------------
+
+Action 82:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([16])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 16
+----------------------------------------
+
+Action 83:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([17])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 17
+----------------------------------------
+
+Action 84:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([7])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 7
+----------------------------------------
+
+Action 85:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 13 [on substation 12]
+	 	 - Switch bus of load id 9 [on substation 12]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 12
+----------------------------------------
+
+Action 86:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 13 [on substation 12]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 12
+----------------------------------------
+
+Action 87:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 14 [on substation 12]
+	 	 - Switch bus of load id 9 [on substation 12]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 12
+----------------------------------------
+
+Action 88:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 19 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 89:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 19 [on substation 8]
+	 	 - Switch bus of load id 5 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 90:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 16 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 91:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 92:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 16 [on substation 8]
+	 	 - Switch bus of line (origin) id 19 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 93:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 16 [on substation 8]
+	 	 - Switch bus of line (origin) id 19 [on substation 8]
+	 	 - Switch bus of load id 5 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 94:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 11 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 95:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 11 [on substation 8]
+	 	 - Switch bus of load id 5 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 96:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 11 [on substation 8]
+	 	 - Switch bus of line (origin) id 19 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 97:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 11 [on substation 8]
+	 	 - Switch bus of line (extremity) id 16 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 98:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 11 [on substation 8]
+	 	 - Switch bus of line (extremity) id 16 [on substation 8]
+	 	 - Switch bus of line (origin) id 19 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 99:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 11 [on substation 8]
+	 	 - Switch bus of line (extremity) id 16 [on substation 8]
+	 	 - Switch bus of line (origin) id 19 [on substation 8]
+	 	 - Switch bus of load id 5 [on substation 8]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 8
+----------------------------------------
+
+Action 100:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of load id 6 [on substation 9]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 9
+----------------------------------------
+
+Action 101:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 12 [on substation 9]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 9
+----------------------------------------
+
+Action 102:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 12 [on substation 9]
+	 	 - Switch bus of load id 6 [on substation 9]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 9
+----------------------------------------
+
+Action 103:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 12 [on substation 10]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 10
+----------------------------------------
+
+Action 104:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 12 [on substation 10]
+	 	 - Switch bus of load id 7 [on substation 10]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 10
+----------------------------------------
+
+Action 105:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 13 [on substation 11]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 11
+----------------------------------------
+
+Action 106:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 13 [on substation 11]
+	 	 - Switch bus of load id 8 [on substation 11]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 11
+----------------------------------------
+
+Action 107:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of load id 9 [on substation 12]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 12
+----------------------------------------
+
+Action 108:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 14 [on substation 12]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 12
+----------------------------------------
+
+Action 109:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of generator id 4 [on substation 7]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 7
+----------------------------------------
+
+Action 110:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 111:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 112:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 113:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 114:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 115:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 116:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 117:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 118:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of load id 1 [on substation 2]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 2
+----------------------------------------
+
+Action 119:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of generator id 1 [on substation 2]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 2
+----------------------------------------
+
+Action 120:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of generator id 1 [on substation 2]
+	 	 - Switch bus of load id 1 [on substation 2]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 2
+----------------------------------------
+
+Action 121:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 5 [on substation 2]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 2
+----------------------------------------
+
+Action 122:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 123:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 5 [on substation 2]
+	 	 - Switch bus of load id 1 [on substation 2]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 2
+----------------------------------------
+
+Action 124:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 5 [on substation 2]
+	 	 - Switch bus of generator id 1 [on substation 2]
+	 	 - Switch bus of load id 1 [on substation 2]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 2
+----------------------------------------
+
+Action 125:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 126:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 127:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 128:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 129:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 130:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 131:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 132:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 133:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 5 [on substation 2]
+	 	 - Switch bus of generator id 1 [on substation 2]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 2
+----------------------------------------
+
+Action 134:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 135:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 136:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 137:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of generator id 5 [on substation 0]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 0
+----------------------------------------
+
+Action 138:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 1 [on substation 0]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 0
+----------------------------------------
+
+Action 139:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 1 [on substation 0]
+	 	 - Switch bus of generator id 5 [on substation 0]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 0
+----------------------------------------
+
+Action 140:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 141:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 142:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 143:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 144:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 145:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 146:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 147:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 148:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 149:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 150:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 151:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 152:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 153:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 3 [on substation 1]
+	 	 - Switch bus of line (origin) id 4 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 154:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 155:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 156:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 157:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 2 [on substation 1]
+	 	 - Switch bus of generator id 0 [on substation 1]
+	 	 - Switch bus of load id 0 [on substation 1]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 1
+----------------------------------------
+
+Action 158:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 159:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 160:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 161:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 162:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 4 [on substation 4]
+	 	 - Switch bus of line (extremity) id 6 [on substation 4]
+	 	 - Switch bus of line (origin) id 17 [on substation 4]
+	 	 - Switch bus of load id 3 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 163:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 164:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 165:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 166:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 167:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 168:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 169:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 170:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 171:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 4 [on substation 4]
+	 	 - Switch bus of line (extremity) id 6 [on substation 4]
+	 	 - Switch bus of load id 3 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 172:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 173:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 174:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 175:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 176:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 177:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 178:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 179:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 180:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 181:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 9 [on substation 5]
+	 	 - Switch bus of generator id 2 [on substation 5]
+	 	 - Switch bus of load id 4 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 182:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 17 [on substation 5]
+	 	 - Switch bus of generator id 3 [on substation 5]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 5
+----------------------------------------
+
+Action 183:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 4 [on substation 4]
+	 	 - Switch bus of line (extremity) id 6 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 184:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 4 [on substation 4]
+	 	 - Switch bus of line (origin) id 17 [on substation 4]
+	 	 - Switch bus of load id 3 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 185:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 4 [on substation 4]
+	 	 - Switch bus of line (origin) id 17 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 186:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 187:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 188:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 189:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 190:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 191:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 192:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 193:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 194:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 195:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 196:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 197:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 198:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 5 [on substation 3]
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 	 - Switch bus of load id 2 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 199:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of load id 3 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 200:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 17 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 201:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 17 [on substation 4]
+	 	 - Switch bus of load id 3 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 202:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 6 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 203:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 6 [on substation 4]
+	 	 - Switch bus of load id 3 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 204:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 6 [on substation 4]
+	 	 - Switch bus of line (origin) id 17 [on substation 4]
+	 	 - Switch bus of load id 3 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 205:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 4 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 206:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (extremity) id 4 [on substation 4]
+	 	 - Switch bus of load id 3 [on substation 4]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 4
+----------------------------------------
+
+Action 207:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - NOT switch any line status
+	 - Change the bus of the following element(s):
+	 	 - Switch bus of line (origin) id 6 [on substation 3]
+	 	 - Switch bus of line (origin) id 15 [on substation 3]
+	 	 - Switch bus of line (origin) id 16 [on substation 3]
+	 - NOT force any particular bus configuration
+
+Impacted substations:
+  - Substation 3
+----------------------------------------
+
+Action 208:
+----------------------------------------
+Action description: This action will:
+	 - NOT change anything to the injections
+	 - NOT perform any redispatching action
+	 - NOT modify any storage capacity
+	 - NOT perform any curtailment
+	 - NOT force any line status
+	 - Switch status of 1 powerlines ([19])
+	 - NOT switch anything in the topology
+	 - NOT force any particular bus configuration
+
+Impacted power lines:
+  - Line 19
+----------------------------------------
+
+Summary Statistics:
+================================================================================
+Environment: bus14 (grid2op_id: l2rpn_case14_sandbox)
+Difficulty: 1 / 1
+Number of actions: 209
+Number of substations: 14
+Number of power lines: 20
+Total number of substation-impacting actions: 188
+Number of actions that impact at least one substation: 188

@@ -2,8 +2,11 @@ from time import time
 
 from .agent import Agent
 from .config import get_alg_args
+from .evaluator import evaluate_policy
 from common.imports import ap, nn, np, optim, th
 from common.logger import Logger
+from env.utils import make_env
+from grid2op.Parameters import Parameters
 
 class PPO:
     def __init__(self, envs, max_steps, run_name, start_time, args, ckpt):        
@@ -38,6 +41,11 @@ class PPO:
             actor_optim.load_state_dict(ckpt.loaded_run['actor_optim'])
             critic_optim.load_state_dict(ckpt.loaded_run['critic_optim'])
 
+        grid_params = Parameters()
+        grid_params.MAX_LINE_STATUS_CHANGED = 1
+        grid_params.MAX_SUB_CHANGED = 1
+        eval_env = make_env(args, 0, resume_run=False, params=grid_params, eval_mode=True)()
+
         # ALGO Logic: Storage setup
         observations = th.zeros((args.n_steps, args.n_envs) + envs.single_observation_space.shape).to(device)
         actions = th.zeros((args.n_steps, args.n_envs) + 
@@ -68,7 +76,7 @@ class PPO:
 
                 # ALGO LOGIC: action logic
                 with th.no_grad():
-                    action, logprob, _ = agent.get_action(next_obs)
+                    action, logprob, _ = agent.get_action(next_obs) # , deterministic=True
                     value = agent.get_value(next_obs)
                     values[step] = value.flatten()
                 actions[step] = action
@@ -190,6 +198,18 @@ class PPO:
                             if track: logger.store_metrics(survival, info)
                             break
 
+                # Evaluate policy every eval_freq steps
+                if global_step % args.eval_freq == 0:
+                    eval_metrics = evaluate_policy(agent, eval_env, args.n_eval_episodes, max_steps, device)
+                    if track:
+                        for key, value in eval_metrics.items():
+                            logger.writer.add_scalar(key, value, global_step)
+                        logger.writer.flush()
+                    if args.verbose:
+                        print(f"Evaluation at step {global_step}:")
+                        for key, value in eval_metrics.items():
+                            print(f"{key}: {value:.2f}")
+
                 if track and global_step % logger.log_freq == 0: logger.log_metrics(global_step)
 
             # bootstrap value if not done
@@ -307,4 +327,5 @@ class PPO:
         ckpt.set_record(args, agent.actor, agent.critic, global_step, actor_optim, critic_optim, logger.wb_path, iteration)
         ckpt.save()
         envs.close()
+        eval_env.close()
         if track: logger.close()

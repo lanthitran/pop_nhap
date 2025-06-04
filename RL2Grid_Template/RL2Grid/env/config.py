@@ -42,6 +42,12 @@ def get_env_args():
     parser.add_argument("--reward_param_lsmrm_n_safe", type=int, default=7, help="n_th_root_safe for LineSoftMaxRootMarginReward variants")
     parser.add_argument("--reward_param_lsmrm_n_overflow", type=int, default=7, help="n_th_root_overflow for LineSoftMaxRootMarginReward variants")
 
+    # Environment
+    parser.add_argument("--eval-env-id", type=str, default="bus14_val", help="Environment ID for evaluation")
+    # Evaluation parameters
+    parser.add_argument("--eval-freq", type=int, default=10000, help="Frequency of evaluation in terms of environment steps")
+    parser.add_argument("--n-eval-episodes", type=int, default=50, help="Number of episodes to evaluate on")
+
     # Parse the arguments
     params, _ = parser.parse_known_args()
 

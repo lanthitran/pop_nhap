@@ -41,18 +41,24 @@ class Agent(nn.Module):
     def get_value(self, x):
         return self.critic(x)
 
-    def get_discrete_action(self, x, action=None):
+    def get_discrete_action(self, x, action=None, deterministic=False):
         logits = self.actor(x)
         probs = Categorical(logits=logits)
         if action is None:
-            action = probs.sample()
+            if deterministic:
+                action = th.argmax(logits, dim=-1)
+            else:
+                action = probs.sample()
         return action, probs.log_prob(action), probs.entropy()
 
-    def get_continuous_action(self, x, action=None):
+    def get_continuous_action(self, x, action=None, deterministic=False):
         action_mu = self.actor(x)
         action_logstd = self.logstd.expand_as(action_mu)
         action_std = th.exp(action_logstd)
         probs = Normal(action_mu, action_std)
         if action is None:
-            action = probs.sample()
+            if deterministic:
+                action = action_mu
+            else:
+                action = probs.sample()
         return action, probs.log_prob(action).sum(1), probs.entropy().sum(1)

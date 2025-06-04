@@ -75,7 +75,7 @@ def main(args):
         # If additional timesteps are specified, add them to total_timesteps
         if args.additional_timesteps > 0:
             print(f"Adding {args.additional_timesteps} additional timesteps to training")
-            args.total_timesteps += args.additional_timesteps * 10
+            args.total_timesteps += args.additional_timesteps * 5
     
     # Create and configure the Parameters object
     grid_params = Parameters()

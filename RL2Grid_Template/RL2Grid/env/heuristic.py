@@ -206,4 +206,69 @@ class GridOpIdleNonLoop(GridOpNonLoop):
         else: return [self.init_env.action_space()]    
 
 
+class GridOpForGym(gym.Wrapper, ABC):
+    @property
+    def _risk_overflow(self):
+        return self.init_env.current_obs.rho.max() >= RHO_SAFETY_THRESHOLD
+
+    @property  
+    def _obs(self):
+        return self.init_env.current_obs
+    
+    @abstractmethod
+    def _get_heuristic_actions(self):
+        return []
+
+    def apply_actions(self):
+        use_heuristic, heuristic_reward = True, 0.
+        
+        while use_heuristic:
+            g2o_actions = self._get_heuristic_actions()
+            if not g2o_actions: break
+            for g2o_act in g2o_actions:
+                _, reward, done, info = self.init_env.step(g2o_act)
+                heuristic_reward += reward    # Cumulate reward over heuristic steps
+                #print(f"HEURISTIC: {g2o_actions[0]} -> {reward} -> {heuristic_reward}")  ##PP
+                
+                 
+                if done or self._risk_overflow:   # Resume the agent if in a risky situation
+                    use_heuristic = False
+                    break
+
+        return heuristic_reward, done, info
+
+    def step(self, gym_action):
+        #print(self.action_space.from_gym(gym_action)) ##PP 
+        _, reward, done, info = self.init_env.step(self.action_space.from_gym(gym_action))
+        if not done and not self._risk_overflow:
+            heuristic_reward, done, info = self.apply_actions()
+            reward += heuristic_reward
+        self.ep_reward += reward
+        gym_obs = self.observation_space.to_gym(self._obs)
+
+        if done:
+            info['episode'] = {'l': [self.init_env.nb_time_step], 'r': [self.ep_reward]}    # replacing the use of RecordEpisodeStatistics
+            #print(info)    ##PP
+            #print(info[detailed_infos_for_cascading_failures])    ##PP
+        return gym_obs, float(reward), done, info    # Truncation is always false in g2o envs
+        
+    def reset(self, **kwargs):
+        super().reset(**kwargs)  # Reset the underlying scenario
+        self.ep_reward = 0.
+
+        info = {}
+        if not self._risk_overflow:
+            _, _, info = self.apply_actions()  # First reward is zero
+        
+        return self.observation_space.to_gym(self._obs), info
+
+class GridOpIdleForGym(GridOpForGym):
+    def _get_heuristic_actions(self):      
+        if self._risk_overflow: return []
+        else: return [self.init_env.action_space()]   
+
+
+
+
+
    

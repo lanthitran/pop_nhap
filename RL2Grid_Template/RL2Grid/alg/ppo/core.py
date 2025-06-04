@@ -76,7 +76,7 @@ class PPO:
 
                 # ALGO LOGIC: action logic
                 with th.no_grad():
-                    action, logprob, _ = agent.get_action(next_obs) # , deterministic=True
+                    action, logprob, _ = agent.get_action(next_obs, deterministic=args.deterministic_action)
                     value = agent.get_value(next_obs)
                     values[step] = value.flatten()
                 actions[step] = action

@@ -152,5 +152,6 @@ if __name__ == "__main__":
     parser.add_argument("--th-deterministic", type=str2bool, default=True, help="Enable deterministic in Torch.")
     parser.add_argument("--cuda", type=str2bool, default=False, help="Enable CUDA by default.")
     parser.add_argument("--n-threads", type=int, default=8, help="Max number of torch threads.")
+    parser.add_argument("--deterministic-action", type=str2bool, default=False, help="Use deterministic actions during training.")
 
     main(parser.parse_known_args()[0])

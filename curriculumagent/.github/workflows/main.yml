@@ -1,0 +1,174 @@
+name: CI
+
+on: [push]
+
+env:
+  # Setting an environment variable with the value of a configuration variable
+  env_var: ${{ vars.ENV_CONTEXT_VAR }}
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    environment: ${{ vars.ENVIRONMENT_STAGE }}
+    steps:
+      # Install python and dependencies:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint pytest pytest-cov pytest-benchmark
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      # Run pylint
+      - name: Run Pylint for checking of Syntax
+        run: |
+           pylint curriculumagent --rcfile=pylintrc --fail-under=8
+      # Run Pytest
+  testbaseline:
+    needs: pipeline
+    runs-on: ubuntu-latest
+    environment: ${{ vars.ENVIRONMENT_STAGE }}
+    steps:
+      # Install python and dependencies:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install test dependencies
+        run: |
+          pip install pytest-cov pytest-benchmark pytest-test-groups
+          pip install -r requirements-dev.txt
+          pip install setuptools==69.5.1
+
+      - name: Test with pytest number 1
+        run: |
+          pytest --cov-report html:cov_html --cov=curriculumagent tests/test_baseline -s
+  testcommon:
+    needs: pipeline
+    runs-on: ubuntu-latest
+    environment: ${{ vars.ENVIRONMENT_STAGE }}
+    steps:
+      # Install python and dependencies:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install test dependencies
+        run: |
+          pip install pytest-cov pytest-benchmark pytest-test-groups
+          pip install -r requirements-dev.txt
+          pip install setuptools==69.5.1
+
+      - name: Test with pytest number 2
+        run: |
+          pytest --cov-report html:cov_html --cov=curriculumagent tests/test_common -s
+  testjunior:
+    needs: pipeline
+    runs-on: ubuntu-latest
+    environment: ${{ vars.ENVIRONMENT_STAGE }}
+    steps:
+      # Install python and dependencies:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install test dependencies
+        run: |
+          pip install pytest-cov pytest-benchmark pytest-test-groups
+          pip install -r requirements-dev.txt
+          pip install setuptools==69.5.1
+
+      - name: Test with pytest number 3
+        run: |
+          pytest --cov-report html:cov_html --cov=curriculumagent tests/test_junior -s
+  testsenior:
+    needs: pipeline
+    runs-on: ubuntu-latest
+    environment: ${{ vars.ENVIRONMENT_STAGE }}
+    steps:
+      # Install python and dependencies:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install test dependencies
+        run: |
+          pip install pytest-cov pytest-benchmark pytest-test-groups
+          pip install -r requirements-dev.txt
+          pip install setuptools==69.5.1
+
+      - name: Test with pytest number 4
+        run: |
+          pytest --cov-report html:cov_html --cov=curriculumagent tests/test_senior -m "not gitlabonly" -s
+  testtutor:
+    needs: pipeline
+    runs-on: ubuntu-latest
+    environment: ${{ vars.ENVIRONMENT_STAGE }}
+    steps:
+      # Install python and dependencies:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install test dependencies
+        run: |
+          pip install pytest-cov pytest-benchmark pytest-test-groups
+          pip install -r requirements-dev.txt
+          pip install setuptools==69.5.1
+
+      - name: Test with pytest number 5
+        run: |
+          pytest --cov-report html:cov_html --cov=curriculumagent tests/test_tutor -s
+  testteacher:
+    needs: pipeline
+    runs-on: ubuntu-latest
+    environment: ${{ vars.ENVIRONMENT_STAGE }}
+    steps:
+      # Install python and dependencies:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install test dependencies
+        run: |
+          pip install pytest-cov pytest-benchmark pytest-test-groups
+          pip install -r requirements-dev.txt
+          pip install setuptools==69.5.1
+
+      - name: Test with pytest number 6
+        run: |
+          pytest --cov-report html:cov_html --cov=curriculumagent tests/test_teacher -s -m "not slow"
+
+  build:
+    needs: [ testteacher,testtutor,testjunior,testsenior,testcommon,testbaseline ]
+    runs-on: ubuntu-latest
+    environment: ${{ vars.ENVIRONMENT_STAGE }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install for safety again all requirements
+        run: |
+          pip install -r requirements-dev.txt
+          pip install setuptools==69.5.1
+          pip install build
+      - name: Build Package
+        run: python -m build

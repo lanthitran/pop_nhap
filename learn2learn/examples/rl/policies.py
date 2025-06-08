@@ -186,7 +186,7 @@ class CategoricalPolicy(nn.Module):
         Returns both the action and additional information about the distribution.
         | Hung |
         """
-        state = ch.onehot(state, dim=self.input_size)
+        state = ch.onehot(state, dim=self.input_size)  # onehot encoding should be removed for grid2op env   | Hung |
         loc = self.mean(state)
         density = Categorical(logits=loc)
         action = density.sample()

@@ -8,6 +8,7 @@ manager_selective_learning = true
 generator_storage_only = true
 remove_no_action = true
 manager_remove_no_action = true
+# dictatorship_penalty = {base_penalty_exponential_decay_half_life: float,penalty_exponential_growth_factor: float, smallest_base_penalty: float,}    | Hung |
 
 [agent]
 embedding = "egat_architecture_very_very_small"

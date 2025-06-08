@@ -136,7 +136,7 @@ class DictatorshipPenalizer:
         - A new dictatorship tracker instance
         | Hung |
         """
-        self._choice_to_ranking = choice_to_ranking
+        self._choice_to_ranking = choice_to_ranking         # List of Dict: Mapping of substation to its number of actions? | Hung |
         self._dictatorship_tracker = DictatorshipPenalizer.DictatorshipTracker(
             base_penalty_exponential_decay_half_life=base_penalty_exponential_decay_half_life,
             penalty_exponential_growth_factor=penalty_exponential_growth_factor,

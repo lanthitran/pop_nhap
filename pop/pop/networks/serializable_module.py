@@ -4,7 +4,27 @@ from typing import Optional, Any, Dict, TypeVar
 import torch as th
 from pathlib import Path
 
-T = TypeVar("T")
+"""
+This module provides a base class for serializing and deserializing PyTorch models.
+It's a crucial component for saving training progress and loading pre-trained models.
+
+Key concepts:
+- Checkpoint: A saved state of the model that can be loaded later
+- Log file: The base path where checkpoints are stored
+- Counter: A number appended to checkpoint files to track versions
+
+The module uses PyTorch's save/load functionality and integrates with the project's
+logging system to manage model persistence.
+
+This module is essential for:
+1. Saving model states during training
+2. Loading pre-trained models
+3. Resuming training from checkpoints
+4. Managing model versioning
+| Hung |
+"""
+
+T = TypeVar("T")  # Generic type variable for type hints | Hung |
 
 
 class SerializableModule(ABC):
@@ -21,9 +41,23 @@ class SerializableModule(ABC):
 
     The class is designed to work with PyTorch's save/load functionality and integrates
     with the project's logging system.
+
+    Usage:
+    1. Inherit from this class
+    2. Implement get_state() and factory() methods
+    3. Use save() to save checkpoints
+    4. Use load() to load checkpoints
     | Hung |
     """
     def __init__(self, log_dir: Optional[str], name: Optional[str]):
+        """
+        Initialize the SerializableModule with logging directory and name.
+        
+        Args:
+            log_dir: Directory where checkpoints will be saved
+            name: Name of the model/checkpoint file
+        | Hung |
+        """
         self.log_file = self._get_log_file(log_dir, name)
         self.number_of_saves = 0
 
@@ -31,6 +65,17 @@ class SerializableModule(ABC):
     def _get_log_file(
         log_dir: Optional[str], file_name: Optional[str]
     ) -> Optional[str]:
+        """
+        Generate the log file path from directory and name.
+        
+        Args:
+            log_dir: Directory for saving checkpoints
+            file_name: Name of the checkpoint file
+            
+        Returns:
+            Full path to the checkpoint file or None if log_dir is None
+        | Hung |
+        """
         if log_dir is not None:
             if file_name is None:
                 raise Exception("Please pass a non-null name to get_log_file")
@@ -40,10 +85,28 @@ class SerializableModule(ABC):
 
     @abstractmethod
     def get_state(self: T) -> Dict[str, Any]:
+        """
+        Abstract method that must be implemented to define what state to save.
+        
+        Returns:
+            Dictionary containing the state to be saved
+        | Hung |
+        """
         ...
 
     @staticmethod
     def _add_counter_to_file_path(log_file: str, counter: int) -> str:
+        """
+        Add a counter suffix to the checkpoint filename.
+        
+        Args:
+            log_file: Base checkpoint file path
+            counter: Counter value to append
+            
+        Returns:
+            New file path with counter suffix
+        | Hung |
+        """
         log_file_path = Path(log_file)
         log_file_path_name_split = log_file_path.name.split(".")
         return str(
@@ -59,6 +122,16 @@ class SerializableModule(ABC):
 
     @staticmethod
     def _get_last_saved_checkpoint(log_file: str) -> int:
+        """
+        Find the highest checkpoint number in the directory.
+        
+        Args:
+            log_file: Base checkpoint file path
+            
+        Returns:
+            Highest checkpoint number found
+        | Hung |
+        """
         return max(
             [
                 int(dir_object.stem.split("_")[-1])
@@ -68,6 +141,14 @@ class SerializableModule(ABC):
         )
 
     def save(self: T) -> None:
+        """
+        Save the current state as a checkpoint.
+        
+        The checkpoint is saved with an incremental counter suffix.
+        If this is the first save and previous checkpoints exist,
+        the counter will continue from the last checkpoint.
+        | Hung |
+        """
         if self.log_file is None:
             raise Exception("Called save() in " + self.name + " with None log_dir")
 
@@ -89,6 +170,18 @@ class SerializableModule(ABC):
         checkpoint: Optional[Dict[str, Any]] = None,
         **kwargs
     ) -> T:
+        """
+        Load a checkpoint and create a new instance.
+        
+        Args:
+            log_file: Path to the checkpoint file
+            checkpoint: Pre-loaded checkpoint dictionary
+            **kwargs: Additional arguments for factory method
+            
+        Returns:
+            New instance with loaded state
+        | Hung |
+        """
         checkpoint: Dict[str, Any] = SerializableModule._load_checkpoint(
             log_file, checkpoint
         )
@@ -97,12 +190,37 @@ class SerializableModule(ABC):
     @staticmethod
     @abstractmethod
     def factory(checkpoint: Dict[str, Any], **kwargs) -> T:
+        """
+        Abstract method that must be implemented to create a new instance from checkpoint.
+        
+        Args:
+            checkpoint: Dictionary containing saved state
+            **kwargs: Additional arguments for initialization
+            
+        Returns:
+            New instance with loaded state
+        | Hung |
+        """
         ...
 
     @staticmethod
     def _load_checkpoint(
         log_file: Optional[str], checkpoint_dict: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
+        """
+        Load checkpoint data from file or dictionary.
+        
+        If loading from file fails, it will try previous checkpoints.
+        If no valid checkpoint is found, the program will exit.
+        
+        Args:
+            log_file: Path to checkpoint file
+            checkpoint_dict: Pre-loaded checkpoint dictionary
+            
+        Returns:
+            Loaded checkpoint dictionary
+        | Hung |
+        """
         if log_file is None and checkpoint_dict is None:
             raise Exception(
                 "Cannot load module: both log_file and checkpoint_dict are None"

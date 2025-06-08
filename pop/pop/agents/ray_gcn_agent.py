@@ -15,21 +15,31 @@ import warnings
 
 from pop.constants import PER_PROCESS_GPU_MEMORY_FRACTION
 
+# Configure logging to suppress lightning framework logs           | Hung |
+# This prevents interference with our own logging system          | Hung |
 logging.getLogger("lightning").addHandler(logging.NullHandler())
 logging.getLogger("lightning").propagate = False
 
+# Suppress user warnings to keep output clean                       | Hung |
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
 """
-RayGCNAgent is a distributed agent class that extends BaseGCNAgent to provide 
-distributed computing capabilities using Ray framework. It enables parallel 
-processing of GCN-based reinforcement learning tasks across multiple processes 
-and GPUs. The agent handles distributed training, inference, and state management 
-for GCN models in a distributed environment.
+This module implements a distributed Graph Convolutional Network (GCN) agent using Ray framework.
+Key features:
+- Distributed training across multiple processes and GPUs
+- Parallel processing of GCN-based reinforcement learning tasks
+- State management for distributed environments
+- Integration with Ray's distributed computing capabilities
+
+The agent extends BaseGCNAgent to add distributed computing features while maintaining
+the core GCN functionality for reinforcement learning tasks.
 | Hung |
 """
 
+# @ray.remote decorator marks this class for distributed execution      | Hung |
+# num_cpus: CPU resources allocated per instance (0.5 means 2 instances per CPU)       | Hung |
+# num_gpus: GPU resources allocated per instance (0 if no GPU, otherwise uses configured fraction)     | Hung |
 @ray.remote(
     num_cpus=0.5,
     num_gpus=0 if not th.cuda.is_available() else PER_PROCESS_GPU_MEMORY_FRACTION,
@@ -44,19 +54,20 @@ class RayGCNAgent(BaseGCNAgent):
     """
     def __init__(
         self,
-        agent_actions: int,
-        node_features: int,
-        architecture: AgentArchitecture,
-        name: str,
-        training: bool,
-        device: str,
-        feature_ranges: Dict[str, Tuple[float, float]],
-        edge_features: Optional[int] = None,
+        agent_actions: int,  # Number of possible actions for the agent       | Hung |              
+        node_features: int,  # Number of features per node in the graph       | Hung |
+        architecture: AgentArchitecture,  # Network architecture configuration       | Hung |
+        name: str,  # Unique identifier for the agent       | Hung |
+        training: bool,  # Whether agent is in training mode       | Hung |
+        device: str,  # Computing device (CPU/GPU)       | Hung |
+        feature_ranges: Dict[str, Tuple[float, float]],  # Valid ranges for features       | Hung |
+        edge_features: Optional[int] = None,  # Optional number of edge features       | Hung |
     ):
         """
-        Initialize the distributed GCN agent with network architecture and 
-        training configuration. Sets up the base GCN agent with distributed 
-        computing capabilities.
+        Initialize the distributed GCN agent.
+        
+        Sets up the base GCN agent with distributed computing capabilities
+        and configures the network architecture for distributed training.
         | Hung |
         """
         BaseGCNAgent.__init__(
@@ -76,6 +87,7 @@ class RayGCNAgent(BaseGCNAgent):
     def get_q_network(self) -> DuelingNet:
         """
         Returns the Q-network used for action-value estimation.
+        This network is used to predict the value of different actions.
         | Hung |
         """
         return self.q_network
@@ -83,6 +95,7 @@ class RayGCNAgent(BaseGCNAgent):
     def get_name(self) -> str:
         """
         Returns the name identifier of the agent.
+        Used for logging and identification in distributed environment.
         | Hung |
         """
         return self.name
@@ -90,6 +103,8 @@ class RayGCNAgent(BaseGCNAgent):
     def reset_decay(self):
         """
         Resets the decay steps counter used for exploration rate decay.
+        This helps in managing the exploration-exploitation trade-off
+        during training.
         | Hung |
         """
         self.decay_steps = 0
@@ -98,10 +113,19 @@ class RayGCNAgent(BaseGCNAgent):
     def factory(checkpoint: Dict[str, Any], **kwargs) -> ObjectRef:
         """
         Creates a new distributed GCN agent instance from a checkpoint.
-        Handles loading of network states, optimizer states, and training 
-        parameters. Returns a Ray object reference to the created agent.
+        
+        This factory method:
+        - Creates a new agent instance with saved configuration
+        - Loads network states and optimizer states
+        - Restores training parameters
+        - Returns a Ray object reference for distributed access
+        
+        The .remote() call creates a distributed instance of the agent
+        that can be accessed across the Ray cluster.
         | Hung |
         """
+        # Create a new distributed agent instance using Ray         | Hung |
+        # The .remote() call makes this agent available across the Ray cluster   | Hung |
         agent: ObjectRef = RayGCNAgent.remote(
             agent_actions=checkpoint["agent_actions"],
             node_features=checkpoint["node_features"],
@@ -117,6 +141,9 @@ class RayGCNAgent(BaseGCNAgent):
             edge_features=checkpoint["edge_features"],
             feature_ranges=checkpoint["feature_ranges"],
         )
+        
+        # Load the saved state into the distributed agent         | Hung |
+        # The .remote() call makes this operation distributed       | Hung |
         agent.load_state.remote(
             optimizer_state=checkpoint["optimizer_state"],
             q_network_state=checkpoint["q_network_state"],

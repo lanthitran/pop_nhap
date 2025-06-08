@@ -1,17 +1,15 @@
-
 # Table of Contents
 
-1.  [Introduction](#org78e4d6c)
-2.  [Problem Description](#org09277c3)
-3.  [System Description](#orged2481f)
-4.  [Installation](#orgac677f4)
-5.  [Execution](#orgf3086ca)
+1. [Introduction](#org78e4d6c)
+2. [Problem Description](#org09277c3)
+3. [System Description](#orged2481f)
+4. [Installation](#orgac677f4)
+5. [Execution](#orgf3086ca)
 
-
-
-<a id="org78e4d6c"></a>
+`<a id="org78e4d6c"></a>`
 
 # Introduction
+
 [Thesis](https://www.politesi.polimi.it/retrieve/42d6db27-0396-4cd4-8373-1f6e34da5bef/Tesi_L2RPN.pdf)
 
 We are in the middle of a climate crisis, renewable energies must readily be implemented in the power grids. However, solar and wind power integration in the grid is challenging, their production depends on the weather, and our overall storage capacity is insufficient. We hope artificial intelligence (AI) can assist grid operators.
@@ -28,20 +26,19 @@ Challenges offer standardized and reproducible benchmarks that alleviate the AI 
 
 We developed a hierarchical Multi-Agent RL (MARL) system:
 
--   **Multi-Agent**: multiple agents participate in each decision;
--   **Hierarchical**: managers handle communities of agents and select the best decision proposed by each community.
+- **Multi-Agent**: multiple agents participate in each decision;
+- **Hierarchical**: managers handle communities of agents and select the best decision proposed by each community.
 
-
-<a id="org09277c3"></a>
+`<a id="org09277c3"></a>`
 
 # Problem Description
+
 <p float="left" align="middle">
     <img src="./readme_resources/graph_rte.png" width="60%"/>
 </p>
 
 The L2RPN challenge is a series of competitions that model the sequential decision-makig environments of real-time power network operation. The participants&rsquo; algorithms must control a simulated power network within an RL framework.
 RTE has developed Grid2Op, a python module that casts the power grid operational decision process into a Markov Decision Process (MDP). Grid2Op represents a power grid as a set of objects: powerlines, loads, and generators, with substations linking everything together. **Powerlines connect substations and allow power to flow from one place to another**.
-
 
 However, our power network model needs to take into account also the **internal structure of substations**, where we find two busbars to which every grid object connects.
 Substations connect elements through switches which allow the operator to electrically separate elements from each other.
@@ -52,9 +49,10 @@ Below we see the buses inside of a substation (on the left) and the switches ins
   <img src="./readme_resources/switch.png" width="30%" />
 </p>
 
-<a id="orged2481f"></a>
+`<a id="orged2481f"></a>`
 
 # System Description
+
 <p float="left" align="middle">
     <img src="./readme_resources/system_arch_blind.png" width="60%"/>
 </p>
@@ -67,8 +65,7 @@ The system then builds agent communities: subgraphs composed by reducing the num
 
 Finally, **the head manager receives all the managers&rsquo; choices and must choose one**. Then, the action of the chosen agent gets executed. The head manager picks a manager given a summarized version of the graph where communities are represented as nodes linked by inter-community edges. Like all other system actors, the head manager is an RL agent, thus pairing its current perception with experience to make a decision.
 
-
-<a id="orgac677f4"></a>
+`<a id="orgac677f4"></a>`
 
 # Installation
 
@@ -81,8 +78,7 @@ If you want to install the dependencies manually you can inspect the `pyproject.
 
     poetry install
 
-
-<a id="orgf3086ca"></a>
+`<a id="orgf3086ca"></a>`
 
 # Execution
 
@@ -90,4 +86,3 @@ Run files specify all the required hyperparameters of a system run.
 For example, to train the base architecture we run the following
 
     poetry run pop/main --run-file ./runs/run_files/dpop_base.toml
-

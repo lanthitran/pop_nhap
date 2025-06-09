@@ -67,6 +67,20 @@ EOFError: Ran out of input
 
 
 
+---------------------------------------------------------------------------------------------
 
+
+
+Traceback (most recent call last):
+  File "D:\grid2op\pop_nhap\learn2learn\examples\rl\promp.py", line 27, in <module>
+    import cherry as ch
+  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\cherry\__init__.py", line 8, in <module>
+    from . import wrappers
+  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\cherry\wrappers\__init__.py", line 15, in <module>
+    from .recorder_wrapper import Recorder
+  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\cherry\wrappers\recorder_wrapper.py", line 127, in <module>
+    class ImageEncoderWithGif(GymVideoRecorder.ImageEncoder):
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gym.wrappers.monitoring.video_recorder' has no attribute 'ImageEncoder'
 
 

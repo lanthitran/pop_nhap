@@ -3,12 +3,206 @@
 
 
 
+pip install learn2learn
+
+
+
+-------------------------------------------------------------------------
+
+
+
+Using cached joblib-1.5.1-py3-none-any.whl (307 kB)
+Building wheels for collected packages: learn2learn
+  DEPRECATION: Building 'learn2learn' using the legacy setup.py bdist_wheel mechanism, which will be removed in a future version. pip 25.3 will enforce this behaviour change. A possible replacement is to use the standardized build interface by setting the `--use-pep517` option, (possibly combined with `--no-build-isolation`), or adding a `pyproject.toml` file to the source tree of 'learn2learn'. Discussion can be found at https://github.com/pypa/pip/issues/6334
+  Building wheel for learn2learn (setup.py) ... error
+  error: subprocess-exited-with-error
+
+  × python setup.py bdist_wheel did not run successfully.
+  │ exit code: 1
+  ╰─> [165 lines of output]
+      D:\Miniconda3\envs\rl2grid_cherry\Lib\site-packages\setuptools\__init__.py:94: _DeprecatedInstaller: setuptools.installer and fetch_build_eggs are deprecated.
+      !!
+
+              ********************************************************************************
+              Requirements should be satisfied by a PEP 517 installer.
+              If you are using pip, you can try `pip install --use-pep517`.
+              ********************************************************************************
+
+      !!
+        dist.fetch_build_eggs(dist.setup_requires)
+      running bdist_wheel
+      running build
+      running build_py
+      creating build\lib.win-amd64-cpython-312\learn2learn
+      copying learn2learn\_version.py -> build\lib.win-amd64-cpython-312\learn2learn
+      copying learn2learn\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn
+      creating build\lib.win-amd64-cpython-312\tests
+      copying tests\__init__.py -> build\lib.win-amd64-cpython-312\tests
+      creating build\lib.win-amd64-cpython-312\learn2learn\algorithms
+      copying learn2learn\algorithms\base_learner.py -> build\lib.win-amd64-cpython-312\learn2learn\algorithms
+      copying learn2learn\algorithms\gbml.py -> build\lib.win-amd64-cpython-312\learn2learn\algorithms
+      copying learn2learn\algorithms\maml.py -> build\lib.win-amd64-cpython-312\learn2learn\algorithms
+      copying learn2learn\algorithms\meta_sgd.py -> build\lib.win-amd64-cpython-312\learn2learn\algorithms
+      copying learn2learn\algorithms\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\algorithms
+      creating build\lib.win-amd64-cpython-312\learn2learn\data
+      copying learn2learn\data\samplers.py -> build\lib.win-amd64-cpython-312\learn2learn\data
+      copying learn2learn\data\utils.py -> build\lib.win-amd64-cpython-312\learn2learn\data
+      copying learn2learn\data\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\data
+      creating build\lib.win-amd64-cpython-312\learn2learn\gym
+      copying learn2learn\gym\async_vec_env.py -> build\lib.win-amd64-cpython-312\learn2learn\gym
+      copying learn2learn\gym\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\gym
+      creating build\lib.win-amd64-cpython-312\learn2learn\nn
+      copying learn2learn\nn\kroneckers.py -> build\lib.win-amd64-cpython-312\learn2learn\nn
+      copying learn2learn\nn\metaoptnet.py -> build\lib.win-amd64-cpython-312\learn2learn\nn
+      copying learn2learn\nn\misc.py -> build\lib.win-amd64-cpython-312\learn2learn\nn
+      copying learn2learn\nn\protonet.py -> build\lib.win-amd64-cpython-312\learn2learn\nn
+      copying learn2learn\nn\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\nn
+      creating build\lib.win-amd64-cpython-312\learn2learn\optim
+      copying learn2learn\optim\learnable_optimizer.py -> build\lib.win-amd64-cpython-312\learn2learn\optim
+      copying learn2learn\optim\parameter_update.py -> build\lib.win-amd64-cpython-312\learn2learn\optim
+      copying learn2learn\optim\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\optim
+      creating build\lib.win-amd64-cpython-312\learn2learn\text
+      copying learn2learn\text\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\text
+      creating build\lib.win-amd64-cpython-312\learn2learn\utils
+      copying learn2learn\utils\lightning.py -> build\lib.win-amd64-cpython-312\learn2learn\utils
+      copying learn2learn\utils\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\utils
+      creating build\lib.win-amd64-cpython-312\learn2learn\vision
+      copying learn2learn\vision\transforms.py -> build\lib.win-amd64-cpython-312\learn2learn\vision
+      copying learn2learn\vision\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\vision
+      creating build\lib.win-amd64-cpython-312\learn2learn\algorithms\lightning
+      copying learn2learn\algorithms\lightning\lightning_anil.py -> build\lib.win-amd64-cpython-312\learn2learn\algorithms\lightning
+      copying learn2learn\algorithms\lightning\lightning_episodic_module.py -> build\lib.win-amd64-cpython-312\learn2learn\algorithms\lightning
+      copying learn2learn\algorithms\lightning\lightning_maml.py -> build\lib.win-amd64-cpython-312\learn2learn\algorithms\lightning
+      copying learn2learn\algorithms\lightning\lightning_metaoptnet.py -> build\lib.win-amd64-cpython-312\learn2learn\algorithms\lightning
+      copying learn2learn\algorithms\lightning\lightning_protonet.py -> build\lib.win-amd64-cpython-312\learn2learn\algorithms\lightning
+      copying learn2learn\algorithms\lightning\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\algorithms\lightning
+      creating build\lib.win-amd64-cpython-312\learn2learn\gym\envs
+      copying learn2learn\gym\envs\meta_env.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs
+      copying learn2learn\gym\envs\subproc_vec_env.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs
+      copying learn2learn\gym\envs\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs
+      creating build\lib.win-amd64-cpython-312\learn2learn\gym\envs\metaworld
+      copying learn2learn\gym\envs\metaworld\metaworld.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs\metaworld
+      copying learn2learn\gym\envs\metaworld\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs\metaworld
+      creating build\lib.win-amd64-cpython-312\learn2learn\gym\envs\mujoco
+      copying learn2learn\gym\envs\mujoco\ant_direction.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs\mujoco
+      copying learn2learn\gym\envs\mujoco\ant_forward_backward.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs\mujoco
+      copying learn2learn\gym\envs\mujoco\dummy_mujoco_env.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs\mujoco
+      copying learn2learn\gym\envs\mujoco\halfcheetah_forward_backward.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs\mujoco
+      copying learn2learn\gym\envs\mujoco\humanoid_direction.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs\mujoco
+      copying learn2learn\gym\envs\mujoco\humanoid_forward_backward.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs\mujoco
+      copying learn2learn\gym\envs\mujoco\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs\mujoco
+      creating build\lib.win-amd64-cpython-312\learn2learn\gym\envs\particles
+      copying learn2learn\gym\envs\particles\particles_2d.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs\particles
+      copying learn2learn\gym\envs\particles\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\gym\envs\particles
+      creating build\lib.win-amd64-cpython-312\learn2learn\nn\metalayers
+      copying learn2learn\nn\metalayers\metamodule.py -> build\lib.win-amd64-cpython-312\learn2learn\nn\metalayers
+      copying learn2learn\nn\metalayers\parameter_transform.py -> build\lib.win-amd64-cpython-312\learn2learn\nn\metalayers
+      copying learn2learn\nn\metalayers\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\nn\metalayers
+      creating build\lib.win-amd64-cpython-312\learn2learn\optim\transforms
+      copying learn2learn\optim\transforms\kronecker_transform.py -> build\lib.win-amd64-cpython-312\learn2learn\optim\transforms
+      copying learn2learn\optim\transforms\metacurvature_transform.py -> build\lib.win-amd64-cpython-312\learn2learn\optim\transforms
+      copying learn2learn\optim\transforms\module_transform.py -> build\lib.win-amd64-cpython-312\learn2learn\optim\transforms
+      copying learn2learn\optim\transforms\transform_dictionary.py -> build\lib.win-amd64-cpython-312\learn2learn\optim\transforms
+      copying learn2learn\optim\transforms\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\optim\transforms
+      creating build\lib.win-amd64-cpython-312\learn2learn\optim\update_rules
+      copying learn2learn\optim\update_rules\differentiable_sgd.py -> build\lib.win-amd64-cpython-312\learn2learn\optim\update_rules
+      copying learn2learn\optim\update_rules\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\optim\update_rules
+      creating build\lib.win-amd64-cpython-312\learn2learn\text\datasets
+      copying learn2learn\text\datasets\news_classification.py -> build\lib.win-amd64-cpython-312\learn2learn\text\datasets
+      copying learn2learn\text\datasets\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\text\datasets
+      creating build\lib.win-amd64-cpython-312\learn2learn\vision\benchmarks
+      copying learn2learn\vision\benchmarks\cifarfs_benchmark.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\benchmarks
+      copying learn2learn\vision\benchmarks\fc100_benchmark.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\benchmarks
+      copying learn2learn\vision\benchmarks\mini_imagenet_benchmark.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\benchmarks
+      copying learn2learn\vision\benchmarks\omniglot_benchmark.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\benchmarks
+      copying learn2learn\vision\benchmarks\tiered_imagenet_benchmark.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\benchmarks
+      copying learn2learn\vision\benchmarks\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\benchmarks
+      creating build\lib.win-amd64-cpython-312\learn2learn\vision\datasets
+      copying learn2learn\vision\datasets\cifarfs.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\datasets
+      copying learn2learn\vision\datasets\cu_birds200.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\datasets
+      copying learn2learn\vision\datasets\describable_textures.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\datasets
+      copying learn2learn\vision\datasets\fc100.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\datasets
+      copying learn2learn\vision\datasets\fgvc_aircraft.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\datasets
+      copying learn2learn\vision\datasets\fgvc_fungi.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\datasets
+      copying learn2learn\vision\datasets\full_omniglot.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\datasets
+      copying learn2learn\vision\datasets\mini_imagenet.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\datasets
+      copying learn2learn\vision\datasets\quickdraw.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\datasets
+      copying learn2learn\vision\datasets\tiered_imagenet.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\datasets
+      copying learn2learn\vision\datasets\vgg_flowers.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\datasets
+      copying learn2learn\vision\datasets\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\datasets
+      creating build\lib.win-amd64-cpython-312\learn2learn\vision\models
+      copying learn2learn\vision\models\cnn4.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\models
+      copying learn2learn\vision\models\resnet12.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\models
+      copying learn2learn\vision\models\wrn28.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\models
+      copying learn2learn\vision\models\__init__.py -> build\lib.win-amd64-cpython-312\learn2learn\vision\models
+      creating build\lib.win-amd64-cpython-312\tests\integration
+      copying tests\integration\maml_miniimagenet_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\integration
+      copying tests\integration\maml_omniglot_test.py -> build\lib.win-amd64-cpython-312\tests\integration
+      copying tests\integration\protonets_miniimagenet_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\integration
+      copying tests\integration\__init__.py -> build\lib.win-amd64-cpython-312\tests\integration
+      creating build\lib.win-amd64-cpython-312\tests\unit
+      copying tests\unit\utils_test.py -> build\lib.win-amd64-cpython-312\tests\unit
+      copying tests\unit\__init__.py -> build\lib.win-amd64-cpython-312\tests\unit
+      creating build\lib.win-amd64-cpython-312\tests\unit\algorithms
+      copying tests\unit\algorithms\gbml_test.py -> build\lib.win-amd64-cpython-312\tests\unit\algorithms
+      copying tests\unit\algorithms\lightning_anil_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\algorithms
+      copying tests\unit\algorithms\lightning_maml_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\algorithms
+      copying tests\unit\algorithms\lightning_metaoptnet_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\algorithms
+      copying tests\unit\algorithms\lightning_protonet_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\algorithms
+      copying tests\unit\algorithms\maml_test.py -> build\lib.win-amd64-cpython-312\tests\unit\algorithms
+      copying tests\unit\algorithms\metasgd_test.py -> build\lib.win-amd64-cpython-312\tests\unit\algorithms
+      copying tests\unit\algorithms\__init__.py -> build\lib.win-amd64-cpython-312\tests\unit\algorithms
+      creating build\lib.win-amd64-cpython-312\tests\unit\data
+      copying tests\unit\data\metadataset_test.py -> build\lib.win-amd64-cpython-312\tests\unit\data
+      copying tests\unit\data\task_dataset_test.py -> build\lib.win-amd64-cpython-312\tests\unit\data
+      copying tests\unit\data\transforms_test.py -> build\lib.win-amd64-cpython-312\tests\unit\data
+      copying tests\unit\data\utils_test.py -> build\lib.win-amd64-cpython-312\tests\unit\data
+      copying tests\unit\data\util_datasets.py -> build\lib.win-amd64-cpython-312\tests\unit\data
+      copying tests\unit\data\__init__.py -> build\lib.win-amd64-cpython-312\tests\unit\data
+      creating build\lib.win-amd64-cpython-312\tests\unit\nn
+      copying tests\unit\nn\kroneckers_test.py -> build\lib.win-amd64-cpython-312\tests\unit\nn
+      copying tests\unit\nn\metaoptnet_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\nn
+      copying tests\unit\nn\misc.py -> build\lib.win-amd64-cpython-312\tests\unit\nn
+      copying tests\unit\nn\protonet_test.py -> build\lib.win-amd64-cpython-312\tests\unit\nn
+      copying tests\unit\nn\__init__.py -> build\lib.win-amd64-cpython-312\tests\unit\nn
+      creating build\lib.win-amd64-cpython-312\tests\unit\vision
+      copying tests\unit\vision\benchmarks_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\vision
+      copying tests\unit\vision\cifarfs_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\vision
+      copying tests\unit\vision\cu_birds200_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\vision
+      copying tests\unit\vision\describable_textures_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\vision
+      copying tests\unit\vision\fc100_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\vision
+      copying tests\unit\vision\fgvc_aircraft_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\vision
+      copying tests\unit\vision\pretrained_backbones_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\vision
+      copying tests\unit\vision\quickdraw_test_no.py -> build\lib.win-amd64-cpython-312\tests\unit\vision
+      copying tests\unit\vision\tiered_imagenet_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\vision
+      copying tests\unit\vision\transform_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\vision
+      copying tests\unit\vision\vgg_flowers_test_notravis.py -> build\lib.win-amd64-cpython-312\tests\unit\vision
+      copying tests\unit\vision\__init__.py -> build\lib.win-amd64-cpython-312\tests\unit\vision
+      running build_ext
+      building 'learn2learn.data.meta_dataset' extension
+      creating build\temp.win-amd64-cpython-312\Release\learn2learn\data
+      "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\bin\HostX86\x64\cl.exe" /c /nologo /O2 /W3 /GL /DNDEBUG /MD -ID:\Miniconda3\envs\rl2grid_cherry\include -ID:\Miniconda3\envs\rl2grid_cherry\Include "-IC:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\include" "-IC:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um" "-IC:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt" "-IC:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared" "-IC:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um" "-IC:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt" "-IC:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\cppwinrt" /Tclearn2learn/data/meta_dataset.c /Fobuild\temp.win-amd64-cpython-312\Release\learn2learn\data\meta_dataset.obj
+      meta_dataset.c
+      learn2learn/data/meta_dataset.c(210): fatal error C1083: Cannot open include file: 'longintrepr.h': No such file or directory
+      error: command 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX86\\x64\\cl.exe' failed with exit code 2
+      [end of output]
+
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+  ERROR: Failed building wheel for learn2learn
+  Running setup.py clean for learn2learn
+Failed to build learn2learn
+ERROR: Failed to build installable wheels for some pyproject.toml based projects (learn2learn)
+
+(rl2grid_cherry) D:\grid2op\RL2Grid\RL2Grid>
 
 
 
 
 
-            python main.py --alg PPO  --total-timesteps 4000000  --exp-tag TEST_envs_50_train_env                                              --reward_fn   OverloadRewarddd  --reward_factors 1.0 --reward_param_lsmrm_use_softmax True  -- reward_param_lsmrm_temp_softmax 0.05  --reward_param_lsmrm_n_safe 7  --reward_param_lsmrm_n_overflow 7   --use-heuristic True  --heuristic_type idle   --action-type topology   --additional-timesteps 100000   --n-minibatches 4  --n-envs 1  --n-steps 400  --n-threads 1   --gamma 0.9 --env-id bus14_train  --vf-coef 0.5 --actor-lr 0.00003 --norm-adv True --norm-obs True --anneal-lr True --clip-coef 0.2 --critic-lr 0.0003    --difficulty 0 --gae-lambda 0.95   --clip-vfloss True --actor-act-fn tanh --actor-layers 256 128 64 --entropy-coef 0.01 --optimize-mem False --critic-act-fn tanh --critic-layers 512 256 256 --max-grad-norm 10   --update-epochs 40   --env-config-path scenario.json --th-deterministic True     --wandb-mode offline --time-limit 9000 --seed 42 --cuda True --verbose True --track True  
+
+
+
+
 
 
 

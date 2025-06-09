@@ -69,9 +69,9 @@ D:
             pip install cherry-rl 
             pip install pandapower==2.14.11
 
-            pip install gym==0.21.0   
-            # base: gym==0.26.2   | gym==0.14.0
-            BUG: cloudpickle==1.2.2 
+            pip install cloudpickle==3.0.0 
+            pip install gym==0.15.3   
+            # base: gym==0.26.2   | gym==0.14.0 failed
 
 
                 test:

@@ -1,6 +1,0 @@
-{"time":"2025-04-15T23:45:11.7289107+07:00","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"C:\\Users\\admin\\Grid2Op\\RL2Grid_Template\\RL2Grid\\wandb\\run-20250415_234511-DQN_bus14_ONLINE_42_0_1744735081_16060\\logs\\debug-core.log"}
-{"time":"2025-04-15T23:45:11.7294397+07:00","level":"INFO","msg":"created new stream","id":"DQN_bus14_ONLINE_42_0_1744735081_16060"}
-{"time":"2025-04-15T23:45:11.7294397+07:00","level":"INFO","msg":"stream: started","id":"DQN_bus14_ONLINE_42_0_1744735081_16060"}
-{"time":"2025-04-15T23:45:11.7294397+07:00","level":"INFO","msg":"writer: Do: started","stream_id":"DQN_bus14_ONLINE_42_0_1744735081_16060"}
-{"time":"2025-04-15T23:45:11.7294397+07:00","level":"INFO","msg":"sender: started","stream_id":"DQN_bus14_ONLINE_42_0_1744735081_16060"}
-{"time":"2025-04-15T23:45:11.7294397+07:00","level":"INFO","msg":"handler: started","stream_id":"DQN_bus14_ONLINE_42_0_1744735081_16060"}

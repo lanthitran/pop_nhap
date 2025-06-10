@@ -1,0 +1,89 @@
+Time series Customization
+Study always the same time serie
+If you spotted a particularly interesting chronics, or if you want, for some reason your agent to see only one chronics, you can do this rather easily with grid2op.
+
+All chronics are given a unique persistent ID (it means that as long as the data is not modified the same chronics will have always the same ID each time you load the environment). The environment has a “set_id” method that allows you to use it. Just add “env.set_id(THE\_ID\_YOU\_WANT)” before the call to “env.reset”. This gives the following code:
+
+import grid2op
+from grid2op.Agent import RandomAgent
+env = grid2op.make("l2rpn_case14_sandbox")
+agent = RandomAgent(env.action_space)
+env.seed(0)  # for reproducible experiments
+episode_count = 100  # i want to make 100 episodes
+
+###################################
+THE_CHRONIC_ID = 42
+###################################
+
+# i initialize some useful variables
+reward = 0
+done = False
+total_reward = 0
+
+# and now the loop starts
+for i in range(episode_count):
+    ###################################
+    # with recent grid2op
+    obs = env.reset(options={"time serie id": THE_CHRONIC_ID})
+    ###################################
+
+    ###################################
+    # 'old method (oldest grid2op version)'
+    # env.set_id(THE_CHRONIC_ID)
+    # obs = env.reset()
+    ###################################
+
+    # now play the episode as usual
+    while True:
+       action = agent.act(obs, reward, done)
+       obs, reward, done, info = env.step(action)
+       total_reward += reward
+       if done:
+           # in this case the episode is over
+           break
+
+# Close the env and write monitor result info to disk
+env.close()
+print("The total reward was {:.2f}".format(total_reward))
+(as always added line compared to the base code are highlighted: they are “circle” with #####)
+
+Shuffle the chronics order
+In some other usecase, you might want to go through the whole set of chronics, and then loop again through them, but in a different order (remember that by default it will always loop in the same order 0, 1, 2, 3, …, 0, 1, 2, 3, …, 0, 1, 2, 3, …).
+
+Again, doing so with grid2op is rather easy. To that end you can use the chronics_handler.shuffle function that will do exactly that. You can use it like this:
+
+import numpy as np
+import grid2op
+from grid2op.Agent import RandomAgent
+env = grid2op.make("l2rpn_case14_sandbox")
+agent = RandomAgent(env.action_space)
+env.seed(0)  # for reproducible experiments
+episode_count = 10000  # i want to make lots of episode
+
+# total number of episode
+total_episode = len(env.chronics_handler.subpaths)
+
+# i initialize some useful variables
+reward = 0
+done = False
+total_reward = 0
+
+# and now the loop starts
+for i in range(episode_count):
+
+    ###################################
+    if i % total_episode == 0:
+        # I shuffle each time i need to
+        env.chronics_handler.shuffle()
+    ###################################
+
+    obs = env.reset()
+    # now play the episode as usual
+    while True:
+       action = agent.act(obs, reward, done)
+       obs, reward, done, info = env.step(action)
+       total_reward += reward
+       if done:
+           # in this case the episode is over
+           break
+(as always added line compared to the base code are highlighted: they are “circle” with #####)

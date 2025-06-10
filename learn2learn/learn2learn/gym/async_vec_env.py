@@ -28,13 +28,13 @@ class AsyncVectorEnv(SubprocVecEnv):
         self._env = env
         self.reset()
 
-    def set_task(self, task):
-        tasks = [task for _ in range(self.num_envs)]
-        reset = super(AsyncVectorEnv, self).set_task(tasks)
+    def set_task(self, task):  # 'task' here is a single task_config dictionary     | Hung |
+        tasks = [task for _ in range(self.num_envs)] # Replicates the single task for each worker    | Hung |
+        reset = super(AsyncVectorEnv, self).set_task(tasks) # Calls SubprocVecEnv.set_task    | Hung |
         return all(reset)
 
     def sample_tasks(self, num_tasks):
-        tasks = self._env.unwrapped.sample_tasks(num_tasks)
+        tasks = self._env.unwrapped.sample_tasks(num_tasks) # unwrapped to use the sample_tasks of the base env    | Hung |
         return tasks
 
     def step(self, actions):

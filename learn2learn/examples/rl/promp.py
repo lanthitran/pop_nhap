@@ -9,7 +9,7 @@ python examples/rl/promp.py
 """
 
 """
-This file implements ProMP (Probabilistic Meta-Policy) algorithm for meta-reinforcement learning.
+This file implements ProMP (Proximal Meta-Policy Search) algorithm for meta-reinforcement learning.
 It combines MAML (Model-Agnostic Meta-Learning) with PPO (Proximal Policy Optimization) to enable
 fast adaptation to new tasks while maintaining stable learning.
 
@@ -182,6 +182,11 @@ def main(
                 for p in clone.parameters():
                     p.detach_().requires_grad_()
                 task_policies.append(deepcopy(clone))
+                # Run parallel environments to collect adapt_bsz total episodes across all workers     | Hung |
+                # For example, with adapt_bsz=20 and num_workers=4:                                   | Hung |
+                # - Workers may finish different numbers of episodes (e.g. 5,6,4,5)                     | Hung |
+                # - Runner continues until total episodes = adapt_bsz                                  | Hung |
+                # - Returns flattened replay buffer with all episodes                                  | Hung |
                 train_episodes = task.run(clone, episodes=adapt_bsz)
                 clone = fast_adapt_a2c(clone, train_episodes, adapt_lr,
                                        baseline, gamma, tau, first_order=True)

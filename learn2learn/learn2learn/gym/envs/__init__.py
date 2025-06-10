@@ -3,6 +3,7 @@
 from gym.envs.registration import register
 
 from .subproc_vec_env import SubprocVecEnv
+from learn2learn.gym.envs.grid2op import Grid2OpDirectionEnv    #   | Hung |
 
 # 2D Navigation
 # ----------------------------------------
@@ -45,3 +46,7 @@ register(
     entry_point='learn2learn.gym.envs.mujoco.humanoid_direction:HumanoidDirectionEnv',
     max_episode_steps=200,
 )
+   #   | Hung |
+__all__ = [
+    'Grid2OpDirectionEnv',
+]

@@ -1,2 +1,0 @@
-[34m[1mwandb[0m: [33mWARNING[0m Step cannot be set when using tensorboard syncing. Please use `run.define_metric(...)` to define a custom metric to log your step values.
-global steps=740, length=8064, survival=100.000%, return=1508.8156514624134

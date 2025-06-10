@@ -1,6 +1,0 @@
-{"time":"2025-04-13T21:44:33.6510183+07:00","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"C:\\Users\\admin\\Grid2Op\\RL2Grid_Template\\RL2Grid\\wandb\\run-20250413_214433-DQN_bus14_curri_test_level_1_42_0_1744555462_15215\\logs\\debug-core.log"}
-{"time":"2025-04-13T21:44:33.6520769+07:00","level":"INFO","msg":"created new stream","id":"DQN_bus14_curri_test_level_1_42_0_1744555462_15215"}
-{"time":"2025-04-13T21:44:33.6520769+07:00","level":"INFO","msg":"stream: started","id":"DQN_bus14_curri_test_level_1_42_0_1744555462_15215"}
-{"time":"2025-04-13T21:44:33.6520769+07:00","level":"INFO","msg":"writer: Do: started","stream_id":"DQN_bus14_curri_test_level_1_42_0_1744555462_15215"}
-{"time":"2025-04-13T21:44:33.6520769+07:00","level":"INFO","msg":"sender: started","stream_id":"DQN_bus14_curri_test_level_1_42_0_1744555462_15215"}
-{"time":"2025-04-13T21:44:33.6520769+07:00","level":"INFO","msg":"handler: started","stream_id":"DQN_bus14_curri_test_level_1_42_0_1744555462_15215"}

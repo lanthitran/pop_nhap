@@ -12,15 +12,24 @@ def main():
     done = False
     total_reward = 0.0
     step_count = 0
-
-    while not done and step_count < 10:
+    while not done and step_count < 15:
         action = env.action_space.sample()
         obs, reward, done, info = env.step(action)
-        print(f"Step {step_count}: reward={reward}, done={done}")
+        print(f"Step {step_count}:")
+        print(f"  Action: {action}")
+        print(f"  Reward: {reward}")
+        print(f"  Done: {done}")
+        print(f"  Info: {info}")
+        print()
         total_reward += reward
         step_count += 1
 
-    print("Test finished. Total reward:", total_reward)
+    if done:
+        print(f"Episode length: {info['episode']['l'][0]}")
+        print(f"Episode reward: {info['episode']['r'][0]}")
+    
+    print("Test finished.")
+    print(f"Total reward: {total_reward}")
     env.close()
 
 if __name__ == "__main__":

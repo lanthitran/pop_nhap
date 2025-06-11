@@ -5,7 +5,10 @@ import numpy as np
 import grid2op
 from grid2op.gym_compat import GymEnv
 from learn2learn.gym.envs.meta_env import MetaEnv
-from .RL2Grid.env.utils import make_env, make_env_for_gym
+from RL2Grid.env.utils import make_env, make_env_for_gym
+
+
+
 
 class Grid2OpDirectionEnv(MetaEnv, gym.Env):
     """
@@ -28,21 +31,20 @@ class Grid2OpDirectionEnv(MetaEnv, gym.Env):
     3. Grid2Op Documentation and Implementation.
     """
 
-    def __init__(self, task=None, env_name="bus14", action_type="topology"):
+    def __init__(self, task=None, env_name="bus14", action_type="topology", **kwargs):
         # Create arguments for make_env
         class Args:
             def __init__(self):
                 self.env_id = env_name
                 self.action_type = action_type
-                self.env_config_path = "scenario.json"
-                self.norm_obs = True
-                self.use_heuristic = True
-                self.heuristic_type = "idle"
-                self.seed = 42
-                self.difficulty = 0
-                # Set default reward function and factors for demonstration
-                self.reward_fn = ["L2RPNReward"]
-                self.reward_factors = [1.0]
+                self.env_config_path = kwargs.get("env_config_path", "scenario.json")
+                self.norm_obs = kwargs.get("norm_obs", True)
+                self.use_heuristic = kwargs.get("use_heuristic", True)
+                self.heuristic_type = kwargs.get("heuristic_type", "idle")
+                self.seed = kwargs.get("seed", 42)
+                self.difficulty = kwargs.get("difficulty", 0)
+                self.reward_fn = kwargs.get("reward_fn", ["L2RPNRewardRegularized"])
+                self.reward_factors = kwargs.get("reward_factors", [1.0])
                 print(f"[Grid2OpDirectionEnv] Using reward_fn: {self.reward_fn}, reward_factors: {self.reward_factors}")
         
         args = Args()
@@ -83,16 +85,19 @@ class Grid2OpDirectionEnv(MetaEnv, gym.Env):
             # as it's not exposed through the Gym interface
             if hasattr(self.env.init_env, 'set_weather_conditions'):
                 self.env.init_env.set_weather_conditions(task['weather_conditions'])  # not work yet
+        
+        # Update self.task after all modifications
+        self.task = task
 
     def sample_tasks(self, num_tasks):
         """Sample different Grid2Op scenarios as tasks."""
         tasks = []
         # Access chronics_handler through the base Grid2Op environment
-        total_chronics = len(self.env.init_env.chronics_handler.subpaths)
+        chronic_names = self.env.init_env.chronics_handler.subpaths
         
         for _ in range(num_tasks):
             task = {
-                'chronics_id': np.random.randint(0, total_chronics),
+                'chronics_id': np.random.choice(chronic_names),  # Randomly select a chronic name
                 'weather_conditions': np.random.choice(['normal', 'storm', 'heat_wave']),
             }
             tasks.append(task)
@@ -128,38 +133,68 @@ class Grid2OpDirectionEnv(MetaEnv, gym.Env):
         """Clean up environment resources."""
         self.env.close()
 
-
 if __name__ == '__main__':
-    # Test the environment
+    
+    
+
+
+    # Test the environment with custom arguments
     env = Grid2OpDirectionEnv(
-        env_name="l2rpn_case14_sandbox",
-        action_type="topology"
+        task=None,
+        env_name="bus14",
+        action_type="topology",
+        env_config_path="scenario.json",
+        norm_obs=True,
+        use_heuristic=True,
+        heuristic_type="idle",
+        seed=42,
+        difficulty=0,
+        reward_fn=["L2RPNRewardRegularized"],   # L2RPNRewardRegularized
+        reward_factors=[1.0]
     )
     
     # Test with a specific chronic ID
     test_task = {
-        'chronics_id': 42,  # Use a specific chronic ID
+        'chronics_id': 345,  # Use a specific chronic ID
         'weather_conditions': 'normal'
     }
-    
+
     print("Testing with specific chronic ID...")
     env.set_task(test_task)
-    obs = env.reset()
-    action = env.action_space.sample()
-    obs, reward, done, info = env.step(action)
-    print(f"Task: {test_task}")
-    print(f"Chronic ID in info: {info['chronic_id']}")
-    print(f"Reward: {reward}")
-    print(f"Done: {done}")
+    obs = env.reset()     # obs is a tuple of 2 ele, obs and info
+    print("Initial obs:", obs)
+    print("Initial obs length:", len(obs))  # Check length of tuple
+    for i, obs_item in enumerate(obs):
+        if isinstance(obs_item, dict):
+            print(f"obs[{i}] is a dict with {len(obs_item)} items")
+            print(f"Keys: {list(obs_item.keys())}")
+            print(f"Values: {list(obs_item.values())}")
+        else:
+            print(f"obs[{i}] shape:", obs_item.shape if hasattr(obs_item, 'shape') else "no shape")
+    done = False
+    total_reward = 0
+    step_count = 0
     
-    # Test with random task
-    print("\nTesting with random task...")
-    random_task = env.sample_tasks(1)[0]
-    env.set_task(random_task)
-    obs = env.reset()
-    action = env.action_space.sample()
-    obs, reward, done, info = env.step(action)
-    print(f"Task: {random_task}")
-    print(f"Chronic ID in info: {info['chronic_id']}")
-    print(f"Reward: {reward}")
-    print(f"Done: {done}") 
+    # Set random seed for action sampling
+    np.random.seed(42)
+    
+    while not done:
+        action =  0   #env.action_space.sample()
+        obs, reward, done, info = env.step(action)
+        total_reward += reward
+        step_count += 1
+        
+        print(f"\nStep {step_count}:")
+        print(f"Action: {action}")
+        print(f"Reward: {reward}")
+        print(f"Total Return: {total_reward}")
+        print(f"Done: {done}")
+        #print(f"Info: {info}")
+        if done:
+            print(f"\nEpisode finished after {step_count} steps")
+            print(f"Episode length: {info['episode']['l'][0]}")
+            print(f"Episode return: {info['episode']['r'][0]}")
+            print(f"Info: {info}")
+
+    
+    env.close()

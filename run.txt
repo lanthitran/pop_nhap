@@ -57,10 +57,10 @@ D:
 
             conda activate rl2grid_cherry_3
             
-            pip install .
+            pip install .                      # you must do this, but why?
 
             pip install Cython
-                # to use learn2learn with python 3.12.2 i have to do this, then i'll have learn2learn==0.2.1 
+
             cd D:\grid2op\pop_nhap\learn2learn
             pip install -e .     
                 # --no-build-isolation
@@ -69,8 +69,8 @@ D:
             pip install cherry-rl 
             pip install pandapower==2.14.11
 
-            pip install cloudpickle==3.0.0 
             pip install gym==0.15.3   
+            pip install cloudpickle==3.0.0 
             # base: gym==0.26.2   | gym==0.14.0 failed
 
 

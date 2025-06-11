@@ -206,6 +206,7 @@ class PPO:
                             logger.writer.add_scalar(key, value, global_step)
                         logger.writer.flush()
                     if args.verbose:
+                        print("|" * 40)
                         print(f"Evaluation at step {global_step}:")
                         for key, value in eval_metrics.items():
                             print(f"{key}: {value:.2f}")

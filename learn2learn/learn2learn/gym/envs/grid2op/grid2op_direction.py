@@ -5,7 +5,7 @@ import numpy as np
 import grid2op
 from grid2op.gym_compat import GymEnv
 from learn2learn.gym.envs.meta_env import MetaEnv
-from RL2Grid.env.utils import make_env, make_env_for_gym
+from .RL2Grid.env.utils import make_env, make_env_for_gym
 
 class Grid2OpDirectionEnv(MetaEnv, gym.Env):
     """
@@ -28,10 +28,7 @@ class Grid2OpDirectionEnv(MetaEnv, gym.Env):
     3. Grid2Op Documentation and Implementation.
     """
 
-    def __init__(self, task=None, env_name="l2rpn_case14_sandbox", action_type="topology"):
-        MetaEnv.__init__(self, task)
-        gym.Env.__init__(self)
-        
+    def __init__(self, task=None, env_name="bus14", action_type="topology"):
         # Create arguments for make_env
         class Args:
             def __init__(self):
@@ -39,32 +36,38 @@ class Grid2OpDirectionEnv(MetaEnv, gym.Env):
                 self.action_type = action_type
                 self.env_config_path = "scenario.json"
                 self.norm_obs = True
-                self.use_heuristic = False
+                self.use_heuristic = True
+                self.heuristic_type = "idle"
                 self.seed = 42
+                self.difficulty = 0
+                # Set default reward function and factors for demonstration
+                self.reward_fn = ["L2RPNReward"]
+                self.reward_factors = [1.0]
+                print(f"[Grid2OpDirectionEnv] Using reward_fn: {self.reward_fn}, reward_factors: {self.reward_factors}")
         
         args = Args()
         
-        # Create environment using make_env
-        env_creator = make_env(args, 0) # or make_env_for_gym ?
-        self.env = env_creator()  # Keep this for accessing Grid2Op-specific features
+        # Create environment using make_env (already returns a Gym env)
+        env_creator = make_env_for_gym(args, 0)   # or make_env ?
+        self.env = env_creator()  # This is already a Gym-compatible env
         
-        # Create Gym environment
-        self.gym_env = GymEnv(self.env)
-        
-        # Set observation and action spaces
-        self.observation_space = self.gym_env.observation_space
-        self.action_space = self.gym_env.action_space
+        # Set observation and action spaces directly from self.env
+        self.observation_space = self.env.observation_space
+        self.action_space = self.env.action_space
         
         # Store current chronic ID
         self.current_chronic_id = None
         
-        # Initialize task parameters
-        self.task = task if task is not None else self.sample_tasks(1)[0]
+        MetaEnv.__init__(self, task)
+        gym.Env.__init__(self)
+        self.task = task
         self.set_task(self.task)
 
     # -------- MetaEnv Methods --------
     def set_task(self, task):
         """Set the current task configuration."""
+        if task is None:
+            return
         MetaEnv.set_task(self, task)
         
         # Update environment parameters based on task
@@ -72,19 +75,20 @@ class Grid2OpDirectionEnv(MetaEnv, gym.Env):
             # Store the chronic ID
             self.current_chronic_id = task['chronics_id']
             # Reset environment with the specified chronic ID
-            self.gym_env.reset(options={"time serie id": self.current_chronic_id})
+            self.env.reset(options={"time serie id": self.current_chronic_id})
             
         if 'weather_conditions' in task:
             # TODO 
             # Note: Weather conditions need to be set on the base Grid2Op environment
             # as it's not exposed through the Gym interface
-            self.env.set_weather_conditions(task['weather_conditions'])  # not work yet
+            if hasattr(self.env.init_env, 'set_weather_conditions'):
+                self.env.init_env.set_weather_conditions(task['weather_conditions'])  # not work yet
 
     def sample_tasks(self, num_tasks):
         """Sample different Grid2Op scenarios as tasks."""
         tasks = []
-        # Need to access chronics_handler through the base environment... or not?
-        total_chronics = len(self.env.chronics_handler.subpaths)
+        # Access chronics_handler through the base Grid2Op environment
+        total_chronics = len(self.env.init_env.chronics_handler.subpaths)
         
         for _ in range(num_tasks):
             task = {
@@ -97,12 +101,12 @@ class Grid2OpDirectionEnv(MetaEnv, gym.Env):
     # -------- Gym Methods --------
     def step(self, action):
         """Execute one time step within the environment."""
-        obs, reward, done, info = self.gym_env.step(action)
+        obs, reward, done, info = self.env.step(action)
         
         # Add task-specific information to info
         info.update({
             'task': self.task,
-            'grid_state': self.env.get_grid_state(),  # Need base env for grid state...?
+            'grid_state': self.env.init_env.get_grid_state() if hasattr(self.env.init_env, 'get_grid_state') else None,
             'chronic_id': self.current_chronic_id
         })
         
@@ -113,16 +117,15 @@ class Grid2OpDirectionEnv(MetaEnv, gym.Env):
         # If we have a chronic ID set, ensure it's used
         if self.current_chronic_id is not None:
             kwargs['options'] = {"time serie id": self.current_chronic_id}
-        obs = self.gym_env.reset(*args, **kwargs)
+        obs = self.env.reset(*args, **kwargs)
         return obs
 
     def render(self, mode='human'):
         """Render the environment."""
-        return self.gym_env.render(mode)
+        return self.env.render(mode)
 
     def close(self):
         """Clean up environment resources."""
-        self.gym_env.close()
         self.env.close()
 
 

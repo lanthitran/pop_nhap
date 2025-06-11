@@ -90,7 +90,7 @@ def precompute_quantities(states, actions, old_policy, new_policy):
 
 
 def main(
-        env_name='l2rpn_case14_sandbox',  # Grid2Op environment
+        env_name='bus14',  # Grid2Op environment
         action_type='topology',           # Action type (topology/redispatch)
         adapt_lr=0.1,                     # Learning rate for adaptation
         meta_lr=3e-4,                     # Learning rate for meta-updates

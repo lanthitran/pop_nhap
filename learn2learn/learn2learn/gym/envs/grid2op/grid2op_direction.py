@@ -2,8 +2,6 @@
 
 import gym
 import numpy as np
-import grid2op
-from grid2op.gym_compat import GymEnv
 from learn2learn.gym.envs.meta_env import MetaEnv
 from RL2Grid.env.utils import make_env, make_env_for_gym
 
@@ -155,12 +153,13 @@ if __name__ == '__main__':
     
     # Test with a specific chronic ID
     test_task = {
-        'chronics_id': 345,  # Use a specific chronic ID
+        'chronics_id': 35,  # Use a specific chronic ID
         'weather_conditions': 'normal'
     }
 
     print("Testing with specific chronic ID...")
     env.set_task(test_task)
+    # TODO after this reset, will it load new chronics ID??? is this a bug? sould i ask the author?
     obs = env.reset()     # obs is a tuple of 2 ele, obs and info
     print("Initial obs:", obs)
     print("Initial obs length:", len(obs))  # Check length of tuple
@@ -196,5 +195,6 @@ if __name__ == '__main__':
             print(f"Episode return: {info['episode']['r'][0]}")
             print(f"Info: {info}")
 
-    
+    obs, info = env.reset()
+    print(info)
     env.close()

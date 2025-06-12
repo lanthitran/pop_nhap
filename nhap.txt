@@ -1,59 +1,23 @@
+in learn2learn with rl2grid and grid2op, i ran 
+                    python D:\grid2op\pop_nhap\learn2learn\examples\rl\promp_grid2op.py  
 
 
+and this bug happend
 
+(rl2grid_cherry_3) D:\grid2op>                    python D:\grid2op\pop_nhap\learn2learn\examples\rl\promp_grid2op.py
+D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\grid2op\Backend\pandaPowerBackend.py:32: UserWarning: Numba cannot be loaded. You will gain possibly massive speed if installing it by
+        D:\Miniconda3\envs\rl2grid_cherry_3\python.exe -m pip install numba
 
+  warnings.warn(
+[Grid2OpDirectionEnv] Using reward_fn: ['L2RPNRewardRegularized'], reward_factors: [1.0]
+[Grid2OpDirectionEnv] Using reward_fn: ['L2RPNRewardRegularized'], reward_factors: [1.0]
+[Grid2OpDirectionEnv] Using reward_fn: ['L2RPNRewardRegularized'], reward_factors: [1.0]
+[Grid2OpDirectionEnv] Using reward_fn: ['L2RPNRewardRegularized'], reward_factors: [1.0]
+D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\grid2op\Backend\pandaPowerBackend.py:32: UserWarning: Numba cannot be loaded. You will gain possibly massive speed if installing it by
+        D:\Miniconda3\envs\rl2grid_cherry_3\python.exe -m pip install numba
 
-pip install learn2learn
-
-
-
--------------------------------------------------------------------------
-
-
+  warnings.warn(
 Traceback (most recent call last):
-  File "D:\grid2op\RL2Grid\RL2Grid\main.py", line 157, in <module>
-    main(parser.parse_known_args()[0])
-  File "D:\grid2op\RL2Grid\RL2Grid\main.py", line 98, in main
-    envs = gym.vector.AsyncVectorEnv([make_env(args, i, resume_run=checkpoint.resumed, params=grid_params) for i in range(args.n_envs)])
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\gymnasium\vector\async_vector_env.py", line 166, in __init__
-    process.start()
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\multiprocessing\process.py", line 121, in start
-    self._popen = self._Popen(self)
-                  ^^^^^^^^^^^^^^^^^
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\multiprocessing\context.py", line 337, in _Popen
-    return Popen(process_obj)
-           ^^^^^^^^^^^^^^^^^^
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\multiprocessing\popen_spawn_win32.py", line 95, in __init__
-    reduction.dump(process_obj, to_child)
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\multiprocessing\reduction.py", line 60, in dump
-    ForkingPickler(file, protocol).dump(obj)
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\gymnasium\vector\utils\misc.py", line 25, in __getstate__
-    return cloudpickle.dumps(self.fn)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\cloudpickle\cloudpickle_fast.py", line 62, in dumps
-    cp.dump(obj)
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\cloudpickle\cloudpickle_fast.py", line 538, in dump
-    return Pickler.dump(self, obj)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\cloudpickle\cloudpickle_fast.py", line 472, in reducer_override
-    return self._function_reduce(obj)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\cloudpickle\cloudpickle_fast.py", line 501, in _function_reduce
-    return self._dynamic_function_reduce(obj)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\cloudpickle\cloudpickle_fast.py", line 482, in _dynamic_function_reduce
-    state = _function_getstate(func)
-            ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\cloudpickle\cloudpickle_fast.py", line 114, in _function_getstate
-    f_globals_ref = _extract_code_globals(func.__code__)
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\cloudpickle\cloudpickle.py", line 212, in _extract_code_globals
-    out_names = {names[oparg] for _, oparg in _walk_global_ops(co)}
-                 ~~~~~^^^^^^^
-IndexError: tuple index out of range
-
-(rl2grid_cherry_3) D:\grid2op\pop_nhap\learn2learn>Traceback (most recent call last):
   File "<string>", line 1, in <module>
   File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\multiprocessing\spawn.py", line 122, in spawn_main
     exitcode = _main(fd, parent_sentinel)
@@ -61,26 +25,6 @@ IndexError: tuple index out of range
   File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\multiprocessing\spawn.py", line 132, in _main
     self = reduction.pickle.load(from_parent)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-EOFError: Ran out of input
+AttributeError: Can't get attribute 'CompleteAction_l2rpn_case14_sandbox' on <module 'grid2op.Space.GridObjects' from 'D:\\Miniconda3\\envs\\rl2grid_cherry_3\\Lib\\site-packages\\grid2op\\Space\\GridObjects.py'>
 
-(rl2grid_cherry_3) D:\grid2op\pop_nhap\learn2learn>
-
-
-
----------------------------------------------------------------------------------------------
-
-
-
-Traceback (most recent call last):
-  File "D:\grid2op\pop_nhap\learn2learn\examples\rl\promp.py", line 27, in <module>
-    import cherry as ch
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\cherry\__init__.py", line 8, in <module>
-    from . import wrappers
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\cherry\wrappers\__init__.py", line 15, in <module>
-    from .recorder_wrapper import Recorder
-  File "D:\Miniconda3\envs\rl2grid_cherry_3\Lib\site-packages\cherry\wrappers\recorder_wrapper.py", line 127, in <module>
-    class ImageEncoderWithGif(GymVideoRecorder.ImageEncoder):
-                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: module 'gym.wrappers.monitoring.video_recorder' has no attribute 'ImageEncoder'
-
-
+explain, and what can i do@/learn2learn 

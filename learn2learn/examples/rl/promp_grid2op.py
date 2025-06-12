@@ -127,7 +127,7 @@ def main(
             env_name=env_name,
             action_type=action_type
         )
-        #env = ch.envs.ActionSpaceScaler(env)  # is this necessary? this will create a bug with .shape, there would be no shape
+        #env = ch.envs.ActionSpaceScaler(env)  # is this necessary? If execute this will create a bug with .shape, there would be no shape...
 
         return env
 

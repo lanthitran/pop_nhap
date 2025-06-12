@@ -1,4 +1,5 @@
 import os
+#os.environ["grid2op_class_in_file"] = "true"  # or "false" if you want to disable it
 import json
 
 from gymnasium.wrappers import NormalizeObservation
@@ -173,9 +174,11 @@ def make_env(args, idx, resume_run=False, generate_class=False, async_vec_env=Fa
         g2op_env = grid2op.make(
             env_config[env_id]['grid2op_id'], 
             reward_class=CombinedReward, 
-            experimental_read_from_local_dir=True if async_vec_env else False,
+            #experimental_read_from_local_dir=True if async_vec_env else False,
             #other_rewards={f"line_{l_id}": N1Reward(l_id=l_id) for l_id in range(186)}
-            backend=LightSimBackend()  # detailed_infos_for_cascading_failures=True
+            backend=LightSimBackend(),  # detailed_infos_for_cascading_failures=True
+            #experimental_read_from_local_dir=True
+            class_in_file=True
         ) 
         
         cr = g2op_env.get_reward_instance()
@@ -329,9 +332,11 @@ def make_env_for_gym(args, idx, resume_run=False, generate_class=False, async_ve
         g2op_env = grid2op.make(
             env_config[env_id]['grid2op_id'], 
             reward_class=CombinedReward, 
-            experimental_read_from_local_dir=True if async_vec_env else False,
+            #experimental_read_from_local_dir=True if async_vec_env else False,
             #other_rewards={f"line_{l_id}": N1Reward(l_id=l_id) for l_id in range(186)}
-            backend=LightSimBackend()  # detailed_infos_for_cascading_failures=True
+            backend=LightSimBackend(),  # detailed_infos_for_cascading_failures=True
+            class_in_file=True
+            #experimental_read_from_local_dir=True
         ) 
         
         cr = g2op_env.get_reward_instance()

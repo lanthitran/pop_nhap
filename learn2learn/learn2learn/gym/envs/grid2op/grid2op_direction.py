@@ -8,7 +8,7 @@ from .RL2Grid.env.utils import make_env, make_env_for_gym
 
 
 
-class Grid2OpDirectionEnv(MetaEnv, gym.Env):
+class Grid2OpDirectionEnv(MetaEnv, gym.Env, gym.utils.EzPickle):
     """
     **Description**
 
@@ -60,6 +60,7 @@ class Grid2OpDirectionEnv(MetaEnv, gym.Env):
         
         MetaEnv.__init__(self, task)
         gym.Env.__init__(self)
+        gym.utils.EzPickle.__init__(self)
         self.task = task
         self.set_task(self.task)
 

@@ -260,7 +260,7 @@ class GridOpForGym(gym.Wrapper, ABC):
         if not self._risk_overflow:
             _, _, info = self.apply_actions()  # First reward is zero
         
-        return self.observation_space.to_gym(self._obs)
+        return self.observation_space.to_gym(self._obs)  # for gym, only obs, no info 
 
 class GridOpIdleForGym(GridOpForGym):
     def _get_heuristic_actions(self):      

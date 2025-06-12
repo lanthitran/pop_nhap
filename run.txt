@@ -73,7 +73,7 @@ D:
             # for cherry-rl: 'numpy>=1.15.4', 'gym>=0.10.9', 'torch>=1.0.0', gym<=0.21.0 (not sure about this gym version)
             # for learn2learn: 'numpy>=1.15.4', 'gym>=0.14.0', 'torch>=1.1.0', 'torchvision>=0.3.0',
             # for grid2op: gym>=0.17.2
-            pip install gym==0.15.3   
+            pip install gym==0.17.3
             pip install cloudpickle==3.0.0 
 
             conda activate rl2grid_cherry_3

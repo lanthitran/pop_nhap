@@ -95,7 +95,7 @@ def main(
         adapt_lr=0.1,                     # Learning rate for adaptation
         meta_lr=3e-4,                     # Learning rate for meta-updates
         adapt_steps=3,                    # Number of adaptation steps
-        num_iterations=1000,              # Total training iterations
+        num_iterations=10,              # Total training iterations
         meta_bsz=40,                      # Meta-batch size
         adapt_bsz=20,                     # Adaptation batch size
         ppo_clip=0.3,                     # PPO clipping parameter
@@ -121,14 +121,58 @@ def main(
         """
         Creates and configures the Grid2Op environment.
         """
+        import grid2op
+        _ = grid2op.make('l2rpn_case14_sandbox', test=True)
         env = Grid2OpDirectionEnv(
             env_name=env_name,
             action_type=action_type
         )
+        #env = ch.envs.ActionSpaceScaler(env)  # is this necessary? this will create a bug with .shape, there would be no shape
+
         return env
 
     # Initialize parallel environments
-    env = l2l.gym.AsyncVectorEnv([make_env for _ in range(num_workers)])
+    #env = l2l.gym.AsyncVectorEnv([make_env for _ in range(num_workers)])  # TODO I can't resolve the pickling problem
+    env = make_env()
+
+
+    # Patch: Convert observation space if it's Gymnasium-based and Cherry expects Gym-based
+    # This addresses the AssertionError in cherry.envs.utils.get_space_dimension
+    if 'gymnasium' in str(type(env.observation_space)).lower(): # More robust check
+        try:
+            from gym.spaces import Box as LegacyGymBox # Cherry uses gym.spaces
+            gymnasium_obs_space = env.observation_space
+            env.observation_space = LegacyGymBox(
+                low=gymnasium_obs_space.low,
+                high=gymnasium_obs_space.high,
+                shape=gymnasium_obs_space.shape,
+                dtype=gymnasium_obs_space.dtype
+            )
+            print(f"Successfully patched env.observation_space to: {type(env.observation_space)}")
+        except ImportError:
+            print("Warning: gym.spaces.Box not available. Cannot patch observation_space for Cherry compatibility.")
+        except Exception as e:
+            print(f"Warning: Failed to patch env.observation_space: {e}")
+
+    # Patch: Convert action space if it's Gymnasium-based and Cherry expects Gym-based
+    if 'gymnasium' in str(type(env.action_space)).lower(): # More robust check
+        try:
+            from gym.spaces import Discrete as LegacyGymDiscrete
+            gymnasium_act_space = env.action_space
+            # Assuming the Gymnasium-based discrete space has an 'n' attribute
+            if hasattr(gymnasium_act_space, 'n'):
+                env.action_space = LegacyGymDiscrete(n=gymnasium_act_space.n)
+                print(f"Successfully patched env.action_space to: {type(env.action_space)}")
+            else:
+                print(f"Warning: Original action space {type(gymnasium_act_space)} does not have 'n' attribute. Cannot patch.")  # TODO continous act space?
+        except ImportError:
+            print("Warning: gym.spaces.Discrete not available. Cannot patch action_space for Cherry compatibility.")
+        except Exception as e:
+            print(f"Warning: Failed to patch env.action_space: {e}")
+
+
+    print(env)
+    print("--------------------------------")
     env.seed(seed)
     env = ch.envs.Torch(env)
     
@@ -145,12 +189,14 @@ def main(
 
     # Main training loop
     for iteration in range(num_iterations):
+        print(f"\n========== Iteration {iteration} ==========")
         iteration_reward = 0.0
         iteration_replays = []
         iteration_policies = []
 
         # Sample Trajectories
         # Sample trajectories for meta-batch
+        print(">>> Sampling tasks and collecting trajectories (meta-batch)...")
         for task_config in tqdm(env.sample_tasks(meta_bsz), leave=False, desc='Data'):
             clone = deepcopy(meta_learner)
             env.set_task(task_config)
@@ -160,9 +206,12 @@ def main(
             task_policies = []
 
             # Fast Adapt
-            # Fast adaptation loop
-            for step in range(adapt_steps):
+            print("=== Adaptation Phase ===")
+            # Fast adaptation loop with tqdm
+            for step in tqdm(range(adapt_steps), leave=False, desc='Adapt', position=2):
                 # Prepare policy for adaptation
+                print(f"  [Adapt Step {step+1}/{adapt_steps}]")
+
                 for p in clone.parameters():
                     p.detach_().requires_grad_()
                 task_policies.append(deepcopy(clone))
@@ -175,6 +224,8 @@ def main(
 
             # Compute Validation Loss
             # Compute validation performance
+            print("=== Validation Phase ===")
+
             for p in clone.parameters():
                 p.detach_().requires_grad_()
             task_policies.append(deepcopy(clone))
@@ -191,7 +242,9 @@ def main(
 
         # ProMP meta-optimization
         # ProMP meta-optimization with PPO
-        for _ in tqdm(range(ppo_steps), leave=False, desc='Optim'):
+        print(">>> ProMP Meta-Optimization Phase (PPO steps)...")
+        for ppo_iter in tqdm(range(ppo_steps), leave=False, desc='Optim'):
+            print(f"  [Meta-Optimization Step {ppo_iter+1}/{ppo_steps}]")
             promp_loss = 0.0
             kl_total = 0.0
             for task_replays, old_policies in zip(iteration_replays, iteration_policies):
@@ -215,8 +268,9 @@ def main(
                                              dones, states, next_states)
                 advantages = ch.normalize(advantages).detach()
                 
-                # Adaptation steps
-                for step in range(adapt_steps):
+                # Adaptation steps with tqdm
+                for step in tqdm(range(adapt_steps), leave=False, desc='ProMP Adapt', position=3):
+                    print(f"    [ProMP Adapt Step {step+1}/{adapt_steps}]")
                     # Compute KL penalty
                     kl_pen = kl_divergence(old_density, new_density).mean()
                     kl_total += kl_pen.item()

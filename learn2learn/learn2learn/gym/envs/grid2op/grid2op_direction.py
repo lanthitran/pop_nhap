@@ -3,7 +3,7 @@
 import gym
 import numpy as np
 from learn2learn.gym.envs.meta_env import MetaEnv
-from RL2Grid.env.utils import make_env, make_env_for_gym
+from .RL2Grid.env.utils import make_env, make_env_for_gym
 
 
 

@@ -63,7 +63,7 @@ def is_discrete(space, vectorized=False):
         vectorized environments (True) or just the discreteness of
         the underlying environment (False).
     """
-    msg = 'Space type not supported.'
+    msg = f"Space type not supported. Got type: {type(space)}"
     assert isinstance(space, (Box, Discrete, Dict, Tuple, MultiDiscrete)), msg
     if isinstance(space, (Discrete, MultiDiscrete)):
         return True
@@ -98,7 +98,7 @@ def get_space_dimension(space, vectorized_dims=False):
         environments (True) or just the dimension for the underlying
         environment (False).
     """
-    msg = 'Space type not supported.'
+    msg = f"Space type not supported. Got type: {type(space)}"
     assert isinstance(space, (Box, Discrete, Dict, Tuple, MultiDiscrete)), msg
     if isinstance(space, Discrete):
         return space.n

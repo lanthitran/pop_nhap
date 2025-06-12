@@ -75,7 +75,7 @@ D:
             # for grid2op: gym>=0.17.2
             pip install gym==0.17.3
             pip install cloudpickle==3.0.0 
-
+            # grid2op==1.10.1 is fine for pickling of AsyncVectorEnv, 1.10.5 is not, maybe should be smaller than 1.10.3?
             conda activate rl2grid_cherry_3
 
                 test:

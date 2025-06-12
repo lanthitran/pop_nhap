@@ -176,9 +176,9 @@ def make_env(args, idx, resume_run=False, generate_class=False, async_vec_env=Fa
             reward_class=CombinedReward, 
             #experimental_read_from_local_dir=True if async_vec_env else False,
             #other_rewards={f"line_{l_id}": N1Reward(l_id=l_id) for l_id in range(186)}
-            backend=LightSimBackend(),  # detailed_infos_for_cascading_failures=True
-            #experimental_read_from_local_dir=True
-            class_in_file=True
+            backend=LightSimBackend(),      # detailed_infos_for_cascading_failures=True
+            #class_in_file=True               #only for grid2op>=1.10.3
+            experimental_read_from_local_dir=True     #for grid2op<1.10.3  MUST do this to handle pickling
         ) 
         
         cr = g2op_env.get_reward_instance()
@@ -334,11 +334,11 @@ def make_env_for_gym(args, idx, resume_run=False, generate_class=False, async_ve
             reward_class=CombinedReward, 
             #experimental_read_from_local_dir=True if async_vec_env else False,
             #other_rewards={f"line_{l_id}": N1Reward(l_id=l_id) for l_id in range(186)}
-            backend=LightSimBackend(),  # detailed_infos_for_cascading_failures=True
-            class_in_file=True
-            #experimental_read_from_local_dir=True
+            backend=LightSimBackend(),      # detailed_infos_for_cascading_failures=True
+            #class_in_file=True               #only for grid2op>=1.10.3
+            experimental_read_from_local_dir=True     #for grid2op<1.10.3  MUST do this to handle pickling
         ) 
-        
+        print('pickling...')
         cr = g2op_env.get_reward_instance()
         _configure_rewards(cr, g2op_env, args, _default_rewards_make_env)
 

@@ -167,15 +167,21 @@ class CategoricalPolicy(nn.Module):
     | Hung |
     """
 
-    def __init__(self, input_size, output_size, hiddens=None):
+    def __init__(self, input_size, output_size, hiddens=None, activation='tanh'):
         super(CategoricalPolicy, self).__init__()
         if hiddens is None:
             hiddens = [100, 100]
+        if activation == 'relu':
+            activation_fn = nn.ReLU
+        elif activation == 'tanh':
+            activation_fn = nn.Tanh
+        else:
+            raise ValueError(f"Unsupported activation: {activation}")
         # Build neural network layers     | Hung |
-        layers = [linear_init(nn.Linear(input_size, hiddens[0])), nn.ReLU()]
+        layers = [linear_init(nn.Linear(input_size, hiddens[0])), activation_fn()]
         for i, o in zip(hiddens[:-1], hiddens[1:]):
             layers.append(linear_init(nn.Linear(i, o)))
-            layers.append(nn.Tanh())
+            layers.append(activation_fn())
         layers.append(linear_init(nn.Linear(hiddens[-1], output_size)))
         self.mean = nn.Sequential(*layers)
         self.input_size = input_size

@@ -469,18 +469,18 @@ def main(
         action_type='topology',             # Action type (topology/redispatch)
         adapt_lr=0.1,                       # Learning rate for adaptation
         meta_lr=3e-4,                       # Learning rate for meta-updates
-        adapt_steps=20,                      # Number of adaptation steps
-        num_iterations=100,                  # Total training iterations
+        adapt_steps=100,                      # Number of adaptation steps
+        num_iterations=1000,                  # Total training iterations
         meta_bsz=40,                        # Meta-batch size
-        adapt_bsz=10,                       # Adaptation batch size
+        adapt_bsz=40,                       # Adaptation batch size
         ppo_clip=0.3,                       # PPO clipping parameter
         ppo_steps=5,                        # PPO update steps
         tau=1.00,                           # GAE parameter
-        gamma=0.99,                         # Discount factor
+        gamma=0.9,                         # Discount factor
         eta=0.0005,                         # KL penalty coefficient
         adaptive_penalty=False,             # Whether to use adaptive KL penalty
         kl_target=0.01,                     # Target KL divergence
-        num_workers=2,                      # Number of parallel workers
+        num_workers=10,                      # Number of parallel workers
         seed=42,                            # Random seed
 ):
     """

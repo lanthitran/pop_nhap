@@ -61,6 +61,7 @@ class PPO:
         next_obs, info = envs.reset()
         next_obs = th.tensor(next_obs).to(device)
         next_done = th.zeros(args.n_envs).to(device)
+        episode_count = 0  # Add episode counter
 
         for iteration in range(init_rollout, n_rollouts + 1):
             # Annealing the rate if instructed to do so.
@@ -189,6 +190,14 @@ class PPO:
 
                 # TRY NOT TO MODIFY: record rewards for plotting purposes
                 if "final_info" in infos:
+                    # Count all ended episodes
+                    ended_episodes = sum(1 for info in infos['final_info'] if info and "episode" in info)
+                    #print(infos['final_info'])
+                    #print(infos['_final_info'])
+                    episode_count += ended_episodes
+                    if track:
+                        logger.writer.add_scalar("charts/episode_count", episode_count, global_step)
+                    
                     for info in infos['final_info']:
                         if info and "episode" in info:
                             survival = info['episode']['l'][0]/max_steps

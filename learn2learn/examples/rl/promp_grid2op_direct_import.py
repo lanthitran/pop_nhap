@@ -21,7 +21,7 @@ from torch.distributions.kl import kl_divergence
 from tqdm import tqdm
 
 import learn2learn as l2l
-#from learn2learn.gym.envs import Grid2OpDirectionEnv
+from learn2learn.gym.envs.grid2op.grid2op_direction import Grid2OpDirectionEnv
 from policies import DiagNormalPolicy
 
 
@@ -134,7 +134,7 @@ def main(
         return env
 
     # Initialize parallel environments
-    env = l2l.gym.AsyncVectorEnv([make_env for _ in range(num_workers)])  # TODO I can't resolve the pickling problem
+    env = l2l.gym.AsyncVectorEnv([make_env for _ in range(num_workers)])  # TO_DO I can't resolve the pickling problem
     #env = make_env()
 
 
@@ -179,12 +179,24 @@ def main(
     env = ch.envs.Torch(env)
     
     # Initialize policy and meta-learner
-    policy = DiagNormalPolicy(
-        input_size=env.state_size,
-        output_size=env.action_size,
-        hiddens=[256, 256],  # Larger network for Grid2Op
-        activation='tanh'
-    )
+    from policies import CategoricalPolicy, DiagNormalPolicy
+
+    if action_type == 'topology':
+        policy = CategoricalPolicy(
+            input_size=env.state_size,
+            output_size=env.action_size,
+            hiddens=[256, 256]  # Larger network for Grid2Op
+        )
+    elif action_type == 'redispatch':
+        policy = DiagNormalPolicy(
+            input_size=env.state_size,
+            output_size=env.action_size,
+            hiddens=[256, 256],  # Larger network for Grid2Op
+            device='cpu'  # or 'cuda' if using GPU
+        )
+    else:
+        raise ValueError(f"Unknown action_type: {action_type}")
+    
     meta_learner = l2l.algorithms.MAML(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(meta_learner.parameters(), lr=meta_lr)

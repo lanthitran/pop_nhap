@@ -180,6 +180,54 @@ class CategoricalPolicy(nn.Module):
         self.mean = nn.Sequential(*layers)
         self.input_size = input_size
 
+    def density(self, state):
+        """
+        Computes the categorical distribution for the current state.
+        """
+        loc = self.mean(state)
+        return Categorical(logits=loc)
+
+    def log_prob(self, state, action):
+        """
+        Computes the log probability of taking an action in a given state.
+        """
+        density = self.density(state)
+        return density.log_prob(action).mean(dim=1, keepdim=True)
+
+    def forward(self, state):
+        """
+        Computes action probabilities and samples an action.
+        Returns both the action and additional information about the distribution.
+        | Hung |
+        """
+        #state = ch.onehot(state, dim=self.input_size)  # onehot encoding should be removed for grid2op env   | Hung |
+        density = self.density(state)
+        action = density.sample()
+        log_prob = density.log_prob(action).mean().view(-1, 1).detach()
+        return action
+
+
+
+class CategoricalPolicyLegacy(nn.Module):
+    """
+    A policy network for discrete action spaces using categorical distribution.
+    This is the raw one from learn2learn, i set it to legacy
+    | Hung |
+    """
+
+    def __init__(self, input_size, output_size, hiddens=None):
+        super(CategoricalPolicy, self).__init__()
+        if hiddens is None:
+            hiddens = [100, 100]
+        # Build neural network layers     | Hung |
+        layers = [linear_init(nn.Linear(input_size, hiddens[0])), nn.ReLU()]
+        for i, o in zip(hiddens[:-1], hiddens[1:]):
+            layers.append(linear_init(nn.Linear(i, o)))
+            layers.append(nn.ReLU())
+        layers.append(linear_init(nn.Linear(hiddens[-1], output_size)))
+        self.mean = nn.Sequential(*layers)
+        self.input_size = input_size
+
     def forward(self, state):
         """
         Computes action probabilities and samples an action.

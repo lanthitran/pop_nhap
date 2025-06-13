@@ -263,7 +263,6 @@ class MyOwnRunner(ch.envs.Runner):
                 self.env.render()
             collected_steps += 1
             
-
 def print_episode_lengths_from_replay(replay, prefix=""):
     """
     Print episode lengths and returns from a Cherry ExperienceReplay or list of transitions.
@@ -280,6 +279,10 @@ def print_episode_lengths_from_replay(replay, prefix=""):
             return [action_to_str(a) for a in action]
         else:
             return str(action)
+
+    # Lists to store episode statistics
+    episode_lengths = []
+    episode_returns = []
 
     for idx, sars in enumerate(replay):
         # Get done value (tensor or bool)
@@ -306,21 +309,29 @@ def print_episode_lengths_from_replay(replay, prefix=""):
                     if isinstance(ep, dict):
                         msg = f"{prefix}Worker {env_idx} episode ended"
                         if "l" in ep and "r" in ep:
-                            msg += f". Length: {ep['l']}, Return: {ep['r']}"
+                            msg += f". Length: {ep['l'][0]}, Return: {ep['r'][0]:.2f}"
+                            episode_lengths.append(ep['l'][0])
+                            episode_returns.append(ep['r'][0])
                         elif "l" in ep:
-                            msg += f". Length: {ep['l']}"
+                            msg += f". Length: {ep['l'][0]}"
+                            episode_lengths.append(ep['l'][0])
                         elif "r" in ep:
-                            msg += f". Return: {ep['r']}"
+                            msg += f". Return: {ep['r'][0]:.2f}"
+                            episode_returns.append(ep['r'][0])
                         msg += action_str
                         print(msg)
             elif isinstance(episode_stats, dict):
                 msg = f"{prefix}Episode ended"
                 if "l" in episode_stats and "r" in episode_stats:
-                    msg += f". Length: {episode_stats['l']}, Return: {episode_stats['r']}"
+                    msg += f". Length: {episode_stats['l'][0]}, Return: {episode_stats['r'][0]:.2f}"
+                    episode_lengths.append(episode_stats['l'][0])
+                    episode_returns.append(episode_stats['r'][0])
                 elif "l" in episode_stats:
-                    msg += f". Length: {episode_stats['l']}"
+                    msg += f". Length: {episode_stats['l'][0]}"
+                    episode_lengths.append(episode_stats['l'][0])
                 elif "r" in episode_stats:
-                    msg += f". Return: {episode_stats['r']}"
+                    msg += f". Return: {episode_stats['r'][0]:.2f}"
+                    episode_returns.append(episode_stats['r'][0])
                 msg += action_str
                 print(msg)
             continue  # Prefer env_episode_stats if present
@@ -337,11 +348,15 @@ def print_episode_lengths_from_replay(replay, prefix=""):
                             ep = ep_info["episode"]
                             msg = f"{prefix}Worker {env_idx} episode ended"
                             if "l" in ep and "r" in ep:
-                                msg += f". Length: {ep['l']}, Return: {ep['r']}"
+                                msg += f". Length: {ep['l'][0]}, Return: {ep['r'][0]:.2f}"
+                                episode_lengths.append(ep['l'][0])
+                                episode_returns.append(ep['r'][0])
                             elif "l" in ep:
-                                msg += f". Length: {ep['l']}"
+                                msg += f". Length: {ep['l'][0]}"
+                                episode_lengths.append(ep['l'][0])
                             elif "r" in ep:
-                                msg += f". Return: {ep['r']}"
+                                msg += f". Return: {ep['r'][0]:.2f}"
+                                episode_returns.append(ep['r'][0])
                             msg += action_str
                             print(msg)
             elif isinstance(step_info, (list, tuple)):
@@ -350,22 +365,30 @@ def print_episode_lengths_from_replay(replay, prefix=""):
                         ep = ep_info["episode"]
                         msg = f"{prefix}Worker {env_idx} episode ended"
                         if "l" in ep and "r" in ep:
-                            msg += f". Length: {ep['l']}, Return: {ep['r']}"
+                            msg += f". Length: {ep['l'][0]}, Return: {ep['r'][0]:.2f}"
+                            episode_lengths.append(ep['l'][0])
+                            episode_returns.append(ep['r'][0])
                         elif "l" in ep:
-                            msg += f". Length: {ep['l']}"
+                            msg += f". Length: {ep['l'][0]}"
+                            episode_lengths.append(ep['l'][0])
                         elif "r" in ep:
-                            msg += f". Return: {ep['r']}"
+                            msg += f". Return: {ep['r'][0]:.2f}"
+                            episode_returns.append(ep['r'][0])
                         msg += action_str
                         print(msg)
             elif isinstance(step_info, dict) and "episode" in step_info:
                 ep = step_info["episode"]
                 msg = f"{prefix}Episode ended"
                 if "l" in ep and "r" in ep:
-                    msg += f". Length: {ep['l']}, Return: {ep['r']}"
+                    msg += f". Length: {ep['l'][0]}, Return: {ep['r'][0]:.2f}"
+                    episode_lengths.append(ep['l'][0])
+                    episode_returns.append(ep['r'][0])
                 elif "l" in ep:
-                    msg += f". Length: {ep['l']}"
+                    msg += f". Length: {ep['l'][0]}"
+                    episode_lengths.append(ep['l'][0])
                 elif "r" in ep:
-                    msg += f". Return: {ep['r']}"
+                    msg += f". Return: {ep['r'][0]:.2f}"
+                    episode_returns.append(ep['r'][0])
                 msg += action_str
                 print(msg)
             continue
@@ -376,11 +399,15 @@ def print_episode_lengths_from_replay(replay, prefix=""):
             ep = info['episode']
             msg = f"{prefix}Episode ended"
             if "l" in ep and "r" in ep:
-                msg += f". Length: {ep['l']}, Return: {ep['r']}"
+                msg += f". Length: {ep['l'][0]}, Return: {ep['r'][0]:.2f}"
+                episode_lengths.append(ep['l'][0])
+                episode_returns.append(ep['r'][0])
             elif "l" in ep:
-                msg += f". Length: {ep['l']}"
+                msg += f". Length: {ep['l'][0]}"
+                episode_lengths.append(ep['l'][0])
             elif "r" in ep:
-                msg += f". Return: {ep['r']}"
+                msg += f". Return: {ep['r'][0]:.2f}"
+                episode_returns.append(ep['r'][0])
             msg += action_str
             print(msg)
             continue
@@ -390,13 +417,24 @@ def print_episode_lengths_from_replay(replay, prefix=""):
         if isinstance(episode_info, dict):
             msg = f"{prefix}Episode ended"
             if "l" in episode_info and "r" in episode_info:
-                msg += f". Length: {episode_info['l']}, Return: {episode_info['r']}"
+                msg += f". Length: {episode_info['l'][0]}, Return: {episode_info['r'][0]:.2f}"
+                episode_lengths.append(episode_info['l'][0])
+                episode_returns.append(episode_info['r'][0])
             elif "l" in episode_info:
-                msg += f". Length: {episode_info['l']}"
+                msg += f". Length: {episode_info['l'][0]}"
+                episode_lengths.append(episode_info['l'][0])
             elif "r" in episode_info:
-                msg += f". Return: {episode_info['r']}"
+                msg += f". Return: {episode_info['r'][0]:.2f}"
+                episode_returns.append(episode_info['r'][0])
             msg += action_str
             print(msg)
+    # Print summary statistics using numpy for simpler mean calculation
+    if episode_lengths:
+        mean_length = np.mean(episode_lengths)
+        print(f"\n{prefix} =========== Mean episode length: {mean_length:.2f}")
+    if episode_returns:
+        mean_return = np.mean(episode_returns)
+        print(f"{prefix} =========== Mean episode return: {mean_return:.2f}")
 
 
 def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
@@ -469,8 +507,8 @@ def main(
         action_type='topology',             # Action type (topology/redispatch)
         adapt_lr=0.1,                       # Learning rate for adaptation
         meta_lr=3e-4,                       # Learning rate for meta-updates
-        adapt_steps=100,                      # Number of adaptation steps
-        num_iterations=1000,                  # Total training iterations
+        adapt_steps=5,                      # Number of adaptation steps
+        num_iterations=10000,                  # Total training iterations
         meta_bsz=40,                        # Meta-batch size
         adapt_bsz=40,                       # Adaptation batch size
         ppo_clip=0.3,                       # PPO clipping parameter
@@ -493,13 +531,13 @@ def main(
     torch.manual_seed(seed)
 
     def make_env():
-        """
-        Creates and configures the Grid2Op environment.
-        """
-        env = gym.make(rl_env_name, env_name=env_name, action_type=action_type)
+        # Each worker gets a different seed by using the worker index
+        rd_num = random.randint(1, 99999999999)
+        worker_seed = seed + rd_num
+        env = gym.make(rl_env_name, env_name=env_name, action_type=action_type, seed=worker_seed)
         #env = ch.envs.ActionSpaceScaler(env)  # is this necessary? If execute this will create a bug with .shape, there would be no shape...
-
         return env
+    
 
     # Initialize parallel environments
     env = l2l.gym.AsyncVectorEnv([make_env for _ in range(num_workers)])  # TO_DO I can't resolve the pickling problem
@@ -591,7 +629,7 @@ def main(
             # Fast adaptation loop with tqdm
             for step in tqdm(range(adapt_steps), leave=False, desc='Adapt', position=2):
                 # Prepare policy for adaptation
-                print(f"  [Adapt Step {step+1}/{adapt_steps}]")
+                print(f" ====================== [Adapt Step {step+1}/{adapt_steps}] ======================")
 
                 for p in clone.parameters():
                     p.detach_().requires_grad_()

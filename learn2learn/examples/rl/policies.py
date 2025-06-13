@@ -175,7 +175,7 @@ class CategoricalPolicy(nn.Module):
         layers = [linear_init(nn.Linear(input_size, hiddens[0])), nn.ReLU()]
         for i, o in zip(hiddens[:-1], hiddens[1:]):
             layers.append(linear_init(nn.Linear(i, o)))
-            layers.append(nn.ReLU())
+            layers.append(nn.Tanh())
         layers.append(linear_init(nn.Linear(hiddens[-1], output_size)))
         self.mean = nn.Sequential(*layers)
         self.input_size = input_size
@@ -204,7 +204,7 @@ class CategoricalPolicy(nn.Module):
         density = self.density(state)
         action = density.sample()
         log_prob = density.log_prob(action).mean().view(-1, 1).detach()
-        return action
+        return action, {'density': density, 'log_prob': log_prob} # or just return action as DiagNormalPolicy?
 
 
 
@@ -216,7 +216,7 @@ class CategoricalPolicyLegacy(nn.Module):
     """
 
     def __init__(self, input_size, output_size, hiddens=None):
-        super(CategoricalPolicy, self).__init__()
+        super(CategoricalPolicyLegacy, self).__init__()
         if hiddens is None:
             hiddens = [100, 100]
         # Build neural network layers     | Hung |

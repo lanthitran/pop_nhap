@@ -545,7 +545,7 @@ def main(
     env.seed(seed)
     env = ch.envs.Torch(env)
     # Initialize policy and meta-learner
-    from policies import CategoricalPolicy, DiagNormalPolicy
+    from policies import CategoricalPolicy, DiagNormalPolicy, CategoricalPolicyLegacy
 
     if action_type == 'topology':
         policy = CategoricalPolicy(

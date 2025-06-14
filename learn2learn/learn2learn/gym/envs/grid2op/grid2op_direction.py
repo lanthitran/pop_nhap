@@ -133,10 +133,6 @@ class Grid2OpDirectionEnv(MetaEnv, gym.Env, gym.utils.EzPickle):
         self.env.close()
 
 if __name__ == '__main__':
-    
-    
-
-
     # Test the environment with custom arguments
     env = Grid2OpDirectionEnv(
         task=None,
@@ -152,6 +148,12 @@ if __name__ == '__main__':
         reward_factors=[1.0]
     )
     
+    # Deactivate forecast before any environment interaction
+    if hasattr(env.env, 'init_env'):
+        env.env.init_env.deactivate_forecast()
+    else:
+        print("Warning: Could not deactivate forecast - init_env not found")
+
     # Test with a specific chronic ID
     test_task = {
         'chronics_id': 35,  # Use a specific chronic ID
@@ -160,42 +162,36 @@ if __name__ == '__main__':
 
     print("Testing with specific chronic ID...")
     env.set_task(test_task)
-    # TODO after this reset, will it load new chronics ID??? is this a bug? sould i ask the author?
-    obs = env.reset()     # obs is a tuple of 2 ele, obs and info
-    print("Initial obs:", obs)
-    print("Initial obs length:", len(obs))  # Check length of tuple
-    for i, obs_item in enumerate(obs):
-        if isinstance(obs_item, dict):
-            print(f"obs[{i}] is a dict with {len(obs_item)} items")
-            print(f"Keys: {list(obs_item.keys())}")
-            print(f"Values: {list(obs_item.values())}")
-        else:
-            print(f"obs[{i}] shape:", obs_item.shape if hasattr(obs_item, 'shape') else "no shape")
-    done = False
-    total_reward = 0
-    step_count = 0
     
     # Set random seed for action sampling
     np.random.seed(42)
     
-    while not done:
-        action =  0   #env.action_space.sample()
-        obs, reward, done, info = env.step(action)
-        total_reward += reward
-        step_count += 1
+    # Number of episodes to run
+    num_episodes = 300
+    
+    for episode in range(num_episodes):
+        print(f"\nStarting Episode {episode + 1}/{num_episodes}")
+        obs = env.reset()
+        done = False
+        total_reward = 0
+        step_count = 0
         
-        print(f"\nStep {step_count}:")
-        print(f"Action: {action}")
-        print(f"Reward: {reward}")
-        print(f"Total Return: {total_reward}")
-        print(f"Done: {done}")
-        #print(f"Info: {info}")
-        if done:
-            print(f"\nEpisode finished after {step_count} steps")
-            print(f"Episode length: {info['episode']['l'][0]}")
-            print(f"Episode return: {info['episode']['r'][0]}")
-            print(f"Info: {info}")
+        while not done:
+            action = 0  #env.action_space.sample()
+            obs, reward, done, info = env.step(action)
+            total_reward += reward
+            step_count += 1
+            
+            print(f"\nStep {step_count}:")
+            print(f"Action: {action}")
+            print(f"Reward: {reward}")
+            print(f"Total Return: {total_reward}")
+            print(f"Done: {done}")
+            
+            if done:
+                print(f"\nEpisode {episode + 1} finished after {step_count} steps")
+                print(f"Episode length: {info['episode']['l'][0]}")
+                print(f"Episode return: {info['episode']['r'][0]}")
+                print(f"Info: {info}")
 
-    obs, info = env.reset()
-    print(info)
     env.close()

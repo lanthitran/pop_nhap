@@ -62,7 +62,7 @@ class Grid2OpDirectionEnv(MetaEnv, gym.Env, gym.utils.EzPickle):
         gym.Env.__init__(self)
         gym.utils.EzPickle.__init__(self)
         self.task = task
-        self.set_task(self.task)
+        #self.set_task(self.task)       #Don't need anymore, MetaEnv.__init__ already does it
 
     # -------- MetaEnv Methods --------
     def set_task(self, task):

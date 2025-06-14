@@ -154,7 +154,7 @@ def _default_rewards_make_env(cr, g2op_env, env_type, args):
     cr.addReward("LineMarginReward", LineMarginReward(), 0.3)
 
 
-def make_env(args, idx, resume_run=False, generate_class=False, async_vec_env=False, params=None, eval_mode=False):
+def make_env(args, idx, resume_run=False, generate_class=False, async_vec_env=False, params=None, eval_mode=False, deactivate_forecast=True):
     def thunk():
 
         config = load_config(args.env_config_path)
@@ -183,6 +183,9 @@ def make_env(args, idx, resume_run=False, generate_class=False, async_vec_env=Fa
         
         cr = g2op_env.get_reward_instance()
         _configure_rewards(cr, g2op_env, args, _default_rewards_make_env)
+
+        if deactivate_forecast:
+            g2op_env.deactivate_forecast()
 
         g2op_env.chronics_handler.set_chunk_size(100)    # Instead of loading all episode data, get chunks of 100
         if generate_class:
@@ -312,7 +315,7 @@ def make_env(args, idx, resume_run=False, generate_class=False, async_vec_env=Fa
 
 
 
-def make_env_for_gym(args, idx, resume_run=False, generate_class=False, async_vec_env=False, params=None, eval_mode=False):
+def make_env_for_gym(args, idx, resume_run=False, generate_class=False, async_vec_env=False, params=None, eval_mode=False, deactivate_forecast=True):
     def thunk():
 
         config = load_config(args.env_config_path)
@@ -341,6 +344,9 @@ def make_env_for_gym(args, idx, resume_run=False, generate_class=False, async_ve
         print('pickling...')
         cr = g2op_env.get_reward_instance()
         _configure_rewards(cr, g2op_env, args, _default_rewards_make_env)
+        
+        if deactivate_forecast:
+            g2op_env.deactivate_forecast()
 
         g2op_env.chronics_handler.set_chunk_size(100)    # Instead of loading all episode data, get chunks of 100
         if generate_class:

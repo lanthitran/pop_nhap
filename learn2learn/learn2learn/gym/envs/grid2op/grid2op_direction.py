@@ -131,7 +131,7 @@ class Grid2OpDirectionEnv(MetaEnv, gym.Env, gym.utils.EzPickle):
     def close(self):
         """Clean up environment resources."""
         self.env.close()
-
+""" 
 if __name__ == '__main__':
     # Test the environment with custom arguments
     env = Grid2OpDirectionEnv(
@@ -195,3 +195,6 @@ if __name__ == '__main__':
                 print(f"Info: {info}")
 
     env.close()
+
+
+"""

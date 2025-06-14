@@ -535,7 +535,7 @@ def main(
         rd_num = random.randint(1, 99999999999)
         worker_seed = seed + rd_num
         env = gym.make(rl_env_name, env_name=env_name, action_type=action_type, seed=worker_seed)
-        env.env.env.init_env.deactivate_forecast()
+        env.env.env.init_env.deactivate_forecast()       # env.env.env to access grid2op env      # or reactivate_forecast
         #env = ch.envs.ActionSpaceScaler(env)  # is this necessary? If execute this will create a bug with .shape, there would be no shape...
         return env
     
